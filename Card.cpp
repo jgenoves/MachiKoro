@@ -47,6 +47,9 @@ int Card::getActivationMax() const{
 RectangleShape Card::getRectangle() const {
     return rectangle;
 }
+string Card::getName() const{
+    return name;
+}
 
 // Setters
 void Card::setDescription(string newDescription){
@@ -91,6 +94,10 @@ void Card::setActivationMax(int newMax){
 void Card::setRectangle(RectangleShape newRectangle) {
     rectangle = newRectangle;
 }
+void Card::setName(string newName){
+    name = newName;
+}
+
 
 // Virtual Methods
 /* Overridden in child classes */

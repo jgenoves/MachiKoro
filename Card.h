@@ -40,6 +40,7 @@ public:
     int getActivationMin() const;
     int getActivationMax() const;
     RectangleShape getRectangle() const;
+    string getName() const;
 
     // Setters
     void setDescription(string newDescription);
@@ -49,6 +50,7 @@ public:
     void setActivationMin(int newMin);
     void setActivationMax(int newMax);
     void setRectangle(RectangleShape newRectangle);
+    void setName(string newName);
 
     // Virtual Methods
     virtual void draw() const = 0;
@@ -58,9 +60,11 @@ public:
 
 protected:
     string description;
+    string name;
     int cost;
     range activation;
     RectangleShape rectangle;
+
 };
 
 // TODO: Machi Koro cards will inherit the above abstract Card class.
