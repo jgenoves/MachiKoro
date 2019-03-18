@@ -1,6 +1,7 @@
 //
 // Created by Joshua Newton on 2019-03-13.
 //
+// Co-Creator: Jordan Genovese
 
 #include "graphics.h"
 
