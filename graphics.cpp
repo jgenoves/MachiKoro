@@ -9,8 +9,8 @@ GLdouble width, height;
 int wd;
 
 void init() {
-    width = 500;
-    height = 500;
+    width = 1500;
+    height = 800;
 }
 
 /* Initialize OpenGL Graphics */
@@ -108,7 +108,7 @@ int graphicsPlay(int argc, char** argv) {
     glutInitDisplayMode(GLUT_RGBA);
 
     glutInitWindowSize((int)width, (int)height);
-    glutInitWindowPosition(100, 100); // Position the window's initial top-left corner
+    glutInitWindowPosition(0, 0); // Position the window's initial top-left corner
     /* create the window and store the handle to it */
     wd = glutCreateWindow("Machi Koro" /* title */ );
 

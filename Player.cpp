@@ -6,6 +6,7 @@
 
 Player::Player(){
     setMoney(0);
+    setAllLandmarksFalse();
 }
 Player::Player(int newMoney){
     setMoney(newMoney);
@@ -85,7 +86,6 @@ int Player::getNumberOfEstablishment(Card establishment) const{
     }
     return count;
 }
-
 void Player::setAllLandmarksFalse(){
     trainStation = false;
     shoppingMall = false;
