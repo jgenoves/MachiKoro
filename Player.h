@@ -14,14 +14,14 @@ public:
     // Constructors
     Player();
     Player(int newMoney);
-    Player(int newMoney, vector<unique_ptr<Card>> newEstablishments);
+    Player(int newMoney, vector<Card> newEstablishments);
 
     // Destructor
     ~Player();
 
     // Getters
     int getMoney() const;
-    vector<unique_ptr<Card>> getEstablishments() const;
+    //vector<unique_ptr<Card>> getEstablishments() const;
     bool getTrainStationBool() const;
     bool getShoppingMallBool() const;
     bool getAmusementParkBool() const;
@@ -29,20 +29,20 @@ public:
 
     // Setters
     void setMoney(int newMoney);
-    void setEstablishments(vector<unique_ptr<Card>> newEstablishments);
+    void setEstablishments(vector<Card> newEstablishments);
     void setTrainStationBool(bool newValue);
-    bool setShoppingMallBool(bool newValue);
-    bool setAmusementParkBool(bool newValue);
-    bool setRadioTowerBool(bool newValue);
+    void setShoppingMallBool(bool newValue);
+    void setAmusementParkBool(bool newValue);
+    void setRadioTowerBool(bool newValue);
 
     // Other Methods
     bool checkWinner() const;
-    int getNumberOfEstablishment(Card establishment) const;
+//    int getNumberOfEstablishment(Card establishment) const;
     void setAllLandmarksFalse();
 
 protected:
     int money;
-    vector<unique_ptr<Card>> establishments;
+    vector<Card> establishments = {};
     bool trainStation;
     bool shoppingMall;
     bool amusementPark;
