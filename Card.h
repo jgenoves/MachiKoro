@@ -8,6 +8,7 @@
 #include <string>
 #include "Shapes.h"
 
+
 using namespace std;
 
 struct range {
@@ -22,8 +23,9 @@ struct range {
  * majorEstablishment = Purple
  * landmark = Yellow (Gray if not constructed)
  */
-enum cardType {primaryIndustry, secondaryIndustry, restaurants, majorEstablishment, landmark};
-enum cardKind {wheat, cow, gear, box, factory, fruit, coffeeCup, tower};
+enum cardType {primaryIndustry, secondaryIndustry, restaurant, majorEstablishment, landmark};
+enum cardSymbol {wheat, cow, gear, box, factory, fruit, coffeeCup, tower};
+
 
 class Card{
 public:
@@ -34,7 +36,7 @@ public:
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType);
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle);
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName);
-    Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardKind newCardKind);
+    Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newCardSymbol);
 
     // Copy Constructor
     Card(const Card &oldCard);
@@ -51,7 +53,7 @@ public:
     RectangleShape getRectangle() const;
     string getName() const;
     cardType getCardType() const;
-    cardKind getCardKind() const;
+    cardSymbol getCardSymbol() const;
 
     // Setters
     void setDescription(string newDescription);
@@ -63,11 +65,11 @@ public:
     void setRectangle(RectangleShape newRectangle);
     void setName(string newName);
     void setCardType(cardType newType);
-    void setCardKind(cardKind newKind);
+    void setCardSymbol(cardSymbol newSymbol);
 
     // Virtual Methods
-    virtual void draw() const = 0;
-    virtual void activate() const = 0;
+    virtual void draw() = 0;
+    virtual void activate() = 0;
 
     // Other Methods
 
@@ -78,7 +80,7 @@ protected:
     range activation;
     RectangleShape rectangle;
     cardType type;
-    cardKind kind;
+    cardSymbol symbol;
 
 };
 
@@ -88,5 +90,12 @@ protected:
 //  Fruit and Vegetable Market, Cafe, Family Restaurant, Stadium, TV Station, Business Center, Train Station,
 //  Shopping Mall, Amusement Park, Radio Tower
 
-
+//class WheatField : Card{
+//public:
+//    // Constructor for WheatField
+//    WheatField();
+//
+//    void draw() override;
+//    void activate() override;
+//};
 #endif //CS205FINAL_CARD_H

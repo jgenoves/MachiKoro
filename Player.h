@@ -5,8 +5,6 @@
 #ifndef CS205FINAL_PLAYER_H
 #define CS205FINAL_PLAYER_H
 
-#include <memory>
-#include <vector>
 #include "Card.h"
 
 class Player{

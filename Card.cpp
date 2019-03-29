@@ -44,14 +44,14 @@ Card::Card(string newDescription, int newCost, int newActivationMin, int newActi
     setRectangle(newRectangle);
     setName(newName);
 }
-Card::Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardKind newKind){
+Card::Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol){
     setDescription(newDescription);
     setCost(newCost);
     setActivation(newActivationMin, newActivationMax);
     setCardType(newType);
     setRectangle(newRectangle);
     setName(newName);
-    setCardKind(newKind);
+    setCardSymbol(newSymbol);
 }
 
 // Copy Constructor
@@ -62,7 +62,7 @@ Card::Card(const Card &oldCard){
     setCardType(oldCard.getCardType());
     setRectangle(oldCard.getRectangle());
     setName(oldCard.getName());
-    setCardKind(oldCard.getCardKind());
+    setCardSymbol(oldCard.getCardSymbol());
 }
 
 
@@ -96,8 +96,8 @@ string Card::getName() const{
 cardType Card::getCardType() const {
     return type;
 }
-cardKind Card::getCardKind() const {
-    return kind;
+cardSymbol Card::getCardSymbol() const {
+    return symbol;
 }
 
 // Setters
@@ -149,8 +149,8 @@ void Card::setName(string newName){
 void Card::setCardType(cardType newType) {
     type = newType;
 }
-void Card::setCardKind(cardKind newKind) {
-    kind = newKind;
+void Card::setCardSymbol(cardSymbol newSymbol) {
+    symbol = newSymbol;
 }
 
 // Virtual Methods
@@ -162,3 +162,21 @@ void Card::setCardKind(cardKind newKind) {
 /** ABSTRACT CARD CLASS ENDING    **/
 /***********************************/
 
+
+/***********************************/
+/** WHEATFIELD CLASS STARTING     **/
+/***********************************/
+
+//WheatField::WheatField(){
+//    setDescription("Get 1 coin from the bank");
+//    setCost(1);
+//    setActivation(1,1);
+//    setCardType(primaryIndustry);
+//    setRectangle(blueCardRectangle);
+//    setName("Wheat Field");
+//    setCardSymbol(wheat);
+//}
+
+/***********************************/
+/** WHEATFIELD CLASS ENDING       **/
+/***********************************/

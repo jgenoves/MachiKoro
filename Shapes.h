@@ -10,6 +10,8 @@
 #include <cmath>
 #include <iostream>
 #include <memory>
+#include <vector>
+#include <math.h>
 
 /*
  Inheritance:
