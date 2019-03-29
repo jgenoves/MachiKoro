@@ -35,6 +35,10 @@ public:
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle);
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName);
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardKind newCardKind);
+
+    // Copy Constructor
+    Card(const Card &oldCard);
+
     // Destructor
     ~Card();
 

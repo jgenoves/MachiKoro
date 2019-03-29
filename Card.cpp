@@ -54,6 +54,18 @@ Card::Card(string newDescription, int newCost, int newActivationMin, int newActi
     setCardKind(newKind);
 }
 
+// Copy Constructor
+Card::Card(const Card &oldCard){
+    setDescription(oldCard.getDescription());
+    setCost(oldCard.getCost());
+    setActivation(oldCard.getActivationMin(), oldCard.getActivationMax());
+    setCardType(oldCard.getCardType());
+    setRectangle(oldCard.getRectangle());
+    setName(oldCard.getName());
+    setCardKind(oldCard.getCardKind());
+}
+
+
 // Destructor
 Card::~Card(){
 
