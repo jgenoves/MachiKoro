@@ -62,8 +62,8 @@ public:
     void setCardKind(cardKind newKind);
 
     // Virtual Methods
-    virtual void draw() const = 0;
-    virtual void activate() const = 0;
+   // virtual void draw() const = 0;
+   // virtual void activate() const = 0;
 
     // Other Methods
 

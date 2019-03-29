@@ -12,7 +12,7 @@ Player::Player(int newMoney){
     setMoney(newMoney);
     setAllLandmarksFalse();
 }
-Player::Player(int newMoney, vector<unique_ptr<Card>> newEstablishments){
+Player::Player(int newMoney, vector<Card> newEstablishments){
     setMoney(newMoney);
     setEstablishments(newEstablishments);
     setAllLandmarksFalse();
@@ -27,9 +27,11 @@ Player::~Player(){
 int Player::getMoney() const{
     return money;
 }
+/*
 vector<unique_ptr<Card>> Player::getEstablishments() const{
     return establishments;
 }
+ */
 bool Player::getTrainStationBool() const{
     return trainStation;
 }
@@ -52,19 +54,19 @@ void Player::setMoney(int newMoney){
         money = 0;
     }
 }
-void Player::setEstablishments(vector<unique_ptr<Card>> newEstablishments){
+void Player::setEstablishments(vector<Card> newEstablishments){
     establishments = newEstablishments;
 }
 void Player::setTrainStationBool(bool newValue){
     trainStation = newValue;
 }
-bool Player::setShoppingMallBool(bool newValue){
+void Player::setShoppingMallBool(bool newValue){
     shoppingMall = newValue;
 }
-bool Player::setAmusementParkBool(bool newValue){
+void Player::setAmusementParkBool(bool newValue){
     amusementPark = newValue;
 }
-bool Player::setRadioTowerBool(bool newValue){
+void Player::setRadioTowerBool(bool newValue){
     radioTower = newValue;
 }
 
@@ -77,6 +79,7 @@ bool Player::checkWinner() const{
         return false;
     }
 }
+/*
 int Player::getNumberOfEstablishment(Card establishment) const{
     int count = 0;
     for (int i = 0; i < establishments.size(); i++){
@@ -86,6 +89,7 @@ int Player::getNumberOfEstablishment(Card establishment) const{
     }
     return count;
 }
+ */
 void Player::setAllLandmarksFalse(){
     trainStation = false;
     shoppingMall = false;
