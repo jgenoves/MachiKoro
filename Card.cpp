@@ -23,6 +23,37 @@ Card::Card(string newDescription, int newCost, int newActivationMin, int newActi
     setCost(newCost);
     setActivation(newActivationMin, newActivationMax);
 }
+Card::Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType){
+    setDescription(newDescription);
+    setCost(newCost);
+    setActivation(newActivationMin, newActivationMax);
+    setCardType(newType);
+}
+Card::Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle){
+    setDescription(newDescription);
+    setCost(newCost);
+    setActivation(newActivationMin, newActivationMax);
+    setCardType(newType);
+    setRectangle(newRectangle);
+}
+Card::Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName){
+    setDescription(newDescription);
+    setCost(newCost);
+    setActivation(newActivationMin, newActivationMax);
+    setCardType(newType);
+    setRectangle(newRectangle);
+    setName(newName);
+}
+Card::Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardKind newKind){
+    setDescription(newDescription);
+    setCost(newCost);
+    setActivation(newActivationMin, newActivationMax);
+    setCardType(newType);
+    setRectangle(newRectangle);
+    setName(newName);
+    setCardKind(newKind);
+}
+
 // Destructor
 Card::~Card(){
 
@@ -49,6 +80,12 @@ RectangleShape Card::getRectangle() const {
 }
 string Card::getName() const{
     return name;
+}
+cardType Card::getCardType() const {
+    return type;
+}
+cardKind Card::getCardKind() const {
+    return kind;
 }
 
 // Setters
@@ -97,7 +134,12 @@ void Card::setRectangle(RectangleShape newRectangle) {
 void Card::setName(string newName){
     name = newName;
 }
-
+void Card::setCardType(cardType newType) {
+    type = newType;
+}
+void Card::setCardKind(cardKind newKind) {
+    kind = newKind;
+}
 
 // Virtual Methods
 /* Overridden in child classes */
@@ -107,3 +149,4 @@ void Card::setName(string newName){
 /***********************************/
 /** ABSTRACT CARD CLASS ENDING    **/
 /***********************************/
+

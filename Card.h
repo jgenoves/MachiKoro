@@ -23,6 +23,7 @@ struct range {
  * landmark = Yellow (Gray if not constructed)
  */
 enum cardType {primaryIndustry, secondaryIndustry, restaurants, majorEstablishment, landmark};
+enum cardKind {wheat, cow, gear, box, factory, fruit, coffeeCup, tower};
 
 class Card{
 public:
@@ -30,6 +31,10 @@ public:
     Card();
     Card(string newDescription, int newCost, range newActivation);
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax);
+    Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType);
+    Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle);
+    Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName);
+    Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardKind newCardKind);
     // Destructor
     ~Card();
 
@@ -41,6 +46,8 @@ public:
     int getActivationMax() const;
     RectangleShape getRectangle() const;
     string getName() const;
+    cardType getCardType() const;
+    cardKind getCardKind() const;
 
     // Setters
     void setDescription(string newDescription);
@@ -51,6 +58,8 @@ public:
     void setActivationMax(int newMax);
     void setRectangle(RectangleShape newRectangle);
     void setName(string newName);
+    void setCardType(cardType newType);
+    void setCardKind(cardKind newKind);
 
     // Virtual Methods
     virtual void draw() const = 0;
@@ -64,6 +73,8 @@ protected:
     int cost;
     range activation;
     RectangleShape rectangle;
+    cardType type;
+    cardKind kind;
 
 };
 
