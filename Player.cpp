@@ -88,7 +88,7 @@ bool Player::checkWinner() const{
         return false;
     }
 }
-/*
+
 int Player::getNumberOfEstablishment(Card establishment) const{
     int count = 0;
     for (int i = 0; i < establishments.size(); i++){
@@ -98,7 +98,7 @@ int Player::getNumberOfEstablishment(Card establishment) const{
     }
     return count;
 }
- */
+
 void Player::setAllLandmarksFalse(){
     trainStation = false;
     shoppingMall = false;

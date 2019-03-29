@@ -39,7 +39,7 @@ public:
 
     // Other Methods
     bool checkWinner() const;
-//    int getNumberOfEstablishment(Card establishment) const;
+    int getNumberOfEstablishment(Card establishment) const;
     void setAllLandmarksFalse();
 
 protected:
