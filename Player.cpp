@@ -12,11 +12,20 @@ Player::Player(int newMoney){
     setMoney(newMoney);
     setAllLandmarksFalse();
 }
-Player::Player(int newMoney, vector<Card> newEstablishments){
+Player::Player(int newMoney, vector<shared_ptr<Card>> &newEstablishments){
     setMoney(newMoney);
     setEstablishments(newEstablishments);
     setAllLandmarksFalse();
 }
+
+// Copy Constructor
+Player::Player(const Player &oldPlayer){
+    setMoney(oldPlayer.getMoney());
+    vector<shared_ptr<Card>> oldEstablishments = oldPlayer.getEstablishments();
+    setEstablishments(oldEstablishments);
+    setAllLandmarksFalse();
+}
+
 
 // Destructor
 Player::~Player(){
@@ -27,11 +36,11 @@ Player::~Player(){
 int Player::getMoney() const{
     return money;
 }
-/*
-vector<unique_ptr<Card>> Player::getEstablishments() const{
+
+vector<shared_ptr<Card>> Player::getEstablishments() const{
     return establishments;
 }
- */
+
 bool Player::getTrainStationBool() const{
     return trainStation;
 }
@@ -54,7 +63,7 @@ void Player::setMoney(int newMoney){
         money = 0;
     }
 }
-void Player::setEstablishments(vector<Card> newEstablishments){
+void Player::setEstablishments(vector<shared_ptr<Card>> &newEstablishments){
     establishments = newEstablishments;
 }
 void Player::setTrainStationBool(bool newValue){
@@ -79,7 +88,7 @@ bool Player::checkWinner() const{
         return false;
     }
 }
-/*
+
 int Player::getNumberOfEstablishment(Card establishment) const{
     int count = 0;
     for (int i = 0; i < establishments.size(); i++){
@@ -89,7 +98,7 @@ int Player::getNumberOfEstablishment(Card establishment) const{
     }
     return count;
 }
- */
+
 void Player::setAllLandmarksFalse(){
     trainStation = false;
     shoppingMall = false;

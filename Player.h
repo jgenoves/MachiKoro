@@ -14,14 +14,16 @@ public:
     // Constructors
     Player();
     Player(int newMoney);
-    Player(int newMoney, vector<Card> newEstablishments);
+    Player(int newMoney, vector<shared_ptr<Card>> &newEstablishments);
 
+    // Copy Constructor
+    Player(const Player &oldPlayer);
     // Destructor
     ~Player();
 
     // Getters
     int getMoney() const;
-    //vector<unique_ptr<Card>> getEstablishments() const;
+    vector<shared_ptr<Card>> getEstablishments() const;
     bool getTrainStationBool() const;
     bool getShoppingMallBool() const;
     bool getAmusementParkBool() const;
@@ -29,7 +31,7 @@ public:
 
     // Setters
     void setMoney(int newMoney);
-    void setEstablishments(vector<Card> newEstablishments);
+    void setEstablishments(vector<shared_ptr<Card>> &newEstablishments);
     void setTrainStationBool(bool newValue);
     void setShoppingMallBool(bool newValue);
     void setAmusementParkBool(bool newValue);
@@ -37,12 +39,12 @@ public:
 
     // Other Methods
     bool checkWinner() const;
-//    int getNumberOfEstablishment(Card establishment) const;
+    int getNumberOfEstablishment(Card establishment) const;
     void setAllLandmarksFalse();
 
 protected:
     int money;
-    vector<Card> establishments = {};
+    vector<shared_ptr<Card>> establishments;
     bool trainStation;
     bool shoppingMall;
     bool amusementPark;
