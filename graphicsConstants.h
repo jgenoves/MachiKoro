@@ -141,4 +141,26 @@ cardSymbol FAMILY_RESTAURAUNT_SYMBOL = coffeeCup;
 cardSymbol APPLE_ORCHARD_SYMBOL = wheat;
 cardSymbol FRUIT_AND_VEGETABLE_MARKET_SYMBOL = fruit;
 
+// screen enum and variable
+enum screenType {start, game, endGame};
+screenType screen = start;
+
+// Glut constants
+int WIDTH = 1500;
+int HEIGHT = 800;
+
+// Button constants
+int BUTTON_WIDTH = 200;
+int BUTTON_HEIGHT = 75;
+color BUTTON_COLOR = {1,0,0}; // Red
+int BUTTON_X_POSITION = 100;
+int BUTTON_Y_POSITION = 100;
+int BUTTON_Y_MARGIN = 20;
+
+// Menu buttons
+RectangleShape startButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
+RectangleShape exitButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, startButton.getY() + BUTTON_HEIGHT + BUTTON_Y_MARGIN);
+RectangleShape mainMenuButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
+
+
 #endif //GRAPHICS_GRAPHICSCONSTANTS_H

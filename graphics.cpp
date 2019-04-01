@@ -4,13 +4,15 @@
 // Co-Creator: Jordan Genovese
 
 #include "graphics.h"
+#include "graphicsConstants.h"
 
 GLdouble width, height;
 int wd;
 
 void init() {
-    width = 1500;
-    height = 800;
+    width = WIDTH;
+    height = HEIGHT;
+
 }
 
 /* Initialize OpenGL Graphics */
@@ -39,6 +41,36 @@ void display() {
      * Draw here
      */
 
+    if (screen == start){
+
+        startButton.draw();
+        string message = "Start Game";
+        glColor3f(1, 1, 1);
+        glRasterPos2i(startButton.getX() + 25, startButton.getY() + 45);
+        for (int i = 0; i < message.length(); ++i) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
+        }
+
+        exitButton.draw();
+        message = "Exit Game";
+        glColor3f(1, 1, 1);
+        glRasterPos2i(exitButton.getX() + 25, exitButton.getY() + 45);
+        for (int i = 0; i < message.length(); ++i) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
+        }
+    }
+    if (screen == game){
+        mainMenuButton.draw();
+        string message = "Main Menu";
+        glColor3f(1, 1, 1);
+        glRasterPos2i(mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
+        for (int i = 0; i < message.length(); ++i) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
+        }
+    }
+    if (screen == endGame){
+        // Draw stuff
+    }
     glFlush();  // Render now
 }
 
@@ -87,7 +119,23 @@ void cursor(int x, int y) {
 // state will be GLUT_UP or GLUT_DOWN
 void mouse(int button, int state, int x, int y) {
 
+    if (screen == start){
+        if (startButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            screen = game;
+        }
+        else if (exitButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            glutDestroyWindow(wd);
+            exit(0);
+        }
+    }
+    else if (screen == game){
+        if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            screen = start;
+        }
+    }
+    else if (screen == endGame){
 
+    }
 
     glutPostRedisplay();
 }
