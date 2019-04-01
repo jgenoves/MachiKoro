@@ -110,7 +110,31 @@ void kbdS(int key, int x, int y) {
 }
 
 void cursor(int x, int y) {
+    if (screen == start){
+        if (startButton.isOverlapping(x,y)){
+            startButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            startButton.setFill(BUTTON_COLOR);
+        }
+        if (exitButton.isOverlapping(x,y)){
+            exitButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            exitButton.setFill(BUTTON_COLOR);
+        }
+    }
+    else if (screen == game){
+        if (mainMenuButton.isOverlapping(x,y)){
+            mainMenuButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            mainMenuButton.setFill(BUTTON_COLOR);
+        }
+    }
+    else if (screen == endGame){
 
+    }
 
     glutPostRedisplay();
 }
