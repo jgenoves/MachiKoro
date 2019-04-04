@@ -5,6 +5,11 @@
 #ifndef CS205FINAL_PLAYER_H
 #define CS205FINAL_PLAYER_H
 
+#ifndef CARD_H
+#define CARD_H
+
+class Card;
+
 #include "Card.h"
 
 class Player{
@@ -48,5 +53,7 @@ protected:
     bool amusementPark;
     bool radioTower;
 };
+
+#endif //CARD_H
 
 #endif //CS205FINAL_PLAYER_H

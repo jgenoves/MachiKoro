@@ -7,6 +7,7 @@
 
 #include "Shapes.h"
 #include "Card.h"
+#include <vector>
 
 /*************************/
 /** Rectangle Constants **/

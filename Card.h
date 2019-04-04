@@ -5,9 +5,13 @@
 #ifndef CS205FINAL_CARD_H
 #define CS205FINAL_CARD_H
 
+#ifndef PLAYER_H
+#define PLAYER_H
+
+class Player;
+
 #include <string>
 #include "Shapes.h"
-
 
 using namespace std;
 
@@ -36,7 +40,8 @@ public:
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType);
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle);
     Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName);
-    Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newCardSymbol);
+    Card(string newDescription, int newCost, int newActivationMin, int newActivationMax, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
+    Card(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
 
     // Copy Constructor
     Card(const Card &oldCard);
@@ -69,7 +74,7 @@ public:
 
     // Virtual Methods
     virtual void draw() = 0;
-    virtual void activate() = 0;
+    virtual void activate(Player owner) = 0;
 
     // Other Methods
 
@@ -84,18 +89,96 @@ protected:
 
 };
 
-// TODO: Machi Koro cards will inherit the above abstract Card class.
-//  Cards Remaining:
-//  Wheat Field, Ranch, Forest, Mine, Apple Orchard, Bakery, Convenience Store, Cheese Factory, Furniture Factory,
-//  Fruit and Vegetable Market, Cafe, Family Restaurant, Stadium, TV Station, Business Center, Train Station,
-//  Shopping Mall, Amusement Park, Radio Tower
+class WheatField : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
 
-//class WheatField : Card{
-//public:
-//    // Constructor for WheatField
-//    WheatField();
-//
-//    void draw() override;
-//    void activate() override;
-//};
+class Ranch : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class Forest : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class Mine : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class AppleOrchard : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class Bakery : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class ConvenienceStore : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class CheeseFactory : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class FurnitureFactory : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class FruitAndVegetableMarket : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class Cafe : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class FamilyRestauraunt : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class Stadium : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class TVStation : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+class BusinessCenter : public Card{
+public:
+    void draw() override;
+    void activate(Player owner) override;
+};
+
+#endif //PLAYER_H
+
 #endif //CS205FINAL_CARD_H
