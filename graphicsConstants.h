@@ -26,7 +26,6 @@ color LANDMARK_CARD_COLOR = {0.5,0.5,0.5}; // Grey
 /** Card Constants **/
 /********************/
 
-
 // Descriptions
 
 string WHEAT_FIELD_DESCRIPTION = "Get 1 coin from the bank, on anyone's turn";
