@@ -383,14 +383,14 @@ void Cafe::activate(Player owner, vector<Player> &players, Player diceRoller) {
 /***********************************/
 
 /***********************************/
-/** FAMILY RESTAURAUNT CLASS STARTING         **/
+/** FAMILY RESTAURANT CLASS STARTING         **/
 /***********************************/
 
-void FamilyRestauraunt::draw(){
+void FamilyRestaurant::draw(){
     getRectangle().draw();
 }
 
-void FamilyRestauraunt::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void FamilyRestaurant::activate(Player owner, vector<Player> &players, Player diceRoller) {
     if (owner.getShoppingMallBool()) {
         if (diceRoller.getMoney() < 2) {
             owner.setMoney(owner.getMoney() + diceRoller.getMoney());

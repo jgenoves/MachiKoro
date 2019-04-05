@@ -18,7 +18,7 @@ void init() {
 /* Initialize OpenGL Graphics */
 void initGL() {
     // Set "clearing" or background color
-    glClearColor(0.0f, 0.0f, 1.0f, 1.0f); // Blue and opaque
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black and opaque
 }
 
 /* Handler for window-repaint event. Call back when the window first appears and
@@ -67,6 +67,30 @@ void display() {
         for (int i = 0; i < message.length(); ++i) {
             glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
         }
+
+        wheatFieldButton.draw();
+        message = "Wheat Field";
+        glColor3f(1, 1, 1);
+        glRasterPos2i(wheatFieldButton.getX() + 10, wheatFieldButton.getY() + 20);
+        for (int i = 0; i < message.length(); ++i) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
+        }
+
+        ranchButton.draw();
+        bakeryButton.draw();
+        cafeButton.draw();
+        convenienceStoreButton.draw();
+        forestButton.draw();
+        tvStationButton.draw();
+        stadiumButton.draw();
+        bussinessCenterButton.draw();
+        cheeseFactoryButton.draw();
+        furnitureFactoryButton.draw();
+        mineButton.draw();
+        familyRestaurantButton.draw();
+        appleOrchardButton.draw();
+        fruitAndVegetableMarketButton.draw();
+
     }
     if (screen == endGame){
         // Draw stuff

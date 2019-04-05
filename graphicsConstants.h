@@ -17,8 +17,9 @@ int CARD_BASE_DIMENSION = 5;
 int CARD_HEIGHT_DIMENSION = 10;
 
 color RED_CARD_COLOR = {1,0,0}; // Red
-color BLUE_CARD_COLOR = {0,0,1}; // Blue
-color GREEN_CARD_COLOR = {0,1,0}; // Green
+color BLUE_CARD_COLOR = {(0.0/255),(50.0/255),(120.0/255)}; // Blue
+color GREEN_CARD_COLOR = {(0.0/255),(120.0/255),(30.0/255)}; // Green
+color PURPLE_CARD_COLOR = {0.5, 0, 0.5}; // Purple
 color LANDMARK_CARD_COLOR = {0.5,0.5,0.5}; // Grey
 // {1,1,0}; // Yellow
 
@@ -40,7 +41,7 @@ string BUSSINESS_CENTER_DESCRIPTION = "Trade one non 'tower' establishment with 
 string CHEESE_FACTORY_DESCRIPTION = "Get 3 coins from the bank for each 'cow' establishment that you own, on your turn only";
 string FURNITURE_FACTORY_DESCRIPTION = "Get 3 coins from the bank for each 'gear' establishment that you own, on your turn only";
 string MINE_DESCRIPTION = "Get 5 coins from the bank, on anyone's turn";
-string FAMILY_RESTAURAUNT_DESCRIPTION = "Get 2 coins from the player who rolled the dice";
+string FAMILY_RESTAURANT_DESCRIPTION = "Get 2 coins from the player who rolled the dice";
 string APPLE_ORCHARD_DESCRIPTION = "Get 3 coins from the bank, on anyone's turn";
 string FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION = "Get 2 coins from the bank for each 'wheat' establishment that you own, on your turn only";
 
@@ -58,7 +59,7 @@ string BUSSINESS_CENTER_NAME = "Bussiness Center";
 string CHEESE_FACTORY_NAME = "Cheese Factory";
 string FURNITURE_FACTORY_NAME = "Furniture Factory";
 string MINE_NAME = "Mine";
-string FAMILY_RESTAURAUNT_NAME = "Family Restauraunt";
+string FAMILY_RESTAURANT_NAME = "Family Restaurant";
 string APPLE_ORCHARD_NAME = "Apple Orchard";
 string FRUIT_AND_VEGETABLE_MARKET_NAME = "Fruit and Vegetable Market";
 
@@ -76,7 +77,7 @@ int BUSSINESS_CENTER_COST = 8;
 int CHEESE_FACTORY_COST = 5;
 int FURNITURE_FACTORY_COST = 3;
 int MINE_COST = 6;
-int FAMILY_RESTAURAUNT_COST = 3;
+int FAMILY_RESTAURANT_COST = 3;
 int APPLE_ORCHARD_COST = 3;
 int FRUIT_AND_VEGETABLE_MARKET_COST = 2;
 
@@ -94,7 +95,7 @@ range BUSSINESS_CENTER_RANGE = {6,6};
 range CHEESE_FACTORY_RANGE = {7,7};
 range FURNITURE_FACTORY_RANGE = {8,8};
 range MINE_RANGE = {9,9};
-range FAMILY_RESTAURAUNT_RANGE = {9,10};
+range FAMILY_RESTAURANT_RANGE = {9,10};
 range APPLE_ORCHARD_RANGE = {10,10};
 range FRUIT_AND_VEGETABLE_MARKET_RANGE = {11,12};
 
@@ -119,7 +120,7 @@ cardType BUSSINESS_CENTER_TYPE = majorEstablishment;
 cardType CHEESE_FACTORY_TYPE = secondaryIndustry;
 cardType FURNITURE_FACTORY_TYPE = secondaryIndustry;
 cardType MINE_TYPE = primaryIndustry;
-cardType FAMILY_RESTAURAUNT_TYPE = restaurant;
+cardType FAMILY_RESTAURANT_TYPE = restaurant;
 cardType APPLE_ORCHARD_TYPE = primaryIndustry;
 cardType FRUIT_AND_VEGETABLE_MARKET_TYPE = secondaryIndustry;
 
@@ -137,7 +138,7 @@ cardSymbol BUSSINESS_CENTER_SYMBOL = tower;
 cardSymbol CHEESE_FACTORY_SYMBOL = factory;
 cardSymbol FURNITURE_FACTORY_SYMBOL = factory;
 cardSymbol MINE_SYMBOL = gear;
-cardSymbol FAMILY_RESTAURAUNT_SYMBOL = coffeeCup;
+cardSymbol FAMILY_RESTAURANT_SYMBOL = coffeeCup;
 cardSymbol APPLE_ORCHARD_SYMBOL = wheat;
 cardSymbol FRUIT_AND_VEGETABLE_MARKET_SYMBOL = fruit;
 
@@ -158,11 +159,38 @@ int BUTTON_X_POSITION = 100;
 int BUTTON_Y_POSITION = 100;
 int BUTTON_Y_MARGIN = 20;
 
+// In game card button constants
+int CARD_BUTTON_WIDTH = 75;
+int CARD_BUTTON_HEIGHT = 100;
+color CARD_BUTTON_COLOR = {1,0,0}; // Red
+color CARD_BUTTON_HOVER_COLOR = {0,1,0}; // Green
+int TOP_LEFT_CARD_X_POSITION = 400;
+int TOP_LEFT_CARD_Y_POSITION = 50;
+int CARD_BUTTON_X_MARGIN = 20;
+int CARD_BUTTON_Y_MARGIN = 20;
 
 // Menu buttons
 RectangleShape startButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
 RectangleShape exitButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, startButton.getY() + BUTTON_HEIGHT + BUTTON_Y_MARGIN);
 RectangleShape mainMenuButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
 
+// In game card buttons to buy cards
+RectangleShape wheatFieldButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, BLUE_CARD_COLOR, TOP_LEFT_CARD_X_POSITION, TOP_LEFT_CARD_Y_POSITION);
+RectangleShape ranchButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, BLUE_CARD_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY());
+RectangleShape bakeryButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, GREEN_CARD_COLOR, wheatFieldButton.getX() + 2 * wheatFieldButton.getBase() + 2 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY());
+RectangleShape cafeButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, RED_CARD_COLOR, wheatFieldButton.getX() + 3 * wheatFieldButton.getBase() + 3 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY());
+RectangleShape convenienceStoreButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, GREEN_CARD_COLOR, wheatFieldButton.getX() + 4 * wheatFieldButton.getBase() + 4 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY());
+
+RectangleShape forestButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, BLUE_CARD_COLOR,wheatFieldButton.getX() , wheatFieldButton.getY() + wheatFieldButton.getHeight() + CARD_BUTTON_Y_MARGIN);
+RectangleShape tvStationButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, PURPLE_CARD_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + wheatFieldButton.getHeight() + CARD_BUTTON_Y_MARGIN);
+RectangleShape stadiumButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, PURPLE_CARD_COLOR, wheatFieldButton.getX() + 2 * wheatFieldButton.getBase() + 2 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + wheatFieldButton.getHeight() + CARD_BUTTON_Y_MARGIN);
+RectangleShape bussinessCenterButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, PURPLE_CARD_COLOR, wheatFieldButton.getX() + 3 * wheatFieldButton.getBase() + 3 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + wheatFieldButton.getHeight() + CARD_BUTTON_Y_MARGIN);
+RectangleShape cheeseFactoryButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, GREEN_CARD_COLOR, wheatFieldButton.getX() + 4 * wheatFieldButton.getBase() + 4 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + wheatFieldButton.getHeight() + CARD_BUTTON_Y_MARGIN);
+
+RectangleShape furnitureFactoryButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, GREEN_CARD_COLOR,wheatFieldButton.getX(), wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN);
+RectangleShape mineButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, BLUE_CARD_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN);
+RectangleShape familyRestaurantButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, RED_CARD_COLOR, wheatFieldButton.getX() + 2 * wheatFieldButton.getBase() + 2 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN);
+RectangleShape appleOrchardButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, BLUE_CARD_COLOR, wheatFieldButton.getX() + 3 * wheatFieldButton.getBase() + 3 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN);
+RectangleShape fruitAndVegetableMarketButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, GREEN_CARD_COLOR, wheatFieldButton.getX() + 4 * wheatFieldButton.getBase() + 4 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN);
 
 #endif //GRAPHICS_GRAPHICSCONSTANTS_H

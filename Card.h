@@ -155,7 +155,7 @@ public:
     void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
-class FamilyRestauraunt : public Card{
+class FamilyRestaurant : public Card{
 public:
     void draw() override;
     void activate(Player owner, vector<Player> &players, Player diceRoller) override;

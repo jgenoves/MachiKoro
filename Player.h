@@ -49,6 +49,7 @@ public:
     void setAllLandmarksFalse();
 
 protected:
+    bool isHuman;
     int ID;
     int money;
     vector<shared_ptr<Card>> establishments;
