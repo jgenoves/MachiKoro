@@ -74,7 +74,7 @@ public:
 
     // Virtual Methods
     virtual void draw() = 0;
-    virtual void activate(Player owner, vector<Player> players) = 0;
+    virtual void activate(Player owner, vector<Player> &players, Player diceRoller) = 0;
 
     // Other Methods
 
@@ -92,91 +92,91 @@ protected:
 class WheatField : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class Ranch : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class Forest : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class Mine : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class AppleOrchard : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class Bakery : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class ConvenienceStore : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class CheeseFactory : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class FurnitureFactory : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class FruitAndVegetableMarket : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class Cafe : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class FamilyRestauraunt : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class Stadium : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class TVStation : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 class BusinessCenter : public Card{
 public:
     void draw() override;
-    void activate(Player owner, vector<Player> players) override;
+    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
 };
 
 #endif //PLAYER_H
