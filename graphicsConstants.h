@@ -169,6 +169,15 @@ int TOP_LEFT_CARD_Y_POSITION = 50;
 int CARD_BUTTON_X_MARGIN = 20;
 int CARD_BUTTON_Y_MARGIN = 20;
 
+
+//Roll dice button constants
+int ROLL_BUTTON_WIDTH = 75;
+int ROLL_BUTTON_HEIGHT = 75;
+color ROLL_BUTTON_COLOR = {1,0,1};
+color ROLL_BUTTON_HOVER = {1, 0.5, 1};
+int ROLL_BUTTON_X_POSITION = 400;
+int ROLL_BUTTON_Y_POSITION = 25;
+
 // Menu buttons
 RectangleShape startButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
 RectangleShape exitButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, startButton.getY() + BUTTON_HEIGHT + BUTTON_Y_MARGIN);
@@ -193,4 +202,5 @@ RectangleShape familyRestaurantButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, RED
 RectangleShape appleOrchardButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, BLUE_CARD_COLOR, wheatFieldButton.getX() + 3 * wheatFieldButton.getBase() + 3 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN);
 RectangleShape fruitAndVegetableMarketButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, GREEN_CARD_COLOR, wheatFieldButton.getX() + 4 * wheatFieldButton.getBase() + 4 * CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN);
 
+RectangleShape rollDieButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
 #endif //GRAPHICS_GRAPHICSCONSTANTS_H

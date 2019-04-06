@@ -9,6 +9,15 @@
 GLdouble width, height;
 int wd;
 
+struct GameData {
+    Player currentPlayer;
+    vector<Player> players;
+    bool gameOver = false;
+    int dice1Roll = 0;
+    int dice2Roll = 0;
+
+}Game;
+
 void init() {
     width = WIDTH;
     height = HEIGHT;
@@ -91,6 +100,19 @@ void display() {
         appleOrchardButton.draw();
         fruitAndVegetableMarketButton.draw();
 
+        rollDieButton.draw();
+        string dieMessage = "Roll";
+        glColor3f(1, 1, 1);
+        glRasterPos2i(rollDieButton.getX() + 10, rollDieButton.getY() + 20);
+        for (int i = 0; i < dieMessage.length(); ++i) {
+            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, dieMessage[i]);
+        }
+
+        Player player1 = Player(3);
+        Player player2 = Player(3);
+
+        Game.currentPlayer = player1;
+
     }
     if (screen == endGame){
         // Draw stuff
@@ -155,6 +177,13 @@ void cursor(int x, int y) {
         else {
             mainMenuButton.setFill(BUTTON_COLOR);
         }
+
+        if (rollDieButton.isOverlapping(x,y)){
+            rollDieButton.setFill(ROLL_BUTTON_HOVER);
+        }
+        else {
+            rollDieButton.setFill(ROLL_BUTTON_COLOR);
+        }
     }
     else if (screen == endGame){
 
@@ -175,10 +204,44 @@ void mouse(int button, int state, int x, int y) {
             glutDestroyWindow(wd);
             exit(0);
         }
+
     }
     else if (screen == game){
         if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             screen = start;
+        }
+        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+
+            Game.dice1Roll = rand() % (6 - 1 + 1) + 1;
+            string dieMessage;
+
+            if(Game.dice1Roll == 1){
+                string dieMessage = "1";
+            }
+            else if(Game.dice1Roll == 2){
+                string dieMessage = "2";
+            }
+            else if(Game.dice1Roll == 3){
+                string dieMessage = "3";
+            }
+            else if(Game.dice1Roll == 4){
+                string dieMessage = "4";
+            }
+            else if(Game.dice1Roll == 5){
+                string dieMessage = "5";
+            }
+            else if(Game.dice1Roll == 6){
+                string dieMessage = "6";
+            }
+
+            glColor3f(0, 0, 0);
+            glRasterPos2i(rollDieButton.getX() + 10, rollDieButton.getY() + 20);
+            for (int i = 0; i < dieMessage.length(); ++i) {
+                glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, dieMessage[i]);
+            }
+
+            glutPostRedisplay();
+
         }
     }
     else if (screen == endGame){

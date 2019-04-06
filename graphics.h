@@ -6,6 +6,7 @@
 #define CS205FINAL_GRAPHICS_H
 
 #include <stdlib.h>
+#include "Player.h"
 #ifdef _WIN32
 #include <windows.h>
 #else
