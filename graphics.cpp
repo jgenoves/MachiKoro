@@ -11,12 +11,18 @@ int wd;
 
 struct GameData {
     Player currentPlayer;
+    int currentPlayerIndex = 0;
     vector<Player> players;
     bool gameOver = false;
     int dice1Roll = 0;
     int dice2Roll = 0;
+    int diceSum = 0;
+    bool diceRolled = false;
+    bool gameBegin = true;
 
 }Game;
+
+
 
 void init() {
     width = WIDTH;
@@ -28,6 +34,165 @@ void init() {
 void initGL() {
     // Set "clearing" or background color
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black and opaque
+}
+
+void drawText(string message, float r, float g, float b, double x, double y){
+    glColor3f(r, g, b);
+    glRasterPos2d(x, y);
+    for (int i = 0; i < message.length(); ++i) {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
+    }
+}
+
+void displayStart(){
+
+    startButton.draw();
+    string message = "Start Game";
+    drawText(message, 1, 1, 1, startButton.getX() + 25, startButton.getY() + 45);
+
+    exitButton.draw();
+    message = "Exit Game";
+    drawText(message, 1, 1, 1, exitButton.getX() + 25, exitButton.getY() + 45);
+
+
+}
+
+void displayGame(){
+    mainMenuButton.draw();
+    string message = "Main Menu";
+    drawText(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
+
+    wheatFieldButton.draw();
+    message = "Wheat Field";
+    drawText(message, 1, 1, 1, wheatFieldButton.getX() + 10, wheatFieldButton.getY() + 20);
+
+    ranchButton.draw();
+    bakeryButton.draw();
+    cafeButton.draw();
+    convenienceStoreButton.draw();
+    forestButton.draw();
+    tvStationButton.draw();
+    stadiumButton.draw();
+    bussinessCenterButton.draw();
+    cheeseFactoryButton.draw();
+    furnitureFactoryButton.draw();
+    mineButton.draw();
+    familyRestaurantButton.draw();
+    appleOrchardButton.draw();
+    fruitAndVegetableMarketButton.draw();
+
+
+    if(Game.gameBegin){
+        Player player1 = Player(3);
+        Player player2 = Player(3);
+
+
+        shared_ptr<WheatField> wheat_field_card = make_shared<WheatField>(
+              WheatField()
+        );
+
+        wheat_field_card->setName(WHEAT_FIELD_NAME);
+        wheat_field_card->setCost(WHEAT_FIELD_COST);
+        wheat_field_card->setActivation(WHEAT_FIELD_RANGE);
+        wheat_field_card->setCardType(WHEAT_FIELD_TYPE);
+        wheat_field_card->setDescription(WHEAT_FIELD_DESCRIPTION);
+        wheat_field_card->setCardSymbol(WHEAT_FIELD_SYMBOL);
+
+        shared_ptr<Bakery> bakery_card = make_shared<Bakery>(
+                Bakery()
+        );
+
+        bakery_card->setName(BAKERY_NAME);
+        bakery_card->setCost(BAKERY_COST);
+        bakery_card->setActivation(BAKERY_RANGE);
+        bakery_card->setCardType(BAKERY_TYPE);
+        bakery_card->setDescription(BAKERY_DESCRIPTION);
+        bakery_card->setCardSymbol(BAKERY_SYMBOL);
+
+        Game.players.push_back(player1);
+        Game.players.push_back(player2);
+
+        for(Player player : Game.players){
+            player.addEstablishment(wheat_field_card);
+            player.addEstablishment(bakery_card);
+        }
+
+        Game.currentPlayer = player1;
+
+        Game.gameBegin = false;
+    }
+
+    if(turnPhase == roll){
+        rollDieButton.draw();
+        string dieMessage = "Roll";
+        drawText(dieMessage, 0, 0, 0, rollDieButton.getX() + 10, rollDieButton.getY() + 20);
+        if(Game.diceRolled){
+            turnPhase = distribution;
+            Game.diceRolled = false;
+        }
+    }
+    else if (turnPhase == distribution){
+
+        rollDieButton.draw();
+        drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+
+        while(currentCardPhase == red){
+            for(Player player : Game.players){
+                for(shared_ptr<Card> card : player.getEstablishments()){
+                    if(card->getCardColor() == r || card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
+                        card->activate(player, Game.players, Game.currentPlayer );
+                    }
+                }
+            }
+            currentCardPhase = gb;
+        }
+
+        while(currentCardPhase == gb){
+            for(Player player : Game.players){
+                for(shared_ptr<Card> card : player.getEstablishments()){
+                    if((card->getCardColor() == g || card->getCardColor() == b) && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
+                        card->activate(player, Game.players, Game.currentPlayer );
+                    }
+                }
+            }
+            currentCardPhase = purple;
+        }
+
+        while(currentCardPhase == purple){
+            for(Player player : Game.players){
+                for(shared_ptr<Card> card : player.getEstablishments()){
+                    if(card->getCardColor() == p && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
+                        card->activate(player, Game.players, Game.currentPlayer );
+                    }
+                }
+            }
+            currentCardPhase = red;
+        }
+
+        Game.dice1Roll = 0;
+        Game.dice2Roll = 0;
+        Game.diceSum = 0;
+
+        turnPhase = buy;
+
+    } else if(turnPhase = buy){
+
+        turnPhase = endturn;
+
+    }else if(turnPhase == endturn){
+
+        //This needs to be implemented based upon how many players are playing the game, current set up for two players.
+        if(Game.players.size() == 2 && Game.currentPlayerIndex == 1){
+            Game.currentPlayer = Game.players[0];
+        }else {
+            Game.currentPlayer = Game.players[Game.currentPlayerIndex + 1];
+        }
+
+        turnPhase = roll;
+
+    }
+
+
 }
 
 /* Handler for window-repaint event. Call back when the window first appears and
@@ -51,67 +216,10 @@ void display() {
      */
 
     if (screen == start){
-
-        startButton.draw();
-        string message = "Start Game";
-        glColor3f(1, 1, 1);
-        glRasterPos2i(startButton.getX() + 25, startButton.getY() + 45);
-        for (int i = 0; i < message.length(); ++i) {
-            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
-        }
-
-        exitButton.draw();
-        message = "Exit Game";
-        glColor3f(1, 1, 1);
-        glRasterPos2i(exitButton.getX() + 25, exitButton.getY() + 45);
-        for (int i = 0; i < message.length(); ++i) {
-            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
-        }
+        displayStart();
     }
     if (screen == game){
-        mainMenuButton.draw();
-        string message = "Main Menu";
-        glColor3f(1, 1, 1);
-        glRasterPos2i(mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
-        for (int i = 0; i < message.length(); ++i) {
-            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
-        }
-
-        wheatFieldButton.draw();
-        message = "Wheat Field";
-        glColor3f(1, 1, 1);
-        glRasterPos2i(wheatFieldButton.getX() + 10, wheatFieldButton.getY() + 20);
-        for (int i = 0; i < message.length(); ++i) {
-            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, message[i]);
-        }
-
-        ranchButton.draw();
-        bakeryButton.draw();
-        cafeButton.draw();
-        convenienceStoreButton.draw();
-        forestButton.draw();
-        tvStationButton.draw();
-        stadiumButton.draw();
-        bussinessCenterButton.draw();
-        cheeseFactoryButton.draw();
-        furnitureFactoryButton.draw();
-        mineButton.draw();
-        familyRestaurantButton.draw();
-        appleOrchardButton.draw();
-        fruitAndVegetableMarketButton.draw();
-
-        rollDieButton.draw();
-        string dieMessage = "Roll";
-        glColor3f(1, 1, 1);
-        glRasterPos2i(rollDieButton.getX() + 10, rollDieButton.getY() + 20);
-        for (int i = 0; i < dieMessage.length(); ++i) {
-            glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, dieMessage[i]);
-        }
-
-        Player player1 = Player(3);
-        Player player2 = Player(3);
-
-        Game.currentPlayer = player1;
+       displayGame();
 
     }
     if (screen == endGame){
@@ -210,38 +318,9 @@ void mouse(int button, int state, int x, int y) {
         if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             screen = start;
         }
-        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
-
+        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && Game.diceRolled == false){
             Game.dice1Roll = rand() % (6 - 1 + 1) + 1;
-            string dieMessage;
-
-            if(Game.dice1Roll == 1){
-                string dieMessage = "1";
-            }
-            else if(Game.dice1Roll == 2){
-                string dieMessage = "2";
-            }
-            else if(Game.dice1Roll == 3){
-                string dieMessage = "3";
-            }
-            else if(Game.dice1Roll == 4){
-                string dieMessage = "4";
-            }
-            else if(Game.dice1Roll == 5){
-                string dieMessage = "5";
-            }
-            else if(Game.dice1Roll == 6){
-                string dieMessage = "6";
-            }
-
-            glColor3f(0, 0, 0);
-            glRasterPos2i(rollDieButton.getX() + 10, rollDieButton.getY() + 20);
-            for (int i = 0; i < dieMessage.length(); ++i) {
-                glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, dieMessage[i]);
-            }
-
-            glutPostRedisplay();
-
+            Game.diceRolled = true;
         }
     }
     else if (screen == endGame){
@@ -250,6 +329,8 @@ void mouse(int button, int state, int x, int y) {
 
     glutPostRedisplay();
 }
+
+
 
 void timer(int extra) {
 

@@ -146,6 +146,12 @@ cardSymbol FRUIT_AND_VEGETABLE_MARKET_SYMBOL = fruit;
 enum screenType {start, game, endGame};
 screenType screen = start;
 
+enum turnPhase{roll, distribution, buy, endturn};
+turnPhase turnPhase = roll;
+
+enum cardPhase{red, gb, purple};
+cardPhase currentCardPhase = red;
+
 // Glut constants
 int WIDTH = 1500;
 int HEIGHT = 800;
@@ -173,7 +179,7 @@ int CARD_BUTTON_Y_MARGIN = 20;
 //Roll dice button constants
 int ROLL_BUTTON_WIDTH = 75;
 int ROLL_BUTTON_HEIGHT = 75;
-color ROLL_BUTTON_COLOR = {1,0,1};
+color ROLL_BUTTON_COLOR = {1,1,1};
 color ROLL_BUTTON_HOVER = {1, 0.5, 1};
 int ROLL_BUTTON_X_POSITION = 400;
 int ROLL_BUTTON_Y_POSITION = 25;

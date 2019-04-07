@@ -44,6 +44,7 @@ public:
 
     // Other Methods
     bool checkWinner() const;
+    void addEstablishment(shared_ptr<Card> &establishment);
     int getNumberOfEstablishment(string name) const;
     int getNumberOfEstablishment(cardSymbol symbol) const;
     void setAllLandmarksFalse();
