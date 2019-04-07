@@ -13,12 +13,14 @@ struct GameData {
     Player currentPlayer;
     int currentPlayerIndex = 0;
     vector<Player> players;
+    int numOfPlayers = 0;
     bool gameOver = false;
     int dice1Roll = 0;
     int dice2Roll = 0;
     int diceSum = 0;
     bool diceRolled = false;
     bool gameBegin = true;
+    bool cardPhase = false;
 
 }Game;
 
@@ -112,6 +114,8 @@ void displayGame(){
         Game.players.push_back(player1);
         Game.players.push_back(player2);
 
+        Game.numOfPlayers = Game.players.size();
+
         for(Player player : Game.players){
             player.addEstablishment(wheat_field_card);
             player.addEstablishment(bakery_card);
@@ -136,18 +140,44 @@ void displayGame(){
         rollDieButton.draw();
         drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
 
-        while(currentCardPhase == red){
-            for(Player player : Game.players){
-                for(shared_ptr<Card> card : player.getEstablishments()){
-                    if(card->getCardColor() == r || card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
-                        card->activate(player, Game.players, Game.currentPlayer );
+        Game.cardPhase = true;
+
+        while(Game.cardPhase){
+
+            bool redPhase = true;
+
+            while(redPhase){
+                for(int i = 0; i < Game.numOfPlayers - 1; ++i){
+                    switch(Game.numOfPlayers){
+                        case(2):
+                            Player player;
+                            switch(Game.currentPlayerIndex){
+                                case(0):
+                                    player = Game.players[1];
+                                    for(shared_ptr<Card> card : player.getEstablishments()){
+                                        if(card->getCardColor() == r && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
+                                            card->activate(player, Game.players, Game.currentPlayer );
+                                        }
+                                    }
+                                    break;
+                                case(1):
+                                    player = Game.players[0];
+                                    for(shared_ptr<Card> card : player.getEstablishments()){
+                                        if(card->getCardColor() == r && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
+                                            card->activate(player, Game.players, Game.currentPlayer );
+                                        }
+                                    }
+
+                                    break;
+                            }
+                            break;
+                        }
+
                     }
                 }
             }
-            currentCardPhase = gb;
-        }
 
-        while(currentCardPhase == gb){
+
             for(Player player : Game.players){
                 for(shared_ptr<Card> card : player.getEstablishments()){
                     if((card->getCardColor() == g || card->getCardColor() == b) && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
@@ -155,10 +185,7 @@ void displayGame(){
                     }
                 }
             }
-            currentCardPhase = purple;
-        }
 
-        while(currentCardPhase == purple){
             for(Player player : Game.players){
                 for(shared_ptr<Card> card : player.getEstablishments()){
                     if(card->getCardColor() == p && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
@@ -166,8 +193,10 @@ void displayGame(){
                     }
                 }
             }
-            currentCardPhase = red;
+
+            Game.cardPhase = false;
         }
+
 
         Game.dice1Roll = 0;
         Game.dice2Roll = 0;
