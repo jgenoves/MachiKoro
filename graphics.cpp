@@ -140,42 +140,38 @@ void displayGame(){
         rollDieButton.draw();
         drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
 
-        Game.cardPhase = true;
-
-        while(Game.cardPhase){
-
-            bool redPhase = true;
-
-            while(redPhase){
-                for(int i = 0; i < Game.numOfPlayers - 1; ++i){
-                    switch(Game.numOfPlayers){
-                        case(2):
-                            Player player;
-                            switch(Game.currentPlayerIndex){
-                                case(0):
-                                    player = Game.players[1];
-                                    for(shared_ptr<Card> card : player.getEstablishments()){
-                                        if(card->getCardColor() == r && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
-                                            card->activate(player, Game.players, Game.currentPlayer );
-                                        }
-                                    }
-                                    break;
-                                case(1):
-                                    player = Game.players[0];
-                                    for(shared_ptr<Card> card : player.getEstablishments()){
-                                        if(card->getCardColor() == r && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
-                                            card->activate(player, Game.players, Game.currentPlayer );
-                                        }
-                                    }
-
-                                    break;
+ 
+        for (int i = 0; i < Game.numOfPlayers - 1; ++i) {
+            switch (Game.numOfPlayers) {
+                case (2):
+                    Player player;
+                    switch (Game.currentPlayerIndex) {
+                        case (0):
+                            player = Game.players[1];
+                            for (shared_ptr<Card> card : player.getEstablishments()) {
+                                if (card->getCardColor() == r &&
+                                    card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                                    card->activate(player, Game.players, Game.currentPlayer);
+                                }
                             }
                             break;
-                        }
+                        case (1):
+                            player = Game.players[0];
+                            for (shared_ptr<Card> card : player.getEstablishments()) {
+                                if (card->getCardColor() == r &&
+                                    card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                                    card->activate(player, Game.players, Game.currentPlayer);
+                                }
+                            }
 
+                            break;
                     }
-                }
+                    break;
             }
+
+        }
+
+
 
 
             for(Player player : Game.players){
