@@ -20,7 +20,6 @@ struct GameData {
     int diceSum = 0;
     bool diceRolled = false;
     bool gameBegin = true;
-    bool cardPhase = false;
 
 }Game;
 
@@ -123,6 +122,7 @@ void displayGame(){
 
         Game.currentPlayer = player1;
 
+
         Game.gameBegin = false;
     }
 
@@ -134,63 +134,55 @@ void displayGame(){
             turnPhase = distribution;
             Game.diceRolled = false;
         }
-    }
-    else if (turnPhase == distribution){
+    }else if (turnPhase == distribution){
 
         rollDieButton.draw();
         drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
 
- 
-        for (int i = 0; i < Game.numOfPlayers - 1; ++i) {
-            switch (Game.numOfPlayers) {
-                case (2):
-                    Player player;
-                    switch (Game.currentPlayerIndex) {
-                        case (0):
-                            player = Game.players[1];
-                            for (shared_ptr<Card> card : player.getEstablishments()) {
-                                if (card->getCardColor() == r &&
-                                    card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
-                                    card->activate(player, Game.players, Game.currentPlayer);
-                                }
-                            }
-                            break;
-                        case (1):
-                            player = Game.players[0];
-                            for (shared_ptr<Card> card : player.getEstablishments()) {
-                                if (card->getCardColor() == r &&
-                                    card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
-                                    card->activate(player, Game.players, Game.currentPlayer);
-                                }
-                            }
 
-                            break;
-                    }
-                    break;
-            }
+        switch (Game.numOfPlayers) {
+            case (2):
+                Player player;
+                switch (Game.currentPlayerIndex) {
+                    case (0):
+                        player = Game.players[1];
+                        for (shared_ptr<Card> card : player.getEstablishments()) {
+                            if (card->getCardColor() == r && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                                card->activate(player, Game.players, Game.currentPlayer);
+                            }
+                        }
+                        break;
+                    case (1):
+                        player = Game.players[0];
+                        for (shared_ptr<Card> card : player.getEstablishments()) {
+                            if (card->getCardColor() == r && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                                card->activate(player, Game.players, Game.currentPlayer);
+                            }
+                        }
+
+                        break;
+                }
+                break;
+
 
         }
 
 
-
-
-            for(Player player : Game.players){
-                for(shared_ptr<Card> card : player.getEstablishments()){
-                    if((card->getCardColor() == g || card->getCardColor() == b) && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
-                        card->activate(player, Game.players, Game.currentPlayer );
-                    }
+        for (Player player : Game.players) {
+            for (shared_ptr<Card> card : player.getEstablishments()) {
+                if ((card->getCardColor() == g || card->getCardColor() == b) &&
+                    card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                    card->activate(player, Game.players, Game.currentPlayer);
                 }
             }
+        }
 
-            for(Player player : Game.players){
-                for(shared_ptr<Card> card : player.getEstablishments()){
-                    if(card->getCardColor() == p && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()){
-                        card->activate(player, Game.players, Game.currentPlayer );
-                    }
+        for (Player player : Game.players) {
+            for (shared_ptr<Card> card : player.getEstablishments()) {
+                if (card->getCardColor() == p && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                    card->activate(player, Game.players, Game.currentPlayer);
                 }
             }
-
-            Game.cardPhase = false;
         }
 
 
@@ -209,8 +201,11 @@ void displayGame(){
         //This needs to be implemented based upon how many players are playing the game, current set up for two players.
         if(Game.players.size() == 2 && Game.currentPlayerIndex == 1){
             Game.currentPlayer = Game.players[0];
+            Game.currentPlayerIndex = 0;
         }else {
             Game.currentPlayer = Game.players[Game.currentPlayerIndex + 1];
+            Game.currentPlayerIndex++;
+
         }
 
         turnPhase = roll;
