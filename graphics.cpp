@@ -201,7 +201,7 @@ void displayGame(){
 
         turnPhase = buy;
 
-    } else if(turnPhase = buy){
+    } else if(turnPhase == buy){
 
 
         //TODO implement buying of cards

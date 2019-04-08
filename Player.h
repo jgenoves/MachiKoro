@@ -11,6 +11,7 @@
 class Card;
 
 #include "Card.h"
+#include "enums.h"
 
 class Player{
 public:
