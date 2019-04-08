@@ -192,7 +192,7 @@ void displayGame(){
 
         turnPhase = buy;
 
-    } else if(turnPhase = buy){
+    } else if(turnPhase == buy){
 
         turnPhase = endturn;
 
