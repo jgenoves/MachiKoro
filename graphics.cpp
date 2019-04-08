@@ -45,7 +45,7 @@ struct CardData{
     shared_ptr<TVStation> tv_station_card = make_shared<TVStation>();
     shared_ptr<BusinessCenter> business_center_card = make_shared<BusinessCenter>();
 
-    int numOfWheatField = 0;
+    int numOfWheatField = 1;
     int numOfRanch = 0;
     int numOfForest = 0;
     int numOfMine = 0;
@@ -152,11 +152,12 @@ void displayGame(){
     string message = "Main Menu";
     drawText(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
 
-
-
     if(Game.gameBegin){
         initializeGame(2);
     }
+
+    drawMarket();
+    rollDieButton.draw();
 
     if(Game.turnPhase == roll){
 
@@ -170,7 +171,7 @@ void displayGame(){
         }
     }else if (Game.turnPhase == distribution){
 
-        rollDieButton.draw();
+
         drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
 
 
@@ -229,19 +230,24 @@ void displayGame(){
 
 
 
-        //Game.turnPhase = buy;
+        Game.turnPhase = buy;
 
     } else if(Game.turnPhase == buy){
 
-        rollDieButton.draw();
         drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
 
-        while(!Game.boughtCard){};
 
         //TODO implement buying of cards
-        //Game.turnPhase = endturn;
+
+        if(Game.boughtCard) {
+            cout << "card bought" << endl;
+            Game.turnPhase = endturn;
+            Game.boughtCard = false;
+        }
 
     }else if(Game.turnPhase == endturn){
+
+        cout << "end turn phase" << endl;
 
         //This needs to be implemented based upon how many players are playing the game, current set up for two players.
         if(Game.numOfPlayers == 2 && Game.currentPlayerIndex == 1){
@@ -259,7 +265,7 @@ void displayGame(){
         Game.dice2Roll = 0;
         Game.diceSum = 0;
 
-        //Game.turnPhase = roll;
+        Game.turnPhase = roll;
 
     }
 
@@ -445,7 +451,7 @@ void initializeGame(int numOfPlayers){
     initializeCards();
 
     initializePlayers(numOfPlayers);
-    
+
     Game.gameBegin = false;
 
 }
@@ -536,6 +542,7 @@ void cursor(int x, int y) {
         }
     }
     else if (screen == game){
+
         if (mainMenuButton.isOverlapping(x,y)){
             mainMenuButton.setFill(BUTTON_HOVER_COLOR);
         }
@@ -548,6 +555,13 @@ void cursor(int x, int y) {
         }
         else {
             rollDieButton.setFill(ROLL_BUTTON_COLOR);
+        }
+
+        if (wheatFieldButton.isOverlapping(x,y)){
+            wheatFieldButton.setFill(CARD_BUTTON_HOVER_COLOR);
+        }
+        else {
+            wheatFieldButton.setFill(BLUE_CARD_COLOR);
         }
     }
     else if (screen == endGame){
@@ -572,12 +586,18 @@ void mouse(int button, int state, int x, int y) {
 
     }
     else if (screen == game){
+
         if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             screen = start;
         }
-        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && Game.diceRolled == false){
+        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.diceRolled){
             Game.dice1Roll = rand() % (6 - 1 + 1) + 1;
             Game.diceRolled = true;
+        }
+        else if(wheatFieldButton.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.boughtCard && Cards.numOfWheatField != 0){
+            Game.currentPlayer.addEstablishment(Cards.wheat_field_card);
+            Cards.numOfWheatField--;
+            Game.boughtCard = true;
         }
     }
     else if (screen == endGame){
