@@ -24,7 +24,7 @@
 void init(void);
 
 // Initialize OpenGL Graphics
-void InitGL(void);
+void initGL(void);
 
 
 
@@ -33,9 +33,15 @@ void InitGL(void);
 
 
 //Draw text, takes rgb and xy with a message
-void drawText(string message, float r, float g, float b, double x, double y);
+void drawText24(string message, float r, float g, float b, double x, double y);
+void drawText18(string message, float r, float g, float b, double x, double y);
+void drawText10(string message, float r, float g, float b, double x, double y);
 
 void drawMarket();
+
+void drawPlayerInventory();
+
+void drawPlayerButtons();
 
 void displayStart();
 
