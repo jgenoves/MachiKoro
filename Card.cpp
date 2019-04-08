@@ -111,10 +111,6 @@ cardSymbol Card::getCardSymbol() const {
     return symbol;
 }
 
-cardColor Card::getCardColor() const {
-    return color;
-}
-
 // Setters
 void Card::setDescription(string newDescription){
     description = newDescription;
@@ -168,9 +164,7 @@ void Card::setCardSymbol(cardSymbol newSymbol) {
     symbol = newSymbol;
 }
 
-void Card::setCardColor(cardColor newColor) {
-    color = newColor;
-}
+
 
 
 

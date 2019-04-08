@@ -106,10 +106,12 @@ void displayGame(){
         bakery_card->setDescription(BAKERY_DESCRIPTION);
         bakery_card->setCardSymbol(BAKERY_SYMBOL);
 
+
         Game.players.push_back(player1);
         Game.players.push_back(player2);
 
         Game.numOfPlayers = Game.players.size();
+
 
         for(Player player : Game.players){
             player.addEstablishment(wheat_field_card);

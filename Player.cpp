@@ -101,6 +101,7 @@ void Player::addEstablishment(shared_ptr<Card> establishment) {
     establishments.push_back(establishment);
 }
 
+
 int Player::getNumberOfEstablishment(string name) const{
     int count = 0;
     for (int i = 0; i < establishments.size(); i++){
@@ -129,5 +130,7 @@ void Player::setAllLandmarksFalse(){
     amusementPark = false;
     radioTower = false;
 }
+
+
 
 
