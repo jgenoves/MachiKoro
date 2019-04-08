@@ -88,6 +88,11 @@ void displayGame(){
         Player player2 = Player(3);
 
 
+        Game.players.push_back(player1);
+        Game.players.push_back(player2);
+
+        Game.numOfPlayers = Game.players.size();
+
         shared_ptr<WheatField> wheat_field_card = make_shared<WheatField>();
 
         wheat_field_card->setName(WHEAT_FIELD_NAME);
@@ -105,14 +110,7 @@ void displayGame(){
         bakery_card->setCardType(BAKERY_TYPE);
         bakery_card->setDescription(BAKERY_DESCRIPTION);
         bakery_card->setCardSymbol(BAKERY_SYMBOL);
-
-
-        Game.players.push_back(player1);
-        Game.players.push_back(player2);
-
-        Game.numOfPlayers = Game.players.size();
-
-
+        
         for(Player player : Game.players){
             player.addEstablishment(wheat_field_card);
             player.addEstablishment(bakery_card);
