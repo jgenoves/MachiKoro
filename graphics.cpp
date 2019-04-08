@@ -210,7 +210,7 @@ void displayGame(){
     }else if(turnPhase == endturn){
 
         //This needs to be implemented based upon how many players are playing the game, current set up for two players.
-        if(Game.players.size() == 2 && Game.currentPlayerIndex == 1){
+        if(Game.numOfPlayers == 2 && Game.currentPlayerIndex == 1){
             Game.currentPlayer = Game.players[0];
             Game.currentPlayerIndex = 0;
         }else {
