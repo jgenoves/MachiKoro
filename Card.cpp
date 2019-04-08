@@ -3,7 +3,6 @@
 //
 
 #include "Card.h"
-#include "Player.h"
 
 /***********************************/
 /** ABSTRACT CARD CLASS BEGINNING **/
@@ -164,6 +163,10 @@ void Card::setCardType(cardType newType) {
 void Card::setCardSymbol(cardSymbol newSymbol) {
     symbol = newSymbol;
 }
+
+
+
+
 
 // Virtual Methods
 /* Overridden in child classes */

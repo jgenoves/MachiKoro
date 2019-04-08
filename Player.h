@@ -11,6 +11,7 @@
 class Card;
 
 #include "Card.h"
+#include "enums.h"
 
 class Player{
 public:
@@ -44,6 +45,7 @@ public:
 
     // Other Methods
     bool checkWinner() const;
+    void addEstablishment(shared_ptr<Card> establishment);
     int getNumberOfEstablishment(string name) const;
     int getNumberOfEstablishment(cardSymbol symbol) const;
     void setAllLandmarksFalse();

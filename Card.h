@@ -12,7 +12,8 @@ class Player;
 
 #include <string>
 #include "Shapes.h"
-
+#include "Player.h"
+#include "enums.h"
 using namespace std;
 
 struct range {
@@ -27,8 +28,7 @@ struct range {
  * majorEstablishment = Purple
  * landmark = Yellow (Gray if not constructed)
  */
-enum cardType {primaryIndustry, secondaryIndustry, restaurant, majorEstablishment, landmark};
-enum cardSymbol {wheat, cow, gear, box, factory, fruit, coffeeCup, tower};
+
 
 
 class Card{
@@ -60,6 +60,7 @@ public:
     cardType getCardType() const;
     cardSymbol getCardSymbol() const;
 
+
     // Setters
     void setDescription(string newDescription);
     void setCost(int newCost);
@@ -71,6 +72,7 @@ public:
     void setName(string newName);
     void setCardType(cardType newType);
     void setCardSymbol(cardSymbol newSymbol);
+
 
     // Virtual Methods
     virtual void draw() = 0;

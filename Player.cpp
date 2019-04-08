@@ -97,6 +97,11 @@ bool Player::checkWinner() const{
     }
 }
 
+void Player::addEstablishment(shared_ptr<Card> establishment) {
+    establishments.push_back(establishment);
+}
+
+
 int Player::getNumberOfEstablishment(string name) const{
     int count = 0;
     for (int i = 0; i < establishments.size(); i++){
@@ -107,13 +112,16 @@ int Player::getNumberOfEstablishment(string name) const{
     return count;
 }
 
-int Player::getNumberOfEstablishment(cardSymbol symbol) const{
+int Player::getNumberOfEstablishment(cardSymbol symbol) const {
     int count = 0;
-    for (int i = 0; i < establishments.size(); i++){
-        if (establishments[i]->getCardSymbol() == symbol){
-            count++;
+
+
+        for (int i = 0; i < establishments.size(); i++) {
+            if (establishments[i]->getCardSymbol() == symbol) {
+                count++;
+            }
         }
-    }
+
     return count;
 }
 void Player::setAllLandmarksFalse(){
@@ -122,3 +130,7 @@ void Player::setAllLandmarksFalse(){
     amusementPark = false;
     radioTower = false;
 }
+
+
+
+
