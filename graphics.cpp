@@ -140,10 +140,16 @@ void displayGame(){
         drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
 
 
+        //Red/restaurant cards need to be activated in a counter clockwise fashion. This implementation does that for 2 players right now
+        //Perhaps there is a more efficient way to do this.
         switch (Game.numOfPlayers) {
+
+            //Case 1: 2 player game
             case (2):
                 Player player;
                 switch (Game.currentPlayerIndex) {
+
+                    //Activate red cards for player2 on player1's roll
                     case (0):
                         player = Game.players[1];
                         for (shared_ptr<Card> card : player.getEstablishments()) {
@@ -152,6 +158,8 @@ void displayGame(){
                             }
                         }
                         break;
+
+                    //Activate red cards for player1 on player2's roll
                     case (1):
                         player = Game.players[0];
                         for (shared_ptr<Card> card : player.getEstablishments()) {
@@ -168,24 +176,25 @@ void displayGame(){
         }
 
 
+        //Activate all blue/primaryIndustry cards across the board
         for (Player player : Game.players) {
             for (shared_ptr<Card> card : player.getEstablishments()) {
-                if ((card->getCardType() == primaryIndustry || card->getCardType() == secondaryIndustry) &&
-                    card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
-                    card->activate(player, Game.players, Game.currentPlayer);
-                }
-            }
-        }
-
-        for (Player player : Game.players) {
-            for (shared_ptr<Card> card : player.getEstablishments()) {
-                if (card->getCardType() == majorEstablishment && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                if (card->getCardType() == primaryIndustry && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
                     card->activate(player, Game.players, Game.currentPlayer);
                 }
             }
         }
 
 
+        //Activate currentPlayers green/secondary industry cards and purple/majorEstablishment cards
+        for (shared_ptr<Card> card : Game.currentPlayer.getEstablishments()) {
+            if ((card->getCardType() == majorEstablishment || card->getCardType() == secondaryIndustry) && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                card->activate(Game.currentPlayer, Game.players, Game.currentPlayer);
+            }
+        }
+
+
+        //Reset dice roll and dice sum values
         Game.dice1Roll = 0;
         Game.dice2Roll = 0;
         Game.diceSum = 0;
@@ -194,6 +203,8 @@ void displayGame(){
 
     } else if(turnPhase = buy){
 
+
+        //TODO implement buying of cards
         turnPhase = endturn;
 
     }else if(turnPhase == endturn){
