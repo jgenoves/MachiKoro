@@ -147,10 +147,8 @@ enum screenType {start, game, endGame};
 screenType screen = start;
 
 enum turnPhase{roll, distribution, buy, endturn};
-turnPhase turnPhase = roll;
 
-enum cardPhase{red, gb, purple};
-cardPhase currentCardPhase = red;
+
 
 // Glut constants
 int WIDTH = 1500;

@@ -8,4 +8,5 @@
 enum cardType {primaryIndustry, secondaryIndustry, restaurant, majorEstablishment, landmark};
 enum cardSymbol {wheat, cow, gear, box, factory, fruit, coffeeCup, tower};
 
+
 #endif //GRAPHICS_ENUMS_H

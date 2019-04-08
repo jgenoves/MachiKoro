@@ -6,6 +6,7 @@
 #include "graphics.h"
 #include "graphicsConstants.h"
 
+
 GLdouble width, height;
 int wd;
 
@@ -20,8 +21,68 @@ struct GameData {
     int diceSum = 0;
     bool diceRolled = false;
     bool gameBegin = true;
+    turnPhase turnPhase = roll;
+    bool boughtCard = false;
 
 }Game;
+
+
+struct CardData{
+
+    shared_ptr<WheatField> wheat_field_card = make_shared<WheatField>();
+    shared_ptr<Ranch> ranch_card = make_shared<Ranch>();
+    shared_ptr<Forest> forest_card = make_shared<Forest>();
+    shared_ptr<Mine> mine_card = make_shared<Mine>();
+    shared_ptr<AppleOrchard> apple_orchard_card = make_shared<AppleOrchard>();
+    shared_ptr<Bakery> bakery_card = make_shared<Bakery>();
+    shared_ptr<ConvenienceStore> convenience_store_card = make_shared<ConvenienceStore>();
+    shared_ptr<CheeseFactory> cheese_factory_card = make_shared<CheeseFactory>();
+    shared_ptr<FurnitureFactory> furniture_factory_card = make_shared<FurnitureFactory>();
+    shared_ptr<FruitAndVegetableMarket> fruit_and_veggie_market_card = make_shared<FruitAndVegetableMarket>();
+    shared_ptr<Cafe> cafe_card = make_shared<Cafe>();
+    shared_ptr<FamilyRestaurant> family_restaurant_card = make_shared<FamilyRestaurant>();
+    shared_ptr<Stadium> stadium_card = make_shared<Stadium>();
+    shared_ptr<TVStation> tv_station_card = make_shared<TVStation>();
+    shared_ptr<BusinessCenter> business_center_card = make_shared<BusinessCenter>();
+
+    int numOfWheatField = 0;
+    int numOfRanch = 0;
+    int numOfForest = 0;
+    int numOfMine = 0;
+    int numOfAppleOrchard = 0;
+    int numOfBakery = 0;
+    int numOfConvenienceStore = 0;
+    int numOfCheeseFactory = 0;
+    int numOfFurnitureFactory = 0;
+    int numOfFruitandVeggieMarket = 0;
+    int numOfCafe = 0;
+    int numOfFamilyRestaurant = 0;
+    int numOfStadium = 0;
+    int numOfTVStation = 0;
+    int numOfBusinessCenter = 0;
+
+    vector<shared_ptr<WheatField>> wfCards;
+    vector<shared_ptr<Ranch>> ranchCards;
+    vector<shared_ptr<Forest>> forestCards;
+    vector<shared_ptr<Mine>> mineCards;
+    vector<shared_ptr<AppleOrchard>> aoCards;
+    vector<shared_ptr<Bakery>> bakeryCards;
+    vector<shared_ptr<ConvenienceStore> > csCards;
+    vector<shared_ptr<CheeseFactory>> cfCards;
+    vector<shared_ptr<FurnitureFactory>> ffCards;
+    vector<shared_ptr<FruitAndVegetableMarket>> fvmCards;
+    vector<shared_ptr<Cafe>> cafeCards;
+    vector<shared_ptr<FamilyRestaurant>> frCards;
+    vector<shared_ptr<Stadium>> stadiumCards;
+    vector<shared_ptr<TVStation>> tvsCards;
+    vector<shared_ptr<BusinessCenter>> bcCards;
+
+
+}Cards;
+
+
+//Function Declarations
+
 
 
 
@@ -45,27 +106,13 @@ void drawText(string message, float r, float g, float b, double x, double y){
     }
 }
 
-void displayStart(){
 
-    startButton.draw();
-    string message = "Start Game";
-    drawText(message, 1, 1, 1, startButton.getX() + 25, startButton.getY() + 45);
-
-    exitButton.draw();
-    message = "Exit Game";
-    drawText(message, 1, 1, 1, exitButton.getX() + 25, exitButton.getY() + 45);
-
-
-}
-
-void displayGame(){
-    mainMenuButton.draw();
-    string message = "Main Menu";
-    drawText(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
+void drawMarket(){
 
     wheatFieldButton.draw();
-    message = "Wheat Field";
+    string message = "Wheat Field";
     drawText(message, 1, 1, 1, wheatFieldButton.getX() + 10, wheatFieldButton.getY() + 20);
+
 
     ranchButton.draw();
     bakeryButton.draw();
@@ -82,57 +129,46 @@ void displayGame(){
     appleOrchardButton.draw();
     fruitAndVegetableMarketButton.draw();
 
+}
+
+
+void displayStart(){
+
+    startButton.draw();
+    string message = "Start Game";
+    drawText(message, 1, 1, 1, startButton.getX() + 25, startButton.getY() + 45);
+
+    exitButton.draw();
+    message = "Exit Game";
+    drawText(message, 1, 1, 1, exitButton.getX() + 25, exitButton.getY() + 45);
+
+
+}
+
+void displayGame(){
+
+
+    mainMenuButton.draw();
+    string message = "Main Menu";
+    drawText(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
+
+
 
     if(Game.gameBegin){
-        Player player1 = Player(3);
-        Player player2 = Player(3);
-
-
-        Game.players.push_back(player1);
-        Game.players.push_back(player2);
-
-        Game.numOfPlayers = Game.players.size();
-
-        shared_ptr<WheatField> wheat_field_card = make_shared<WheatField>();
-
-        wheat_field_card->setName(WHEAT_FIELD_NAME);
-        wheat_field_card->setCost(WHEAT_FIELD_COST);
-        wheat_field_card->setActivation(WHEAT_FIELD_RANGE);
-        wheat_field_card->setCardType(WHEAT_FIELD_TYPE);
-        wheat_field_card->setDescription(WHEAT_FIELD_DESCRIPTION);
-        wheat_field_card->setCardSymbol(WHEAT_FIELD_SYMBOL);
-
-        shared_ptr<Bakery> bakery_card = make_shared<Bakery>();
-
-        bakery_card->setName(BAKERY_NAME);
-        bakery_card->setCost(BAKERY_COST);
-        bakery_card->setActivation(BAKERY_RANGE);
-        bakery_card->setCardType(BAKERY_TYPE);
-        bakery_card->setDescription(BAKERY_DESCRIPTION);
-        bakery_card->setCardSymbol(BAKERY_SYMBOL);
-        
-        for(Player player : Game.players){
-            player.addEstablishment(wheat_field_card);
-            player.addEstablishment(bakery_card);
-        }
-
-        Game.currentPlayer = player1;
-
-
-        Game.gameBegin = false;
+        initializeGame(2);
     }
 
-    if(turnPhase == roll){
+    if(Game.turnPhase == roll){
 
         //TODO implement pre roll (2 die roll) and post roll (reroll)
         rollDieButton.draw();
         string dieMessage = "Roll";
         drawText(dieMessage, 0, 0, 0, rollDieButton.getX() + 10, rollDieButton.getY() + 20);
         if(Game.diceRolled){
-            turnPhase = distribution;
+            Game.turnPhase = distribution;
             Game.diceRolled = false;
         }
-    }else if (turnPhase == distribution){
+    }else if (Game.turnPhase == distribution){
 
         rollDieButton.draw();
         drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
@@ -192,20 +228,20 @@ void displayGame(){
         }
 
 
-        //Reset dice roll and dice sum values
-        Game.dice1Roll = 0;
-        Game.dice2Roll = 0;
-        Game.diceSum = 0;
 
-        turnPhase = buy;
+        //Game.turnPhase = buy;
 
-    } else if(turnPhase == buy){
+    } else if(Game.turnPhase == buy){
 
+        rollDieButton.draw();
+        drawText(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+
+        while(!Game.boughtCard){};
 
         //TODO implement buying of cards
-        turnPhase = endturn;
+        //Game.turnPhase = endturn;
 
-    }else if(turnPhase == endturn){
+    }else if(Game.turnPhase == endturn){
 
         //This needs to be implemented based upon how many players are playing the game, current set up for two players.
         if(Game.numOfPlayers == 2 && Game.currentPlayerIndex == 1){
@@ -217,12 +253,204 @@ void displayGame(){
 
         }
 
-        turnPhase = roll;
+
+        //Reset dice roll and dice sum values
+        Game.dice1Roll = 0;
+        Game.dice2Roll = 0;
+        Game.diceSum = 0;
+
+        //Game.turnPhase = roll;
 
     }
 
 
 }
+
+void initializeCards(){
+
+    Cards.wheat_field_card->setName(WHEAT_FIELD_NAME);
+    Cards.wheat_field_card->setCost(WHEAT_FIELD_COST);
+    Cards.wheat_field_card->setActivation(WHEAT_FIELD_RANGE);
+    Cards.wheat_field_card->setCardType(WHEAT_FIELD_TYPE);
+    Cards.wheat_field_card->setDescription(WHEAT_FIELD_DESCRIPTION);
+    Cards.wheat_field_card->setCardSymbol(WHEAT_FIELD_SYMBOL);
+    for(int i = 0; i < Cards.numOfWheatField; ++i){
+        Cards.wfCards.push_back(Cards.wheat_field_card);
+    }
+
+    Cards.ranch_card->setName(RANCH_NAME);
+    Cards.ranch_card->setCost(RANCH_COST);
+    Cards.ranch_card->setActivation(RANCH_RANGE);
+    Cards.ranch_card->setCardType(RANCH_TYPE);
+    Cards.ranch_card->setDescription(RANCH_DESCRIPTION);
+    Cards.ranch_card->setCardSymbol(RANCH_SYMBOL);
+    for(int i = 0; i < Cards.numOfRanch; ++i){
+        Cards.ranchCards.push_back(Cards.ranch_card);
+    }
+
+    Cards.forest_card->setName(FOREST_NAME);
+    Cards.forest_card->setCost(FOREST_COST);
+    Cards.forest_card->setActivation(FOREST_RANGE);
+    Cards.forest_card->setCardType(FOREST_TYPE);
+    Cards.forest_card->setDescription(FOREST_DESCRIPTION);
+    Cards.forest_card->setCardSymbol(FOREST_SYMBOL);
+    for(int i = 0; i < Cards.numOfForest; ++i){
+        Cards.forestCards.push_back(Cards.forest_card);
+    }
+
+    Cards.mine_card->setName(MINE_DESCRIPTION);
+    Cards.mine_card->setCost(MINE_COST);
+    Cards.mine_card->setActivation(MINE_RANGE);
+    Cards.mine_card->setCardType(MINE_TYPE);
+    Cards.mine_card->setDescription(MINE_DESCRIPTION);
+    Cards.mine_card->setCardSymbol(MINE_SYMBOL);
+    for(int i = 0; i < Cards.numOfMine; ++i){
+        Cards.mineCards.push_back(Cards.mine_card);
+    }
+
+    Cards.apple_orchard_card->setName(APPLE_ORCHARD_NAME);
+    Cards.apple_orchard_card->setCost(APPLE_ORCHARD_COST);
+    Cards.apple_orchard_card->setActivation(APPLE_ORCHARD_RANGE);
+    Cards.apple_orchard_card->setCardType(APPLE_ORCHARD_TYPE);
+    Cards.apple_orchard_card->setDescription(APPLE_ORCHARD_DESCRIPTION);
+    Cards.apple_orchard_card->setCardSymbol(APPLE_ORCHARD_SYMBOL);
+    for(int i = 0; i < Cards.numOfAppleOrchard; ++i){
+        Cards.aoCards.push_back(Cards.apple_orchard_card);
+    }
+
+    Cards.bakery_card->setName(BAKERY_NAME);
+    Cards.bakery_card->setCost(BAKERY_COST);
+    Cards.bakery_card->setActivation(BAKERY_RANGE);
+    Cards.bakery_card->setCardType(BAKERY_TYPE);
+    Cards.bakery_card->setDescription(BAKERY_DESCRIPTION);
+    Cards.bakery_card->setCardSymbol(BAKERY_SYMBOL);
+    for(int i = 0; i < Cards.numOfBakery; ++i){
+        Cards.bakeryCards.push_back(Cards.bakery_card);
+    }
+
+    Cards.convenience_store_card->setName(CONVENIENCE_STORE_NAME);
+    Cards.convenience_store_card->setCost(CONVENIENCE_STORE_COST);
+    Cards.convenience_store_card->setActivation(CONVENIENCE_STORE_RANGE);
+    Cards.convenience_store_card->setCardType(CONVENIENCE_STORE_TYPE);
+    Cards.convenience_store_card->setDescription(CONVENIENCE_STORE_DESCRIPTION);
+    Cards.convenience_store_card->setCardSymbol(CONVENIENCE_STORE_SYMBOL);
+    for(int i = 0; i < Cards.numOfConvenienceStore; ++i){
+        Cards.csCards.push_back(Cards.convenience_store_card);
+    }
+
+    Cards.cheese_factory_card->setName(CHEESE_FACTORY_NAME);
+    Cards.cheese_factory_card->setCost(CHEESE_FACTORY_COST);
+    Cards.cheese_factory_card->setActivation(CHEESE_FACTORY_RANGE);
+    Cards.cheese_factory_card->setCardType(CHEESE_FACTORY_TYPE);
+    Cards.cheese_factory_card->setDescription(CHEESE_FACTORY_DESCRIPTION);
+    Cards.cheese_factory_card->setCardSymbol(CHEESE_FACTORY_SYMBOL);
+    for(int i = 0; i < Cards.numOfCheeseFactory; ++i){
+        Cards.cfCards.push_back(Cards.cheese_factory_card);
+    }
+
+    Cards.furniture_factory_card->setName(FURNITURE_FACTORY_NAME);
+    Cards.furniture_factory_card->setCost(FURNITURE_FACTORY_COST);
+    Cards.furniture_factory_card->setActivation(FURNITURE_FACTORY_RANGE);
+    Cards.furniture_factory_card->setCardType(FURNITURE_FACTORY_TYPE);
+    Cards.furniture_factory_card->setDescription(FURNITURE_FACTORY_DESCRIPTION);
+    Cards.furniture_factory_card->setCardSymbol(FURNITURE_FACTORY_SYMBOL);
+    for(int i = 0; i < Cards.numOfFurnitureFactory; ++i) {
+        Cards.ffCards.push_back(Cards.furniture_factory_card);
+    }
+
+    Cards.fruit_and_veggie_market_card->setName(FRUIT_AND_VEGETABLE_MARKET_NAME);
+    Cards.fruit_and_veggie_market_card->setCost(FRUIT_AND_VEGETABLE_MARKET_COST);
+    Cards.fruit_and_veggie_market_card->setActivation(FRUIT_AND_VEGETABLE_MARKET_RANGE);
+    Cards.fruit_and_veggie_market_card->setCardType(FRUIT_AND_VEGETABLE_MARKET_TYPE);
+    Cards.fruit_and_veggie_market_card->setDescription(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION);
+    Cards.fruit_and_veggie_market_card->setCardSymbol(FRUIT_AND_VEGETABLE_MARKET_SYMBOL);
+    for(int i = 0; i < Cards.numOfFruitandVeggieMarket; ++i){
+        Cards.fvmCards.push_back(Cards.fruit_and_veggie_market_card);
+    }
+
+    Cards.cafe_card->setName(CAFE_NAME);
+    Cards.cafe_card->setCost(CAFE_COST);
+    Cards.cafe_card->setActivation(CAFE_RANGE);
+    Cards.cafe_card->setCardType(CAFE_TYPE);
+    Cards.cafe_card->setDescription(CAFE_DESCRIPTION);
+    Cards.cafe_card->setCardSymbol(CAFE_SYMBOL);
+    for(int i = 0; i < Cards.numOfCafe; ++i){
+        Cards.cafeCards.push_back(Cards.cafe_card);
+    }
+
+    Cards.family_restaurant_card->setName(FAMILY_RESTAURANT_NAME);
+    Cards.family_restaurant_card->setCost(FAMILY_RESTAURANT_COST);
+    Cards.family_restaurant_card->setActivation(FAMILY_RESTAURANT_RANGE);
+    Cards.family_restaurant_card->setCardType(FAMILY_RESTAURANT_TYPE);
+    Cards.family_restaurant_card->setDescription(FAMILY_RESTAURANT_DESCRIPTION);
+    Cards.family_restaurant_card->setCardSymbol(FAMILY_RESTAURANT_SYMBOL);
+    for(int i = 0; i < Cards.numOfFamilyRestaurant; ++i){
+        Cards.frCards.push_back(Cards.family_restaurant_card);
+    }
+
+    Cards.stadium_card->setName(STADIUM_NAME);
+    Cards.stadium_card->setCost(STADIUM_COST);
+    Cards.stadium_card->setActivation(STADIUM_RANGE);
+    Cards.stadium_card->setCardType(STADIUM_TYPE);
+    Cards.stadium_card->setDescription(STADIUM_DESCRIPTION);
+    Cards.stadium_card->setCardSymbol(STADIUM_SYMBOL);
+    for(int i = 0; i < Cards.numOfStadium; ++i){
+        Cards.stadiumCards.push_back(Cards.stadium_card);
+    }
+
+    Cards.tv_station_card->setName(TV_STATION_NAME);
+    Cards.tv_station_card->setCost(TV_STATION_COST);
+    Cards.tv_station_card->setActivation(TV_STATION_RANGE);
+    Cards.tv_station_card->setCardType(TV_STATION_TYPE);
+    Cards.tv_station_card->setDescription(TV_STATION_DESCRIPTION);
+    Cards.tv_station_card->setCardSymbol(TV_STATION_SYMBOL);
+    for(int i = 0; i < Cards.numOfTVStation; ++i){
+        Cards.tvsCards.push_back(Cards.tv_station_card);
+    }
+
+    Cards.business_center_card->setName(BUSSINESS_CENTER_NAME);
+    Cards.business_center_card->setCost(BUSSINESS_CENTER_COST);
+    Cards.business_center_card->setActivation(BUSSINESS_CENTER_RANGE);
+    Cards.business_center_card->setCardType(BUSSINESS_CENTER_TYPE);
+    Cards.business_center_card->setDescription(BUSSINESS_CENTER_DESCRIPTION);
+    Cards.business_center_card->setCardSymbol(BUSSINESS_CENTER_SYMBOL);
+    for(int i = 0; i < Cards.numOfBusinessCenter; ++i){
+        Cards.bcCards.push_back(Cards.business_center_card);
+    }
+
+}
+
+void initializePlayers(int numOfPlayers){
+
+    Player player1 = Player(3);
+    Player player2 = Player(3);
+
+
+    Game.players.push_back(player1);
+    Game.players.push_back(player2);
+
+    Game.numOfPlayers = numOfPlayers;
+
+
+    for(Player player : Game.players){
+        player.addEstablishment(Cards.wheat_field_card);
+        player.addEstablishment(Cards.bakery_card);
+    }
+
+    Game.currentPlayer = player1;
+}
+
+void initializeGame(int numOfPlayers){
+
+    initializeCards();
+
+    initializePlayers(numOfPlayers);
+    
+    Game.gameBegin = false;
+
+}
+
+
 
 /* Handler for window-repaint event. Call back when the window first appears and
  whenever the window needs to be re-painted. */

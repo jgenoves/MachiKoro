@@ -26,7 +26,45 @@ void init(void);
 // Initialize OpenGL Graphics
 void InitGL(void);
 
+
+
+
+
+
+
+//Draw text, takes rgb and xy with a message
+void drawText(string message, float r, float g, float b, double x, double y);
+
+void drawMarket();
+
+void displayStart();
+
+void displayGame();
+
+void initializeCards();
+
+void initializePlayers(int numOfPlayers);
+
+void initializeGame(int numOfPlayers);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Callback functions for GLUT */
+
 
 // Draw the window - this is where all the GL actions are
 void display(void);
