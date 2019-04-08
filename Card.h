@@ -28,9 +28,9 @@ struct range {
  * majorEstablishment = Purple
  * landmark = Yellow (Gray if not constructed)
  */
-enum cardType {primaryIndustry, secondaryIndustry, restaurant, majorEstablishment};
+enum cardType {primaryIndustry, secondaryIndustry, restaurant, majorEstablishment, landmark};
 enum cardSymbol {wheat, cow, gear, box, factory, fruit, coffeeCup, tower};
-enum cardColor {r, g, b, p};
+
 
 
 class Card{
@@ -61,7 +61,7 @@ public:
     string getName() const;
     cardType getCardType() const;
     cardSymbol getCardSymbol() const;
-    cardColor getCardColor() const;
+
 
     // Setters
     void setDescription(string newDescription);
@@ -74,7 +74,7 @@ public:
     void setName(string newName);
     void setCardType(cardType newType);
     void setCardSymbol(cardSymbol newSymbol);
-    void setCardColor(cardColor newColor);
+
 
     // Virtual Methods
     virtual void draw() = 0;
@@ -90,7 +90,6 @@ protected:
     RectangleShape rectangle;
     cardType type;
     cardSymbol symbol;
-    cardColor color;
 
 };
 

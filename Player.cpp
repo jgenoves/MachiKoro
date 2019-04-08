@@ -97,7 +97,7 @@ bool Player::checkWinner() const{
     }
 }
 
-void Player::addEstablishment(shared_ptr<Card> &establishment) {
+void Player::addEstablishment(shared_ptr<Card> establishment) {
     establishments.push_back(establishment);
 }
 

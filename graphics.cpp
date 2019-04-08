@@ -88,9 +88,7 @@ void displayGame(){
         Player player2 = Player(3);
 
 
-        shared_ptr<WheatField> wheat_field_card = make_shared<WheatField>(
-              WheatField()
-        );
+        shared_ptr<WheatField> wheat_field_card = make_shared<WheatField>();
 
         wheat_field_card->setName(WHEAT_FIELD_NAME);
         wheat_field_card->setCost(WHEAT_FIELD_COST);
@@ -99,9 +97,7 @@ void displayGame(){
         wheat_field_card->setDescription(WHEAT_FIELD_DESCRIPTION);
         wheat_field_card->setCardSymbol(WHEAT_FIELD_SYMBOL);
 
-        shared_ptr<Bakery> bakery_card = make_shared<Bakery>(
-                Bakery()
-        );
+        shared_ptr<Bakery> bakery_card = make_shared<Bakery>();
 
         bakery_card->setName(BAKERY_NAME);
         bakery_card->setCost(BAKERY_COST);
@@ -127,6 +123,8 @@ void displayGame(){
     }
 
     if(turnPhase == roll){
+
+        //TODO implement pre roll (2 die roll) and post roll (reroll)
         rollDieButton.draw();
         string dieMessage = "Roll";
         drawText(dieMessage, 0, 0, 0, rollDieButton.getX() + 10, rollDieButton.getY() + 20);
@@ -147,7 +145,7 @@ void displayGame(){
                     case (0):
                         player = Game.players[1];
                         for (shared_ptr<Card> card : player.getEstablishments()) {
-                            if (card->getCardColor() == r && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                            if (card->getCardType() == restaurant && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
                                 card->activate(player, Game.players, Game.currentPlayer);
                             }
                         }
@@ -155,7 +153,7 @@ void displayGame(){
                     case (1):
                         player = Game.players[0];
                         for (shared_ptr<Card> card : player.getEstablishments()) {
-                            if (card->getCardColor() == r && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                            if (card->getCardType() == restaurant && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
                                 card->activate(player, Game.players, Game.currentPlayer);
                             }
                         }
@@ -170,7 +168,7 @@ void displayGame(){
 
         for (Player player : Game.players) {
             for (shared_ptr<Card> card : player.getEstablishments()) {
-                if ((card->getCardColor() == g || card->getCardColor() == b) &&
+                if ((card->getCardType() == primaryIndustry || card->getCardType() == secondaryIndustry) &&
                     card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
                     card->activate(player, Game.players, Game.currentPlayer);
                 }
@@ -179,7 +177,7 @@ void displayGame(){
 
         for (Player player : Game.players) {
             for (shared_ptr<Card> card : player.getEstablishments()) {
-                if (card->getCardColor() == p && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
+                if (card->getCardType() == majorEstablishment && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
                     card->activate(player, Game.players, Game.currentPlayer);
                 }
             }
