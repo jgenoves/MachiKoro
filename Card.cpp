@@ -163,11 +163,6 @@ void Card::setCardType(cardType newType) {
 void Card::setCardSymbol(cardSymbol newSymbol) {
     symbol = newSymbol;
 }
-
-
-
-
-
 // Virtual Methods
 /* Overridden in child classes */
 
@@ -180,6 +175,12 @@ void Card::setCardSymbol(cardSymbol newSymbol) {
 /***********************************/
 /** WHEATFIELD CLASS STARTING     **/
 /***********************************/
+WheatField::WheatField(): Card(){
+
+}
+WheatField::WheatField(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+    Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void WheatField::draw(){
     getRectangle().draw();
@@ -196,6 +197,12 @@ void WheatField::activate(Player owner, vector<Player> &players, Player diceRoll
 /***********************************/
 /** RANCH CLASS STARTING          **/
 /***********************************/
+Ranch::Ranch(): Card(){
+
+}
+Ranch::Ranch(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void Ranch::draw(){
     getRectangle().draw();
@@ -212,6 +219,13 @@ void Ranch::activate(Player owner, vector<Player> &players, Player diceRoller) {
 /***********************************/
 /** FOREST CLASS STARTING         **/
 /***********************************/
+Forest::Forest(): Card(){
+
+}
+
+Forest::Forest(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void Forest::draw(){
     getRectangle().draw();
@@ -228,6 +242,13 @@ void Forest::activate(Player owner, vector<Player> &players, Player diceRoller) 
 /***********************************/
 /** MINE CLASS STARTING         **/
 /***********************************/
+Mine::Mine(): Card(){
+
+}
+
+Mine::Mine(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void Mine::draw(){
     getRectangle().draw();
@@ -244,6 +265,13 @@ void Mine::activate(Player owner, vector<Player> &players, Player diceRoller) {
 /***********************************/
 /** APPLE ORCHARD CLASS STARTING  **/
 /***********************************/
+AppleOrchard::AppleOrchard(): Card(){
+
+}
+
+AppleOrchard::AppleOrchard(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void AppleOrchard::draw(){
     getRectangle().draw();
@@ -260,6 +288,13 @@ void AppleOrchard::activate(Player owner, vector<Player> &players, Player diceRo
 /***********************************/
 /** BAKERY CLASS STARTING         **/
 /***********************************/
+Bakery::Bakery(): Card(){
+
+}
+
+Bakery::Bakery(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void Bakery::draw(){
     getRectangle().draw();
@@ -281,6 +316,13 @@ void Bakery::activate(Player owner, vector<Player> &players, Player diceRoller) 
 /***********************************/
 /** CONVENIENCE STORE CLASS STARTING         **/
 /***********************************/
+ConvenienceStore::ConvenienceStore(): Card(){
+
+}
+
+ConvenienceStore::ConvenienceStore(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void ConvenienceStore::draw(){
     getRectangle().draw();
@@ -302,6 +344,13 @@ void ConvenienceStore::activate(Player owner, vector<Player> &players, Player di
 /***********************************/
 /** CHEESE FACTORY CLASS STARTING         **/
 /***********************************/
+CheeseFactory::CheeseFactory(): Card(){
+
+}
+
+CheeseFactory::CheeseFactory(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void CheeseFactory::draw(){
     getRectangle().draw();
@@ -319,6 +368,13 @@ void CheeseFactory::activate(Player owner, vector<Player> &players, Player diceR
 /***********************************/
 /** FURNITURE FACTORY CLASS STARTING         **/
 /***********************************/
+FurnitureFactory::FurnitureFactory(): Card(){
+
+}
+
+FurnitureFactory::FurnitureFactory(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void FurnitureFactory::draw(){
     getRectangle().draw();
@@ -336,6 +392,13 @@ void FurnitureFactory::activate(Player owner, vector<Player> &players, Player di
 /***********************************/
 /** FRUIT AND VEGETABLE MARKET CLASS STARTING         **/
 /***********************************/
+FruitAndVegetableMarket::FruitAndVegetableMarket(): Card(){
+
+}
+
+FruitAndVegetableMarket::FruitAndVegetableMarket(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void FruitAndVegetableMarket::draw(){
     getRectangle().draw();
@@ -353,6 +416,13 @@ void FruitAndVegetableMarket::activate(Player owner, vector<Player> &players, Pl
 /***********************************/
 /** BAKERY CLASS STARTING         **/
 /***********************************/
+Cafe::Cafe(): Card(){
+
+}
+
+Cafe::Cafe(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void Cafe::draw(){
     getRectangle().draw();
@@ -388,6 +458,13 @@ void Cafe::activate(Player owner, vector<Player> &players, Player diceRoller) {
 /***********************************/
 /** FAMILY RESTAURANT CLASS STARTING         **/
 /***********************************/
+FamilyRestaurant::FamilyRestaurant(): Card(){
+
+}
+
+FamilyRestaurant::FamilyRestaurant(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void FamilyRestaurant::draw(){
     getRectangle().draw();
@@ -423,6 +500,13 @@ void FamilyRestaurant::activate(Player owner, vector<Player> &players, Player di
 /***********************************/
 /** STADIUM CLASS STARTING         **/
 /***********************************/
+Stadium::Stadium(): Card(){
+
+}
+
+Stadium::Stadium(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void Stadium::draw(){
     getRectangle().draw();
@@ -450,6 +534,13 @@ void Stadium::activate(Player owner, vector<Player> &players, Player diceRoller)
 /***********************************/
 /** TV STATION CLASS STARTING         **/
 /***********************************/
+TVStation::TVStation(): Card(){
+
+}
+
+TVStation::TVStation(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+        Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void TVStation::draw(){
     getRectangle().draw();
@@ -468,6 +559,13 @@ void TVStation::activate(Player owner, vector<Player> &players, Player diceRolle
 /***********************************/
 /** BUSINESS CENTER CLASS STARTING         **/
 /***********************************/
+BusinessCenter::BusinessCenter(): Card(){
+
+}
+
+BusinessCenter::BusinessCenter(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol):
+    Card(newDescription, newCost, newRange, newType, newRectangle, newName, newSymbol){
+}
 
 void BusinessCenter::draw(){
     getRectangle().draw();

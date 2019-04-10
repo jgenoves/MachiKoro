@@ -89,7 +89,18 @@ struct CardData{
 void init() {
     width = WIDTH;
     height = HEIGHT;
+    // Initialize the cards vectors
+    cardsPlayer1.push_back(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+    cardsPlayer1.push_back(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
 
+    cardsPlayer2.push_back(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+    cardsPlayer2.push_back(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+
+    // Create the players
+    Player humanPlayer = Player(3, cardsPlayer1);
+    Player computerPlayer = Player(3, cardsPlayer2);
+
+    Game.currentPlayer = humanPlayer;
 }
 
 /* Initialize OpenGL Graphics */
@@ -199,85 +210,85 @@ void drawPlayerInventory(){
     message = "Ranch";
     drawText18(message, 1, 1, 1, ranchSlot.getX() + 10, ranchSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(RANCH_NAME));
-    drawText18(message, 1, 1, 1, ranchSlot.getX() + (ranchSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, ranchSlot.getX() + (ranchSlot.getBase() - 30), ranchSlot.getY() + 20);
 
     bakerySlot.draw();
     message = "Bakery";
     drawText18(message, 1, 1, 1, bakerySlot.getX() + 10, bakerySlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(BAKERY_NAME));
-    drawText18(message, 1, 1, 1, bakerySlot.getX() + (bakerySlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, bakerySlot.getX() + (bakerySlot.getBase() - 30), bakerySlot.getY() + 20);
 
     cafeSlot.draw();
     message = "Cafe";
     drawText18(message, 1, 1, 1, cafeSlot.getX() + 10, cafeSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(CAFE_NAME));
-    drawText18(message, 1, 1, 1, cafeSlot.getX() + (cafeSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, cafeSlot.getX() + (cafeSlot.getBase() - 30), cafeSlot.getY() + 20);
 
     convenienceStoreSlot.draw();
     message = "Convenience Store";
     drawText18(message, 1, 1, 1, convenienceStoreSlot.getX() + 10, convenienceStoreSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(CONVENIENCE_STORE_NAME));
-    drawText18(message, 1, 1, 1, convenienceStoreSlot.getX() + (convenienceStoreSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, convenienceStoreSlot.getX() + (convenienceStoreSlot.getBase() - 30), convenienceStoreSlot.getY() + 20);
 
     forestSlot.draw();
     message = "Forest";
     drawText18(message, 1, 1, 1, forestSlot.getX() + 10, forestSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(FOREST_NAME));
-    drawText18(message, 1, 1, 1, forestSlot.getX() + (forestSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, forestSlot.getX() + (forestSlot.getBase() - 30), forestSlot.getY() + 20);
 
     tvStationSlot.draw();
     message = "TV Station";
     drawText18(message, 1, 1, 1, tvStationSlot.getX() + 10, tvStationSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(TV_STATION_NAME));
-    drawText18(message, 1, 1, 1, tvStationSlot.getX() + (tvStationSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, tvStationSlot.getX() + (tvStationSlot.getBase() - 30), tvStationSlot.getY() + 20);
 
     stadiumSlot.draw();
     message = "Stadium";
     drawText18(message, 1, 1, 1, stadiumSlot.getX() + 10, stadiumSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(STADIUM_NAME));
-    drawText18(message, 1, 1, 1, stadiumSlot.getX() + (stadiumSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, stadiumSlot.getX() + (stadiumSlot.getBase() - 30), stadiumSlot.getY() + 20);
 
     bussinessCenterSlot.draw();
     message = "Bussiness Center";
     drawText18(message, 1, 1, 1, bussinessCenterSlot.getX() + 10, bussinessCenterSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(BUSSINESS_CENTER_NAME));
-    drawText18(message, 1, 1, 1, bussinessCenterSlot.getX() + (bussinessCenterSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, bussinessCenterSlot.getX() + (bussinessCenterSlot.getBase() - 30), bussinessCenterSlot.getY() + 20);
 
     cheeseFactorySlot.draw();
     message = "Cheese Factory";
     drawText18(message, 1, 1, 1, cheeseFactorySlot.getX() + 10, cheeseFactorySlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(CHEESE_FACTORY_NAME));
-    drawText18(message, 1, 1, 1, cheeseFactorySlot.getX() + (cheeseFactorySlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, cheeseFactorySlot.getX() + (cheeseFactorySlot.getBase() - 30), cheeseFactorySlot.getY() + 20);
 
     furnitureFactorySlot.draw();
     message = "Furniture Factory";
     drawText18(message, 1, 1, 1, furnitureFactorySlot.getX() + 10, furnitureFactorySlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(FURNITURE_FACTORY_NAME));
-    drawText18(message, 1, 1, 1, furnitureFactorySlot.getX() + (furnitureFactorySlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, furnitureFactorySlot.getX() + (furnitureFactorySlot.getBase() - 30), furnitureFactorySlot.getY() + 20);
 
     mineSlot.draw();
     message = "Mine";
     drawText18(message, 1, 1, 1, mineSlot.getX() + 10, mineSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(MINE_NAME));
-    drawText18(message, 1, 1, 1, mineSlot.getX() + (mineSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, mineSlot.getX() + (mineSlot.getBase() - 30), mineSlot.getY() + 20);
 
     familyRestaurantSlot.draw();
     message = "Family Restaurant";
     drawText18(message, 1, 1, 1, familyRestaurantSlot.getX() + 10, familyRestaurantSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(FAMILY_RESTAURANT_NAME));
-    drawText18(message, 1, 1, 1, familyRestaurantSlot.getX() + (familyRestaurantSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, familyRestaurantSlot.getX() + (familyRestaurantSlot.getBase() - 30), familyRestaurantSlot.getY() + 20);
 
     appleOrchardSlot.draw();
     message = "Apple Orchard";
     drawText18(message, 1, 1, 1, appleOrchardSlot.getX() + 10, appleOrchardSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(APPLE_ORCHARD_NAME));
-    drawText18(message, 1, 1, 1, appleOrchardSlot.getX() + (appleOrchardSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, appleOrchardSlot.getX() + (appleOrchardSlot.getBase() - 30), appleOrchardSlot.getY() + 20);
 
     fruitAndVegetableMarketSlot.draw();
     message = "Fruit and Vegetable Market";
     drawText18(message, 1, 1, 1, fruitAndVegetableMarketSlot.getX() + 10, fruitAndVegetableMarketSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(FRUIT_AND_VEGETABLE_MARKET_NAME));
-    drawText18(message, 1, 1, 1, fruitAndVegetableMarketSlot.getX() + (fruitAndVegetableMarketSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
+    drawText18(message, 1, 1, 1, fruitAndVegetableMarketSlot.getX() + (fruitAndVegetableMarketSlot.getBase() - 30), fruitAndVegetableMarketSlot.getY() + 20);
 
     trainStationSlot.draw();
     message = "Train Station";
