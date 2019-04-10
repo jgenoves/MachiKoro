@@ -150,7 +150,7 @@ enum turnPhase{roll, distribution, buy, endturn};
 
 
 // Glut constants
-int WIDTH = 1500;
+int WIDTH = 1400;
 int HEIGHT = 800;
 
 // Button constants

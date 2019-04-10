@@ -26,12 +26,6 @@ void init(void);
 // Initialize OpenGL Graphics
 void initGL(void);
 
-
-
-
-
-
-
 //Draw text, takes rgb and xy with a message
 void drawText24(string message, float r, float g, float b, double x, double y);
 void drawText18(string message, float r, float g, float b, double x, double y);
@@ -52,23 +46,6 @@ void initializeCards();
 void initializePlayers(int numOfPlayers);
 
 void initializeGame(int numOfPlayers);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Callback functions for GLUT */
 
 
@@ -86,6 +63,8 @@ void cursor(int x, int y);
 
 // Calls itself after a specified time
 void timer(int extra);
+
+void resize(int width, int height);
 
 // Handle mouse button pressed and released events
 void mouse(int button, int state, int x, int y);
