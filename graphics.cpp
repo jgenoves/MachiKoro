@@ -5,9 +5,12 @@
 
 #include "graphics.h"
 #include "graphicsConstants.h"
+#include "Image.h"
 
 GLdouble width, height;
 int wd;
+
+Image i("cardTwo.BMP");
 
 void init() {
     width = WIDTH;
@@ -71,6 +74,9 @@ void display() {
     if (screen == endGame){
         // Draw stuff
     }
+
+    i.draw();
+
     glFlush();  // Render now
 }
 
