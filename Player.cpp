@@ -58,6 +58,9 @@ bool Player::getRadioTowerBool() const{
 int Player::getID() const{
     return ID;
 }
+bool Player::getIsHuman() const{
+    return isHuman;
+}
 
 // Setters
 void Player::setMoney(int newMoney){
@@ -86,7 +89,9 @@ void Player::setRadioTowerBool(bool newValue){
 void Player::setID(int newID){
     ID = newID;
 }
-
+void Player::setHuman(bool isHumanBool) {
+    isHuman = isHumanBool;
+}
 // Other Methods
 bool Player::checkWinner() const{
     if (trainStation && shoppingMall && amusementPark && radioTower){
