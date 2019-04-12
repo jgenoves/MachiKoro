@@ -85,6 +85,7 @@ void readPNG(string filename, vector<vector<Pixel>> &pixels) {
 }
 
 void readBMP(string filename, vector<vector<Pixel>> &pixels) {
+    filename = "../" + filename;
     static constexpr size_t HEADER_SIZE = 54;
 
     std::ifstream bmp(filename, std::ios::binary);
