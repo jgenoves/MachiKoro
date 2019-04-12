@@ -19,7 +19,18 @@ void init() {
     width = WIDTH;
     height = HEIGHT;
 
-    initializeGame(2);
+    // Example of working inventory
+    Player player1 = Player(2);
+    Player player2 = Player(4);
+
+    Game.players.push_back(player1);
+    Game.players.push_back(player2);
+
+    Game.currentPlayer = Game.players[0];
+    Game.focusedPlayer = Game.players[0];
+
+    Game.currentPlayer.addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+    //initializeGame(2);
 
     for(shared_ptr<Card> card : Game.currentPlayer.getEstablishments()){
         cout << card->getName() << endl;
