@@ -2,7 +2,9 @@
 // Created by Joshua Newton on 3/15/2019.
 //
 
+#include <string>
 #include "Player.h"
+#include "Card.h"
 
 Player::Player(){
     setMoney(0);
@@ -53,6 +55,9 @@ bool Player::getAmusementParkBool() const{
 bool Player::getRadioTowerBool() const{
     return radioTower;
 }
+int Player::getID() const{
+    return ID;
+}
 
 // Setters
 void Player::setMoney(int newMoney){
@@ -78,6 +83,9 @@ void Player::setAmusementParkBool(bool newValue){
 void Player::setRadioTowerBool(bool newValue){
     radioTower = newValue;
 }
+void Player::setID(int newID){
+    ID = newID;
+}
 
 // Other Methods
 bool Player::checkWinner() const{
@@ -89,19 +97,40 @@ bool Player::checkWinner() const{
     }
 }
 
-int Player::getNumberOfEstablishment(Card establishment) const{
+void Player::addEstablishment(shared_ptr<Card> establishment) {
+    establishments.push_back(establishment);
+}
+
+
+int Player::getNumberOfEstablishment(string name) const{
     int count = 0;
     for (int i = 0; i < establishments.size(); i++){
-        if (establishments[i]->getName() == establishment.getName()){
+        if (establishments[i]->getName() == name){
             count++;
         }
     }
     return count;
 }
 
+int Player::getNumberOfEstablishment(cardSymbol symbol) const {
+    int count = 0;
+
+
+        for (int i = 0; i < establishments.size(); i++) {
+            if (establishments[i]->getCardSymbol() == symbol) {
+                count++;
+            }
+        }
+
+    return count;
+}
 void Player::setAllLandmarksFalse(){
     trainStation = false;
     shoppingMall = false;
     amusementPark = false;
     radioTower = false;
 }
+
+
+
+

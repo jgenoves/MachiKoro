@@ -3,6 +3,7 @@
 //
 
 #include "Card.h"
+
 /***********************************/
 /** ABSTRACT CARD CLASS BEGINNING **/
 /***********************************/
@@ -48,6 +49,16 @@ Card::Card(string newDescription, int newCost, int newActivationMin, int newActi
     setDescription(newDescription);
     setCost(newCost);
     setActivation(newActivationMin, newActivationMax);
+    setCardType(newType);
+    setRectangle(newRectangle);
+    setName(newName);
+    setCardSymbol(newSymbol);
+}
+
+Card::Card(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol){
+    setDescription(newDescription);
+    setCost(newCost);
+    setActivation(newRange);
     setCardType(newType);
     setRectangle(newRectangle);
     setName(newName);
@@ -153,6 +164,10 @@ void Card::setCardSymbol(cardSymbol newSymbol) {
     symbol = newSymbol;
 }
 
+
+
+
+
 // Virtual Methods
 /* Overridden in child classes */
 
@@ -162,21 +177,308 @@ void Card::setCardSymbol(cardSymbol newSymbol) {
 /** ABSTRACT CARD CLASS ENDING    **/
 /***********************************/
 
-
 /***********************************/
 /** WHEATFIELD CLASS STARTING     **/
 /***********************************/
 
-//WheatField::WheatField(){
-//    setDescription("Get 1 coin from the bank");
-//    setCost(1);
-//    setActivation(1,1);
-//    setCardType(primaryIndustry);
-//    setRectangle(blueCardRectangle);
-//    setName("Wheat Field");
-//    setCardSymbol(wheat);
-//}
+void WheatField::draw(){
+    getRectangle().draw();
+}
+
+void WheatField::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    owner.setMoney(owner.getMoney() + 1);
+}
 
 /***********************************/
 /** WHEATFIELD CLASS ENDING       **/
+/***********************************/
+
+/***********************************/
+/** RANCH CLASS STARTING          **/
+/***********************************/
+
+void Ranch::draw(){
+    getRectangle().draw();
+}
+
+void Ranch::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    owner.setMoney(owner.getMoney() + 1);
+}
+
+/***********************************/
+/** RANCH CLASS ENDING            **/
+/***********************************/
+
+/***********************************/
+/** FOREST CLASS STARTING         **/
+/***********************************/
+
+void Forest::draw(){
+    getRectangle().draw();
+}
+
+void Forest::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    owner.setMoney(owner.getMoney() + 1);
+}
+
+/***********************************/
+/** FOREST CLASS ENDING           **/
+/***********************************/
+
+/***********************************/
+/** MINE CLASS STARTING         **/
+/***********************************/
+
+void Mine::draw(){
+    getRectangle().draw();
+}
+
+void Mine::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    owner.setMoney(owner.getMoney() + 5);
+}
+
+/***********************************/
+/** MINE CLASS ENDING           **/
+/***********************************/
+
+/***********************************/
+/** APPLE ORCHARD CLASS STARTING  **/
+/***********************************/
+
+void AppleOrchard::draw(){
+    getRectangle().draw();
+}
+
+void AppleOrchard::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    owner.setMoney(owner.getMoney() + 3);
+}
+
+/***********************************/
+/** APPLE ORCHARD CLASS ENDING    **/
+/***********************************/
+
+/***********************************/
+/** BAKERY CLASS STARTING         **/
+/***********************************/
+
+void Bakery::draw(){
+    getRectangle().draw();
+}
+
+void Bakery::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    if (owner.getShoppingMallBool()){
+        owner.setMoney(owner.getMoney() + 2);
+    }
+    else {
+        owner.setMoney(owner.getMoney() + 1);
+    }
+}
+
+/***********************************/
+/** BAKERY CLASS ENDING           **/
+/***********************************/
+
+/***********************************/
+/** CONVENIENCE STORE CLASS STARTING         **/
+/***********************************/
+
+void ConvenienceStore::draw(){
+    getRectangle().draw();
+}
+
+void ConvenienceStore::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    if (owner.getShoppingMallBool()){
+        owner.setMoney(owner.getMoney() + 4);
+    }
+    else {
+        owner.setMoney(owner.getMoney() + 3);
+    }
+}
+
+/***********************************/
+/** CONVENIENCE STORE CLASS ENDING           **/
+/***********************************/
+
+/***********************************/
+/** CHEESE FACTORY CLASS STARTING         **/
+/***********************************/
+
+void CheeseFactory::draw(){
+    getRectangle().draw();
+}
+
+void CheeseFactory::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    int numCowsOwned = owner.getNumberOfEstablishment(cow);
+    owner.setMoney(owner.getMoney() + (3 * numCowsOwned));
+}
+
+/***********************************/
+/** CHEESE FACTORY CLASS ENDING         **/
+/***********************************/
+
+/***********************************/
+/** FURNITURE FACTORY CLASS STARTING         **/
+/***********************************/
+
+void FurnitureFactory::draw(){
+    getRectangle().draw();
+}
+
+void FurnitureFactory::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    int numGearsOwned = owner.getNumberOfEstablishment(gear);
+    owner.setMoney(owner.getMoney() + (3 * numGearsOwned));
+}
+
+/***********************************/
+/** FURNITURE FACTORY CLASS ENDING         **/
+/***********************************/
+
+/***********************************/
+/** FRUIT AND VEGETABLE MARKET CLASS STARTING         **/
+/***********************************/
+
+void FruitAndVegetableMarket::draw(){
+    getRectangle().draw();
+}
+
+void FruitAndVegetableMarket::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    int numWheatsOwned = owner.getNumberOfEstablishment(wheat);
+    owner.setMoney(owner.getMoney() + (2 * numWheatsOwned));
+}
+
+/***********************************/
+/** FRUIT AND VEGETABLE MARKET CLASS ENDING         **/
+/***********************************/
+
+/***********************************/
+/** BAKERY CLASS STARTING         **/
+/***********************************/
+
+void Cafe::draw(){
+    getRectangle().draw();
+}
+
+void Cafe::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    if (owner.getShoppingMallBool()) {
+        if (diceRoller.getMoney() < 2) {
+            owner.setMoney(owner.getMoney() + diceRoller.getMoney());
+            diceRoller.setMoney(0);
+        }
+        else{
+            owner.setMoney(owner.getMoney() + 2);
+            diceRoller.setMoney(diceRoller.getMoney() - 2);
+        }
+    }
+    else {
+        if (diceRoller.getMoney() < 1) {
+            owner.setMoney(owner.getMoney() + diceRoller.getMoney());
+            diceRoller.setMoney(0);
+        }
+        else{
+            owner.setMoney(owner.getMoney() + 1);
+            diceRoller.setMoney(diceRoller.getMoney() - 1);
+        }
+    }
+}
+
+/***********************************/
+/** BAKERY CLASS ENDING           **/
+/***********************************/
+
+/***********************************/
+/** FAMILY RESTAURANT CLASS STARTING         **/
+/***********************************/
+
+void FamilyRestaurant::draw(){
+    getRectangle().draw();
+}
+
+void FamilyRestaurant::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    if (owner.getShoppingMallBool()) {
+        if (diceRoller.getMoney() < 2) {
+            owner.setMoney(owner.getMoney() + diceRoller.getMoney());
+            diceRoller.setMoney(0);
+        }
+        else{
+            owner.setMoney(owner.getMoney() + 2);
+            diceRoller.setMoney(diceRoller.getMoney() - 2);
+        }
+    }
+    else {
+        if (diceRoller.getMoney() < 1) {
+            owner.setMoney(owner.getMoney() + diceRoller.getMoney());
+            diceRoller.setMoney(0);
+        }
+        else{
+            owner.setMoney(owner.getMoney() + 1);
+            diceRoller.setMoney(diceRoller.getMoney() - 1);
+        }
+    }
+}
+
+/***********************************/
+/** FAMILY RESTAURANT CLASS ENDING           **/
+/***********************************/
+
+/***********************************/
+/** STADIUM CLASS STARTING         **/
+/***********************************/
+
+void Stadium::draw(){
+    getRectangle().draw();
+}
+
+void Stadium::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    for (int i = 0; i < players.size(); i++){
+        if (players[i].getID() != owner.getID()){
+            if (players[i].getMoney() >= 2){
+                players[i].setMoney(players[i].getMoney() - 2);
+                owner.setMoney(owner.getMoney() + 2);
+            }
+            else {
+                owner.setMoney(owner.getMoney() + players[i].getMoney());
+                players[i].setMoney(0);
+            }
+        }
+    }
+}
+
+/***********************************/
+/** STADIUM CLASS ENDING           **/
+/***********************************/
+
+/***********************************/
+/** TV STATION CLASS STARTING         **/
+/***********************************/
+
+void TVStation::draw(){
+    getRectangle().draw();
+}
+
+void TVStation::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    // TODO: Implement choosing a player to take 5 coins from
+    // Note: maybe set a global boolean here to indicate to the game loop that the player
+    //       needs to choose a player to take coins from
+}
+
+/***********************************/
+/** TV STATION CLASS ENDING           **/
+/***********************************/
+
+/***********************************/
+/** BUSINESS CENTER CLASS STARTING         **/
+/***********************************/
+
+void BusinessCenter::draw(){
+    getRectangle().draw();
+}
+
+void BusinessCenter::activate(Player owner, vector<Player> &players, Player diceRoller) {
+    // TODO: Implement taking an establishment from any player
+    // Note: maybe set a global boolean here to indicate to the game loop that the player
+    //       needs to choose a player to trade an establishment with
+}
+
+/***********************************/
+/** BUSINESS CENTER CLASS ENDING           **/
 /***********************************/
