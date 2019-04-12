@@ -220,7 +220,9 @@ RectangleShape fruitAndVegetableMarketButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIG
 RectangleShape rollDieButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
 
 // In game inventory slots
-RectangleShape wheatFieldSlot(SLOT_WIDTH, SLOT_HEIGHT, BLUE_CARD_COLOR, SLOT_X_POSITION, SLOT_TOP_Y_POSITION);
+RectangleShape moneySlot(SLOT_WIDTH, SLOT_HEIGHT, LANDMARK_CARD_COLOR, SLOT_X_POSITION, SLOT_TOP_Y_POSITION);
+
+RectangleShape wheatFieldSlot(SLOT_WIDTH, SLOT_HEIGHT, BLUE_CARD_COLOR, SLOT_X_POSITION, moneySlot.getY() + moneySlot.getHeight() + SLOT_Y_MARGIN);
 RectangleShape ranchSlot(SLOT_WIDTH, SLOT_HEIGHT, BLUE_CARD_COLOR, SLOT_X_POSITION, wheatFieldSlot.getY() + wheatFieldSlot.getHeight() + SLOT_Y_MARGIN);
 RectangleShape bakerySlot(SLOT_WIDTH, SLOT_HEIGHT, GREEN_CARD_COLOR, SLOT_X_POSITION, wheatFieldSlot.getY() + 2 * wheatFieldSlot.getHeight() + 2 * SLOT_Y_MARGIN);
 RectangleShape cafeSlot(SLOT_WIDTH, SLOT_HEIGHT, RED_CARD_COLOR, SLOT_X_POSITION, wheatFieldSlot.getY() + 3 * wheatFieldSlot.getHeight() + 3 * SLOT_Y_MARGIN);
@@ -246,6 +248,48 @@ RectangleShape radioTowerSlot(SLOT_WIDTH, SLOT_HEIGHT, LANDMARK_CARD_COLOR, SLOT
 // Player buttons
 RectangleShape player1button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION, PLAYER_BUTTON_Y_POSITION);
 RectangleShape player2button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION, PLAYER_BUTTON_Y_POSITION + PLAYER_BUTTON_Y_MARGIN + BUTTON_HEIGHT);
+
+// Vectors
+vector<shared_ptr<Card>> cardsPlayer1;
+vector<shared_ptr<Card>> cardsPlayer2;
+
+
+//GameData
+struct GameData {
+    Player currentPlayer;
+    int currentPlayerIndex = 0;
+    vector<Player> players;
+    int numOfPlayers;
+    bool gameOver = false;
+    int dice1Roll = 0;
+    int dice2Roll = 0;
+    int diceSum = 0;
+    bool diceRolled = false;
+    bool gameBegin = true;
+    turnPhase turnPhase = roll;
+    bool boughtCard = false;
+
+};
+
+GameData Game = {};
+
+
+//Amount of cards
+int numOfWheatField = 6;
+int numOfRanch = 6;
+int numOfForest = 6;
+int numOfMine = 6;
+int numOfAppleOrchard = 6;
+int numOfBakery = 6;
+int numOfConvenienceStore = 6;
+int numOfCheeseFactory = 6;
+int numOfFurnitureFactory = 6;
+int numOfFruitandVeggieMarket = 6;
+int numOfCafe = 6;
+int numOfFamilyRestaurant = 6;
+int numOfStadium = 2;
+int numOfTVStation = 2;
+int numOfBusinessCenter = 2;
 
 
 #endif //GRAPHICS_GRAPHICSCONSTANTS_H
