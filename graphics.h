@@ -6,6 +6,7 @@
 #define CS205FINAL_GRAPHICS_H
 
 #include <stdlib.h>
+#include "Player.h"
 #ifdef _WIN32
 #include <windows.h>
 #else
@@ -23,9 +24,30 @@
 void init(void);
 
 // Initialize OpenGL Graphics
-void InitGL(void);
+void initGL(void);
 
+//Draw text, takes rgb and xy with a message
+void drawText24(string message, float r, float g, float b, double x, double y);
+void drawText18(string message, float r, float g, float b, double x, double y);
+void drawText10(string message, float r, float g, float b, double x, double y);
+
+void drawMarket();
+
+void drawPlayerInventory();
+
+void drawPlayerButtons();
+
+void displayStart();
+
+void displayGame();
+
+void initializeCards();
+
+void initializePlayers(int numOfPlayers);
+
+void initializeGame(int numOfPlayers);
 // Callback functions for GLUT */
+
 
 // Draw the window - this is where all the GL actions are
 void display(void);
@@ -41,6 +63,8 @@ void cursor(int x, int y);
 
 // Calls itself after a specified time
 void timer(int extra);
+
+void resize(int width, int height);
 
 // Handle mouse button pressed and released events
 void mouse(int button, int state, int x, int y);
