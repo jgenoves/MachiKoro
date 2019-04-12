@@ -197,6 +197,7 @@ RectangleShape startButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_P
 RectangleShape exitButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, startButton.getY() + BUTTON_HEIGHT + BUTTON_Y_MARGIN);
 RectangleShape mainMenuButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
 
+
 // In game card buttons to buy cards
 RectangleShape wheatFieldButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, BLUE_CARD_COLOR, TOP_LEFT_CARD_X_POSITION, TOP_LEFT_CARD_Y_POSITION);
 RectangleShape ranchButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIGHT, BLUE_CARD_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY());
