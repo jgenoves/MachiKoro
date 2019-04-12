@@ -128,6 +128,7 @@ struct Pixel {
 
 
 class Image: public Shape {
+private:
 protected:
     Vector2D start;
     Vector2D dimensions;
