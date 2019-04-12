@@ -339,6 +339,7 @@ bool RectangleShape::isOverlapping(const Circle &c) const {
         bottom_right.x >= c.getX()) {
         return true;
     }
+    return false;
 }
 
 double RectangleShape::calculateArea() const {
@@ -431,13 +432,13 @@ bool HollowCircle::isOverlapping(Circle circle) const {
             return true;
         }
     }
-
+    return false;
 }
 
 bool HollowCircle::isOverlapping(RectangleShape rectangle) const{
     // TODO: finish this overlap
 
-
+    return false;
 }
 
 // TODO: test
