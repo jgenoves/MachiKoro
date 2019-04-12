@@ -128,13 +128,13 @@ struct Pixel {
 
 
 class Image: public Shape {
-private:
-    std::vector<std::vector<Pixel>> pixels;
 protected:
     Vector2D start;
     Vector2D dimensions;
 
 public:
+    std::vector<std::vector<Pixel>> pixels;
+
     Image(std::string filename);
 
     void draw() const override;
@@ -143,7 +143,6 @@ public:
     double calculatePerimeter() const override;
 };
 
-void readPNG(std::string filename, std::vector<std::vector<Pixel>> &pixels);
-void readBMP(std::string filename, std::vector<std::vector<Pixel>> &pixels);
+void readBMP(std::string filename, Image &i);
 
 #endif //GAMEENGINE_IMAGE_H

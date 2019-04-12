@@ -8,7 +8,7 @@
 using namespace std;
 
 Image::Image(std::string filename): Shape(0,0), dimensions(173.,264.), start(0,0) {
-    readBMP(filename, pixels);
+    readBMP(filename, *this);
     //readPNG(filename, pixels);
 }
 
@@ -31,7 +31,7 @@ double Image::calculateArea() const {return 0.;}
 double Image::calculatePerimeter() const {return 0.;}
 
 
-void readBMP(string filename, vector<vector<Pixel>> &pixels) {
+void readBMP(string filename, Image &i) {
     filename = "../" + filename;
     static constexpr size_t HEADER_SIZE = 54;
 
@@ -74,7 +74,9 @@ void readBMP(string filename, vector<vector<Pixel>> &pixels) {
         g = img[i] & 0xff;
         b = img[i+2] & 0xff;
 
-        colors.push_back(RGBColor(g,r,b));
+        for (int i = 0; i < 1; i++) {
+            colors.push_back(RGBColor(r, g, b));
+        }
 
         //std::cout << "R: " << int(img[i] & 0xff) << " G: " << int(img[i+1] & 0xff) << " B: " << int(img[i+2] & 0xff) << std::endl;
 
@@ -90,7 +92,7 @@ void readBMP(string filename, vector<vector<Pixel>> &pixels) {
             j++;
         }
 
-        pixels.push_back(col);
+        i.pixels.push_back(col);
     }
 
 
