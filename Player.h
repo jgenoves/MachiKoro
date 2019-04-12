@@ -33,6 +33,7 @@ public:
     bool getAmusementParkBool() const;
     bool getRadioTowerBool() const;
     int getID() const;
+    bool getIsHuman() const;
 
     // Setters
     void setMoney(int newMoney);
@@ -42,6 +43,7 @@ public:
     void setAmusementParkBool(bool newValue);
     void setRadioTowerBool(bool newValue);
     void setID(int newID);
+    void setHuman(bool isHumanBool);
 
     // Other Methods
     bool checkWinner() const;
