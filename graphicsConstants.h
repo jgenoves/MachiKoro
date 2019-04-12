@@ -271,7 +271,7 @@ struct GameData {
 
 };
 
-GameData Game = {};
+GameData Game;
 
 
 //Amount of cards
