@@ -253,6 +253,26 @@ vector<shared_ptr<Card>> cardsPlayer1;
 vector<shared_ptr<Card>> cardsPlayer2;
 
 
+//GameData
+struct GameData {
+    Player currentPlayer;
+    int currentPlayerIndex = 0;
+    vector<Player> players;
+    int numOfPlayers;
+    bool gameOver = false;
+    int dice1Roll = 0;
+    int dice2Roll = 0;
+    int diceSum = 0;
+    bool diceRolled = false;
+    bool gameBegin = true;
+    turnPhase turnPhase = roll;
+    bool boughtCard = false;
+
+};
+
+GameData Game = {};
+
+
 //Amount of cards
 int numOfWheatField = 6;
 int numOfRanch = 6;

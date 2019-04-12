@@ -41,8 +41,6 @@ void displayStart();
 
 void displayGame();
 
-void initializeCards();
-
 void initializePlayers(int numOfPlayers);
 
 void initializeGame(int numOfPlayers);

@@ -10,21 +10,6 @@
 GLdouble width, height;
 int wd;
 
-struct GameData {
-    Player currentPlayer;
-    int currentPlayerIndex = 0;
-    vector<Player> players;
-    int numOfPlayers = 0;
-    bool gameOver = false;
-    int dice1Roll = 0;
-    int dice2Roll = 0;
-    int diceSum = 0;
-    bool diceRolled = false;
-    bool gameBegin = true;
-    turnPhase turnPhase = roll;
-    bool boughtCard = false;
-
-}Game;
 
 //Function Declarations
 
@@ -34,18 +19,12 @@ struct GameData {
 void init() {
     width = WIDTH;
     height = HEIGHT;
-    // Initialize the cards vectors
-    cardsPlayer1.push_back(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
-    cardsPlayer1.push_back(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
 
-    cardsPlayer2.push_back(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
-    cardsPlayer2.push_back(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+    initializeGame(2);
 
-    // Create the players
-    Player humanPlayer = Player(3, cardsPlayer1);
-    Player computerPlayer = Player(3, cardsPlayer2);
-
-    Game.currentPlayer = humanPlayer;
+    for(shared_ptr<Card> card : Game.currentPlayer.getEstablishments()){
+        cout << card->getName() << endl;
+    }
 }
 
 /* Initialize OpenGL Graphics */
@@ -291,10 +270,6 @@ void displayGame(){
     string message = "Main Menu";
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
 
-    if(Game.gameBegin){
-        initializeGame(2);
-    }
-
     drawMarket();
     rollDieButton.draw();
     drawPlayerInventory();
@@ -427,16 +402,16 @@ void initializePlayers(int numOfPlayers){
 
 
     for(Player player : Game.players){
-        player.addEstablishment(make_shared());
-        player.addEstablishment(Cards.bakery_card);
+        player.addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+        player.addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
     }
 
     Game.currentPlayer = player1;
+
+
 }
 
 void initializeGame(int numOfPlayers){
-
-    initializeCards();
 
     initializePlayers(numOfPlayers);
 
@@ -580,13 +555,14 @@ void mouse(int button, int state, int x, int y) {
         if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             screen = start;
         }
-        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.diceRolled){
+        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.diceRolled && Game.turnPhase == roll){
             Game.dice1Roll = rand() % (6 - 1 + 1) + 1;
             Game.diceRolled = true;
         }
-        else if(wheatFieldButton.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.boughtCard && Cards.numOfWheatField != 0){
-            Game.currentPlayer.addEstablishment(Cards.wheat_field_card);
-            Cards.numOfWheatField--;
+        else if(wheatFieldButton.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.boughtCard && numOfWheatField != 0 && Game.turnPhase == buy){
+
+            Game.currentPlayer.addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+            numOfWheatField--;
             Game.boughtCard = true;
         }
     }
