@@ -219,7 +219,9 @@ RectangleShape fruitAndVegetableMarketButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIG
 RectangleShape rollDieButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
 
 // In game inventory slots
-RectangleShape wheatFieldSlot(SLOT_WIDTH, SLOT_HEIGHT, BLUE_CARD_COLOR, SLOT_X_POSITION, SLOT_TOP_Y_POSITION);
+RectangleShape moneySlot(SLOT_WIDTH, SLOT_HEIGHT, LANDMARK_CARD_COLOR, SLOT_X_POSITION, SLOT_TOP_Y_POSITION);
+
+RectangleShape wheatFieldSlot(SLOT_WIDTH, SLOT_HEIGHT, BLUE_CARD_COLOR, SLOT_X_POSITION, moneySlot.getY() + moneySlot.getHeight() + SLOT_Y_MARGIN);
 RectangleShape ranchSlot(SLOT_WIDTH, SLOT_HEIGHT, BLUE_CARD_COLOR, SLOT_X_POSITION, wheatFieldSlot.getY() + wheatFieldSlot.getHeight() + SLOT_Y_MARGIN);
 RectangleShape bakerySlot(SLOT_WIDTH, SLOT_HEIGHT, GREEN_CARD_COLOR, SLOT_X_POSITION, wheatFieldSlot.getY() + 2 * wheatFieldSlot.getHeight() + 2 * SLOT_Y_MARGIN);
 RectangleShape cafeSlot(SLOT_WIDTH, SLOT_HEIGHT, RED_CARD_COLOR, SLOT_X_POSITION, wheatFieldSlot.getY() + 3 * wheatFieldSlot.getHeight() + 3 * SLOT_Y_MARGIN);

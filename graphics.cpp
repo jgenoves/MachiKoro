@@ -199,9 +199,14 @@ void drawMarket(){
 }
 
 void drawPlayerInventory(){
+    moneySlot.draw();
+    string message = "Money";
+    drawText18(message, 1, 1, 1, moneySlot.getX() + 10, moneySlot.getY() + 20);
+    message = to_string(Game.currentPlayer.getMoney());
+    drawText18(message, 1, 1, 1, moneySlot.getX() + (moneySlot.getBase() - 30), moneySlot.getY() + 20);
 
     wheatFieldSlot.draw();
-    string message = "Wheat Field";
+    message = "Wheat Field";
     drawText18(message, 1, 1, 1, wheatFieldSlot.getX() + 10, wheatFieldSlot.getY() + 20);
     message = to_string(Game.currentPlayer.getNumberOfEstablishment(WHEAT_FIELD_NAME));
     drawText18(message, 1, 1, 1, wheatFieldSlot.getX() + (wheatFieldSlot.getBase() - 30), wheatFieldSlot.getY() + 20);
@@ -718,7 +723,7 @@ void kbdS(int key, int x, int y) {
 }
 
 void cursor(int x, int y) {
-    cout << x << "," << y << "\n";
+//    cout << x << "," << y << "\n";
 
     if (screen == start){
         if (startButton.isOverlapping(x,y)){
