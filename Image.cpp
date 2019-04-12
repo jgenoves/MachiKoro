@@ -135,7 +135,6 @@ void readBMP(string filename, vector<vector<Pixel>> &pixels) {
             p.push_back(Pixel(Vector2D(w,h), colors[j]));
             j++;
         }
-        j += 1;
         pixels.push_back(p);
     }
 
