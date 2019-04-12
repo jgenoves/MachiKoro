@@ -723,6 +723,8 @@ void kbdS(int key, int x, int y) {
 }
 
 void cursor(int x, int y) {
+    cout << x << "," << y << "\n";
+
     if (screen == start){
         if (startButton.isOverlapping(x,y)){
             startButton.setFill(BUTTON_HOVER_COLOR);
@@ -813,6 +815,10 @@ void timer(int extra) {
     glutTimerFunc(30, timer, 0);
 }
 
+void resize(int width, int height){
+    glutReshapeWindow(WIDTH, HEIGHT);
+    glutPostRedisplay();
+}
 /* Main function: GLUT runs as a console application starting at main()  */
 int graphicsPlay(int argc, char** argv) {
 
@@ -839,6 +845,8 @@ int graphicsPlay(int argc, char** argv) {
 
     // register special event: function keys, arrows, etc.
     glutSpecialFunc(kbdS);
+
+    glutReshapeFunc(resize);
 
     // handles mouse movement
     glutPassiveMotionFunc(cursor);
