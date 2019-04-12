@@ -253,4 +253,22 @@ vector<shared_ptr<Card>> cardsPlayer1;
 vector<shared_ptr<Card>> cardsPlayer2;
 
 
+//Amount of cards
+int numOfWheatField = 6;
+int numOfRanch = 6;
+int numOfForest = 6;
+int numOfMine = 6;
+int numOfAppleOrchard = 6;
+int numOfBakery = 6;
+int numOfConvenienceStore = 6;
+int numOfCheeseFactory = 6;
+int numOfFurnitureFactory = 6;
+int numOfFruitandVeggieMarket = 6;
+int numOfCafe = 6;
+int numOfFamilyRestaurant = 6;
+int numOfStadium = 2;
+int numOfTVStation = 2;
+int numOfBusinessCenter = 2;
+
+
 #endif //GRAPHICS_GRAPHICSCONSTANTS_H
