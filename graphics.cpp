@@ -12,7 +12,7 @@ int wd;
 
 struct GameData {
     Player currentPlayer;
-    int currentPlayerIndex = 0;
+    int currentPlayerIndex;
     vector<Player> players;
     int numOfPlayers = 0;
     bool gameOver = false;
@@ -45,7 +45,7 @@ struct CardData{
     shared_ptr<TVStation> tv_station_card = make_shared<TVStation>();
     shared_ptr<BusinessCenter> business_center_card = make_shared<BusinessCenter>();
 
-    int numOfWheatField = 1;
+    int numOfWheatField = 5;
     int numOfRanch = 0;
     int numOfForest = 0;
     int numOfMine = 0;
@@ -325,21 +325,34 @@ void displayStart(){
 
 void displayGame(){
 
+    if(Game.gameBegin){
+
+        initializeGame(2);
+
+        Game.gameBegin = false;
+
+    }
+
+
+    cout << "Current Player: " << Game.currentPlayerIndex+1 << endl;
+    cout << "Inventory: " << endl;
+    for(shared_ptr<Card> &card : Game.currentPlayer.getEstablishments()){
+        cout << card->getName() << endl;
+    }
+
 
     mainMenuButton.draw();
     string message = "Main Menu";
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
-
-    if(Game.gameBegin){
-        initializeGame(2);
-    }
 
     drawMarket();
     rollDieButton.draw();
     drawPlayerInventory();
     drawPlayerButtons();
 
+
     if(Game.turnPhase == roll){
+
 
         //TODO implement pre roll (2 die roll) and post roll (reroll)
         rollDieButton.draw();
@@ -428,6 +441,7 @@ void displayGame(){
     }else if(Game.turnPhase == endturn){
 
         cout << "end turn phase" << endl;
+
 
         //This needs to be implemented based upon how many players are playing the game, current set up for two players.
         if(Game.numOfPlayers == 2 && Game.currentPlayerIndex == 1){
@@ -608,6 +622,8 @@ void initializeCards(){
 
 void initializePlayers(int numOfPlayers){
 
+    Game.numOfPlayers = numOfPlayers;
+
     Player player1 = Player(3);
     Player player2 = Player(3);
 
@@ -615,15 +631,15 @@ void initializePlayers(int numOfPlayers){
     Game.players.push_back(player1);
     Game.players.push_back(player2);
 
-    Game.numOfPlayers = numOfPlayers;
 
-
-    for(Player player : Game.players){
+    for(Player &player : Game.players){
         player.addEstablishment(Cards.wheat_field_card);
-        player.addEstablishment(Cards.bakery_card);
+        //player.addEstablishment(Cards.bakery_card);
     }
 
+
     Game.currentPlayer = player1;
+    Game.currentPlayerIndex = 0;
 }
 
 void initializeGame(int numOfPlayers){
@@ -737,6 +753,7 @@ void cursor(int x, int y) {
             rollDieButton.setFill(ROLL_BUTTON_COLOR);
         }
 
+
         if (wheatFieldButton.isOverlapping(x,y)){
             wheatFieldButton.setFill(CARD_BUTTON_HOVER_COLOR);
         }
@@ -774,7 +791,8 @@ void mouse(int button, int state, int x, int y) {
             Game.dice1Roll = rand() % (6 - 1 + 1) + 1;
             Game.diceRolled = true;
         }
-        else if(wheatFieldButton.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.boughtCard && Cards.numOfWheatField != 0){
+
+        else if(wheatFieldButton.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && Game.turnPhase == buy && Cards.numOfWheatField != 0){
             Game.currentPlayer.addEstablishment(Cards.wheat_field_card);
             Cards.numOfWheatField--;
             Game.boughtCard = true;
