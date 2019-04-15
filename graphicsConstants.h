@@ -16,13 +16,17 @@
 int CARD_BASE_DIMENSION = 5;
 int CARD_HEIGHT_DIMENSION = 10;
 
-color RED_CARD_COLOR = {1,0,0}; // Red
+color RED_CARD_COLOR = {(178.0/255),(34.0/255),(34.0/255)}; // Red
 color BLUE_CARD_COLOR = {(0.0/255),(50.0/255),(120.0/255)}; // Blue
-color GREEN_CARD_COLOR = {(0.0/255),(120.0/255),(30.0/255)}; // Green
+color GREEN_CARD_COLOR = {(0.0/255),(128.0/255),(0.0/255)}; // Green
 color PURPLE_CARD_COLOR = {0.5, 0, 0.5}; // Purple
 color LANDMARK_CARD_COLOR = {0.5,0.5,0.5}; // Grey
 color LANDMARK_CARD_OWNED_COLOR = {(204.0/255),(204.0/255),(0.0/255)}; // Yellow
 
+color RED_CARD_HOVER_COLOR = {(220.0/255),(20.0/255),(60.0/255)}; // Red
+color BLUE_CARD_HOVER_COLOR = {(65.0/255),(105.0/255),(225.0/255)}; // Blue
+color GREEN_CARD_HOVER_COLOR = {(34.0/255),(180.0/255),(34.0/255)}; // Green
+color PURPLE_CARD_HOVER_COLOR = {(153.0/255), (50.0/255), (204.0/255)}; // Purple
 /********************/
 /** Card Constants **/
 /********************/

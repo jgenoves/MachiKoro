@@ -158,7 +158,7 @@ void drawPlayerInventory(){
     string message = "Inventory for Player: ";
     drawText18(message, 1, 1, 1, labelSlot.getX() + 10, labelSlot.getY() + 20);
     message = to_string(Game.focusedPlayerIndex + 1);
-    drawText18(message, 1, 1, 1, labelSlot.getX() + (labelSlot.getBase() - 30), moneySlot.getY() + 20);
+    drawText18(message, 1, 1, 1, labelSlot.getX() + (labelSlot.getBase() - 30), labelSlot.getY() + 20);
 
     moneySlot.draw();
     message = "Money";
@@ -546,6 +546,7 @@ void cursor(int x, int y) {
     }
     else if (screen == game){
 
+        // Menu buttons
         if (mainMenuButton.isOverlapping(x,y)){
             mainMenuButton.setFill(BUTTON_HOVER_COLOR);
         }
@@ -553,6 +554,7 @@ void cursor(int x, int y) {
             mainMenuButton.setFill(BUTTON_COLOR);
         }
 
+        // Dice buttons
         if (rollDieButton.isOverlapping(x,y)){
             rollDieButton.setFill(ROLL_BUTTON_HOVER);
         }
@@ -560,11 +562,110 @@ void cursor(int x, int y) {
             rollDieButton.setFill(ROLL_BUTTON_COLOR);
         }
 
+        // Player buttons
+        if (player1button.isOverlapping(x,y)){
+            player1button.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            player1button.setFill(BUTTON_COLOR);
+        }
+        if (player2button.isOverlapping(x,y)){
+            player2button.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            player2button.setFill(BUTTON_COLOR);
+        }
+
+        // Market buttons
         if (wheatFieldButton.isOverlapping(x,y)){
-            wheatFieldButton.setFill(CARD_BUTTON_HOVER_COLOR);
+            wheatFieldButton.setFill(BLUE_CARD_HOVER_COLOR);
         }
         else {
             wheatFieldButton.setFill(BLUE_CARD_COLOR);
+        }
+        if (ranchButton.isOverlapping(x,y)){
+            ranchButton.setFill(BLUE_CARD_HOVER_COLOR);
+        }
+        else {
+            ranchButton.setFill(BLUE_CARD_COLOR);
+        }
+        if (bakeryButton.isOverlapping(x,y)){
+            bakeryButton.setFill(GREEN_CARD_HOVER_COLOR);
+        }
+        else {
+            bakeryButton.setFill(GREEN_CARD_COLOR);
+        }
+        if (cafeButton.isOverlapping(x,y)){
+            cafeButton.setFill(RED_CARD_HOVER_COLOR);
+        }
+        else {
+            cafeButton.setFill(RED_CARD_COLOR);
+        }
+        if (convenienceStoreButton.isOverlapping(x,y)){
+            convenienceStoreButton.setFill(GREEN_CARD_HOVER_COLOR);
+        }
+        else {
+            convenienceStoreButton.setFill(GREEN_CARD_COLOR);
+        }
+        if (forestButton.isOverlapping(x,y)){
+            forestButton.setFill(BLUE_CARD_HOVER_COLOR);
+        }
+        else {
+            forestButton.setFill(BLUE_CARD_COLOR);
+        }
+        if (tvStationButton.isOverlapping(x,y)){
+            tvStationButton.setFill(PURPLE_CARD_HOVER_COLOR);
+        }
+        else {
+            tvStationButton.setFill(PURPLE_CARD_COLOR);
+        }
+        if (stadiumButton.isOverlapping(x,y)){
+            stadiumButton.setFill(PURPLE_CARD_HOVER_COLOR);
+        }
+        else {
+            stadiumButton.setFill(PURPLE_CARD_COLOR);
+        }
+        if (businessCenterButton.isOverlapping(x,y)){
+            businessCenterButton.setFill(PURPLE_CARD_HOVER_COLOR);
+        }
+        else {
+            businessCenterButton.setFill(PURPLE_CARD_COLOR);
+        }
+        if (cheeseFactoryButton.isOverlapping(x,y)){
+            cheeseFactoryButton.setFill(GREEN_CARD_HOVER_COLOR);
+        }
+        else {
+            cheeseFactoryButton.setFill(GREEN_CARD_COLOR);
+        }
+        if (furnitureFactoryButton.isOverlapping(x,y)){
+            furnitureFactoryButton.setFill(GREEN_CARD_HOVER_COLOR);
+        }
+        else {
+            furnitureFactoryButton.setFill(GREEN_CARD_COLOR);
+        }
+        if (mineButton.isOverlapping(x,y)){
+            mineButton.setFill(BLUE_CARD_HOVER_COLOR);
+        }
+        else {
+            mineButton.setFill(BLUE_CARD_COLOR);
+        }
+        if (familyRestaurantButton.isOverlapping(x,y)){
+            familyRestaurantButton.setFill(RED_CARD_HOVER_COLOR);
+        }
+        else {
+            familyRestaurantButton.setFill(RED_CARD_COLOR);
+        }
+        if (appleOrchardButton.isOverlapping(x,y)){
+            appleOrchardButton.setFill(BLUE_CARD_HOVER_COLOR);
+        }
+        else {
+            appleOrchardButton.setFill(BLUE_CARD_COLOR);
+        }
+        if (fruitAndVegetableMarketButton.isOverlapping(x,y)){
+            fruitAndVegetableMarketButton.setFill(GREEN_CARD_HOVER_COLOR);
+        }
+        else {
+            fruitAndVegetableMarketButton.setFill(GREEN_CARD_COLOR);
         }
     }
     else if (screen == endGame){
