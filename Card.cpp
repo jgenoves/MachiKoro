@@ -145,10 +145,10 @@ void Card::setActivationMin(int newMin){
 }
 void Card::setActivationMax(int newMax){
     if (newMax >= 1 && newMax <= 12){
-        activation.minimum = newMax;
+        activation.maximum = newMax;
     }
     else {
-        activation.minimum = 12;
+        activation.maximum = 12;
     }
 }
 void Card::setRectangle(RectangleShape newRectangle) {

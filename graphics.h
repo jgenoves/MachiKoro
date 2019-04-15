@@ -41,9 +41,6 @@ void displayStart();
 
 void displayGame();
 
-void initializePlayers(int numOfPlayers);
-
-void initializeGame(int numOfPlayers);
 // Callback functions for GLUT */
 
 

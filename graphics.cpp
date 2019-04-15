@@ -16,6 +16,23 @@ Image i("cardTwo.BMP");
 //Function Declarations
 
 void init() {
+//    Player player3(50);
+//    Player player4(80);
+//
+//    player3.addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+//    player3.addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+//
+//    player4.addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+//    player4.addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+//
+//    vector<Player> somePlayers;
+//    somePlayers.push_back(player3);
+//    somePlayers.push_back(player4);
+//
+//    player3.getEstablishments()[0]->activate(player3, somePlayers, player3);
+//    cout << "Player 3 Money: " << player3.getMoney() << "\n";
+
+    cout << "wheat field min: " << WHEAT_FIELD_RANGE.minimum << "\n";
     width = WIDTH;
     height = HEIGHT;
 
@@ -137,8 +154,14 @@ void drawMarket(){
 }
 
 void drawPlayerInventory(){
+    labelSlot.draw();
+    string message = "Inventory for Player: ";
+    drawText18(message, 1, 1, 1, labelSlot.getX() + 10, labelSlot.getY() + 20);
+    message = to_string(Game.focusedPlayerIndex + 1);
+    drawText18(message, 1, 1, 1, labelSlot.getX() + (labelSlot.getBase() - 30), moneySlot.getY() + 20);
+
     moneySlot.draw();
-    string message = "Money";
+    message = "Money";
     drawText18(message, 1, 1, 1, moneySlot.getX() + 10, moneySlot.getY() + 20);
     message = to_string(Game.players[Game.focusedPlayerIndex].getMoney());
     drawText18(message, 1, 1, 1, moneySlot.getX() + (moneySlot.getBase() - 30), moneySlot.getY() + 20);
@@ -359,21 +382,21 @@ void displayGame(){
                 switch (Game.currentPlayerIndex) {
                     //Activate red cards for player2 on player1's roll
                     case (0):
-                        for (shared_ptr<Card> card : Game.players[1].getEstablishments()) {
-                            if (card->getCardType() == restaurant && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()) {
+                        for (int i = 0; Game.players[1].getEstablishments().size(); i++) {
+                            if (Game.players[1].getEstablishments()[i]->getCardType() == restaurant && Game.players[1].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[1].getEstablishments()[i]->getActivationMax()) {
                                 cout << "Roll: " << Game.diceSum << "\n";
-                                cout << "activating card: " << card->getName() << "\n";
-                                card->activate(Game.players[1], Game.players, Game.players[Game.currentPlayerIndex]);
+                                cout << "activating card: " << Game.players[1].getEstablishments()[i]->getName() << "\n";
+                                Game.players[1].getEstablishments()[i]->activate(Game.players[1], Game.players, Game.players[Game.currentPlayerIndex]);
                             }
                         }
                         break;
-                    //Activate red cards for player1 on player2's roll
+                        //Activate red cards for player1 on player2's roll
                     case (1):
-                        for (shared_ptr<Card> card : Game.players[0].getEstablishments()) {
-                            if (card->getCardType() == restaurant && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()) {
+                        for (int i = 0; Game.players[0].getEstablishments().size(); i++) {
+                            if (Game.players[0].getEstablishments()[i]->getCardType() == restaurant && Game.players[0].getEstablishments()[0]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[0].getEstablishments()[i]->getActivationMax()) {
                                 cout << "Roll: " << Game.diceSum << "\n";
-                                cout << "activating card: " << card->getName() << "\n";
-                                card->activate(Game.players[0], Game.players, Game.players[Game.currentPlayerIndex]);
+                                cout << "activating card: " << Game.players[1].getEstablishments()[i]->getName() << "\n";
+                                Game.players[0].getEstablishments()[i]->activate(Game.players[0], Game.players, Game.players[Game.currentPlayerIndex]);
                             }
                         }
                         break;
@@ -381,52 +404,49 @@ void displayGame(){
                 break;
         }
 
-//        for(int i = 0; i < Game.players.size(); i++){
-//            for (int j = 0; j < Game.players[i].getEstablishments().size(); j++){
-//                shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
-//                if (card->getCardType() == primaryIndustry && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()){
-//                    card->activate(Game.players[i], Game.players, Game.currentPlayer);
-//                }
-//            }
-//        }
-
         //Activate all blue/primaryIndustry cards across the board
-        for (Player player : Game.players) {
-            for (shared_ptr<Card> card : player.getEstablishments()) {
-                if (card->getCardType() == primaryIndustry && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()) {
+        for(int i = 0; i < Game.players.size(); i++){
+            for (int j = 0; j < Game.players[i].getEstablishments().size(); j++){
+                //shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
+                if (Game.players[i].getEstablishments()[i]->getCardType() == primaryIndustry && Game.players[i].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[i].getEstablishments()[i]->getActivationMax()){
                     cout << "Roll: " << Game.diceSum << "\n";
-                    cout << "activating card: " << card->getName() << "\n";
-                    card->activate(player, Game.players, Game.players[Game.currentPlayerIndex]);
+                    cout << "activating card: " << Game.players[i].getEstablishments()[i]->getName() << "\n";
+                    Game.players[i].getEstablishments()[i]->activate(Game.players[i], Game.players, Game.players[Game.currentPlayerIndex]);
                 }
             }
         }
         //Activate currentPlayers green/secondary industry cards and purple/majorEstablishment cards
-        for (shared_ptr<Card> card : Game.players[Game.currentPlayerIndex].getEstablishments()) {
-            if ((card->getCardType() == majorEstablishment || card->getCardType() == secondaryIndustry) && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()) {
+        for (int i = 0; i < Game.players[Game.currentPlayerIndex].getEstablishments().size(); i++){
+            //shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
+            if (Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getCardType() == secondaryIndustry && Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMax()){
                 cout << "Roll: " << Game.diceSum << "\n";
-                cout << "activating card: " << card->getName() << "\n";
-                card->activate(Game.players[Game.currentPlayerIndex], Game.players, Game.players[Game.currentPlayerIndex]);
+                cout << "activating card: " << Game.players[i].getEstablishments()[i]->getName() << "\n";
+                Game.players[Game.currentPlayerIndex].getEstablishments()[i]->activate(Game.players[Game.currentPlayerIndex], Game.players, Game.players[Game.currentPlayerIndex]);
             }
         }
         Game.turnPhase = buy;
-    } else if(Game.turnPhase == buy){
+    }
+    else if(Game.turnPhase == buy){
         //cout << "buy phase\n";
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         if(Game.boughtCard) {
             cout << "card bought" << endl;
+//            if(Game.players[Game.currentPlayerIndex].checkWinner()){
+//                Game.gameOver = true;
+//                // clean up
+//            }
             Game.turnPhase = endturn;
             //Game.boughtCard = false;
         }
     }else if(Game.turnPhase == endturn){
         cout << "end turn phase" << endl;
-        //This needs to be implemented based upon how many players are playing the game, current set up for two players.
-        if(Game.numOfPlayers == 2 && Game.currentPlayerIndex == 1){
-            Game.currentPlayer = Game.players[0];
+        //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
+        Game.currentPlayerIndex++;
+        //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
+        if (Game.currentPlayerIndex >= Game.players.size()){
             Game.currentPlayerIndex = 0;
-        }else if (Game.numOfPlayers == 2 && Game.currentPlayerIndex != 1) {
-            Game.currentPlayer = Game.players[Game.currentPlayerIndex + 1];
-            Game.currentPlayerIndex++;
         }
+
         //Reset dice roll and dice sum values
         Game.dice1Roll = 0;
         Game.dice2Roll = 0;
@@ -435,39 +455,6 @@ void displayGame(){
         Game.boughtCard = false;
     }
 }
-
-
-void initializePlayers(int numOfPlayers){
-
-    Player player1 = Player(3);
-    Player player2 = Player(3);
-
-
-    Game.players.push_back(player1);
-    Game.players.push_back(player2);
-
-    Game.numOfPlayers = numOfPlayers;
-
-
-    for(Player player : Game.players){
-        player.addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
-        player.addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
-    }
-
-    Game.currentPlayer = player1;
-
-
-}
-
-void initializeGame(int numOfPlayers){
-
-    initializePlayers(numOfPlayers);
-
-    Game.gameBegin = false;
-
-}
-
-
 
 /* Handler for window-repaint event. Call back when the window first appears and
  whenever the window needs to be re-painted. */
@@ -607,7 +594,7 @@ void mouse(int button, int state, int x, int y) {
             screen = start;
         }
         else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.diceRolled && Game.turnPhase == roll){
-            Game.dice1Roll = rand() % (6 - 1 + 1) + 1;
+            Game.dice1Roll = (rand() % 6) + 1;
             Game.diceRolled = true;
         }
         else if(wheatFieldButton.isOverlapping(x, y) && !Game.boughtCard && numOfWheatField >= 0 && Game.turnPhase == buy && Game.players[Game.currentPlayerIndex].getMoney() >= WHEAT_FIELD_COST && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
