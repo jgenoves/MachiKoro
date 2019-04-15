@@ -37,8 +37,8 @@ void init() {
     height = HEIGHT;
 
     // Example of working inventory
-    Player player1 = Player(100);
-    Player player2 = Player(200);
+    Player player1 = Player(3);
+    Player player2 = Player(3);
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
@@ -337,6 +337,12 @@ void displayGame(){
 
     drawMarket();
     rollDieButton.draw();
+    roll2diceButton.draw();
+    skipBuyButton.draw();
+    message = "Skip Buy Phase";
+    drawText24(message, 1, 1, 1, skipBuyButton.getX() + 25, skipBuyButton.getY() + 45);
+
+
     drawPlayerInventory();
     drawPlayerButtons();
 
