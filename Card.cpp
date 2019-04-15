@@ -145,10 +145,10 @@ void Card::setActivationMin(int newMin){
 }
 void Card::setActivationMax(int newMax){
     if (newMax >= 1 && newMax <= 12){
-        activation.minimum = newMax;
+        activation.maximum = newMax;
     }
     else {
-        activation.minimum = 12;
+        activation.maximum = 12;
     }
 }
 void Card::setRectangle(RectangleShape newRectangle) {
@@ -186,7 +186,7 @@ void WheatField::draw(){
     getRectangle().draw();
 }
 
-void WheatField::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void WheatField::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     owner.setMoney(owner.getMoney() + 1);
 }
 
@@ -208,7 +208,7 @@ void Ranch::draw(){
     getRectangle().draw();
 }
 
-void Ranch::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void Ranch::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     owner.setMoney(owner.getMoney() + 1);
 }
 
@@ -231,7 +231,7 @@ void Forest::draw(){
     getRectangle().draw();
 }
 
-void Forest::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void Forest::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     owner.setMoney(owner.getMoney() + 1);
 }
 
@@ -254,7 +254,7 @@ void Mine::draw(){
     getRectangle().draw();
 }
 
-void Mine::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void Mine::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     owner.setMoney(owner.getMoney() + 5);
 }
 
@@ -277,7 +277,7 @@ void AppleOrchard::draw(){
     getRectangle().draw();
 }
 
-void AppleOrchard::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void AppleOrchard::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     owner.setMoney(owner.getMoney() + 3);
 }
 
@@ -300,7 +300,7 @@ void Bakery::draw(){
     getRectangle().draw();
 }
 
-void Bakery::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void Bakery::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     if (owner.getShoppingMallBool()){
         owner.setMoney(owner.getMoney() + 2);
     }
@@ -328,7 +328,7 @@ void ConvenienceStore::draw(){
     getRectangle().draw();
 }
 
-void ConvenienceStore::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void ConvenienceStore::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     if (owner.getShoppingMallBool()){
         owner.setMoney(owner.getMoney() + 4);
     }
@@ -356,7 +356,7 @@ void CheeseFactory::draw(){
     getRectangle().draw();
 }
 
-void CheeseFactory::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void CheeseFactory::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     int numCowsOwned = owner.getNumberOfEstablishment(cow);
     owner.setMoney(owner.getMoney() + (3 * numCowsOwned));
 }
@@ -380,7 +380,7 @@ void FurnitureFactory::draw(){
     getRectangle().draw();
 }
 
-void FurnitureFactory::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void FurnitureFactory::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     int numGearsOwned = owner.getNumberOfEstablishment(gear);
     owner.setMoney(owner.getMoney() + (3 * numGearsOwned));
 }
@@ -404,7 +404,7 @@ void FruitAndVegetableMarket::draw(){
     getRectangle().draw();
 }
 
-void FruitAndVegetableMarket::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void FruitAndVegetableMarket::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     int numWheatsOwned = owner.getNumberOfEstablishment(wheat);
     owner.setMoney(owner.getMoney() + (2 * numWheatsOwned));
 }
@@ -428,7 +428,7 @@ void Cafe::draw(){
     getRectangle().draw();
 }
 
-void Cafe::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void Cafe::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     if (owner.getShoppingMallBool()) {
         if (diceRoller.getMoney() < 2) {
             owner.setMoney(owner.getMoney() + diceRoller.getMoney());
@@ -470,7 +470,7 @@ void FamilyRestaurant::draw(){
     getRectangle().draw();
 }
 
-void FamilyRestaurant::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void FamilyRestaurant::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     if (owner.getShoppingMallBool()) {
         if (diceRoller.getMoney() < 2) {
             owner.setMoney(owner.getMoney() + diceRoller.getMoney());
@@ -512,7 +512,7 @@ void Stadium::draw(){
     getRectangle().draw();
 }
 
-void Stadium::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void Stadium::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     for (int i = 0; i < players.size(); i++){
         if (players[i].getID() != owner.getID()){
             if (players[i].getMoney() >= 2){
@@ -546,7 +546,7 @@ void TVStation::draw(){
     getRectangle().draw();
 }
 
-void TVStation::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void TVStation::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     // TODO: Implement choosing a player to take 5 coins from
     // Note: maybe set a global boolean here to indicate to the game loop that the player
     //       needs to choose a player to take coins from
@@ -571,7 +571,7 @@ void BusinessCenter::draw(){
     getRectangle().draw();
 }
 
-void BusinessCenter::activate(Player owner, vector<Player> &players, Player diceRoller) {
+void BusinessCenter::activate(Player &owner, vector<Player> &players, Player &diceRoller) {
     // TODO: Implement taking an establishment from any player
     // Note: maybe set a global boolean here to indicate to the game loop that the player
     //       needs to choose a player to trade an establishment with
