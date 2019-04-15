@@ -21,7 +21,7 @@ color BLUE_CARD_COLOR = {(0.0/255),(50.0/255),(120.0/255)}; // Blue
 color GREEN_CARD_COLOR = {(0.0/255),(120.0/255),(30.0/255)}; // Green
 color PURPLE_CARD_COLOR = {0.5, 0, 0.5}; // Purple
 color LANDMARK_CARD_COLOR = {0.5,0.5,0.5}; // Grey
-color LANDMARK_CARD_OWNED_COLOR = {1,1,0}; // Yellow
+color LANDMARK_CARD_OWNED_COLOR = {(204.0/255),(204.0/255),(0.0/255)}; // Yellow
 
 /********************/
 /** Card Constants **/
@@ -225,7 +225,7 @@ RectangleShape fruitAndVegetableMarketButton(CARD_BUTTON_WIDTH, CARD_BUTTON_HEIG
 RectangleShape rollDieButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
 
 // In game inventory slots
-RectangleShape moneySlot(SLOT_WIDTH, SLOT_HEIGHT, LANDMARK_CARD_COLOR, SLOT_X_POSITION, SLOT_TOP_Y_POSITION);
+RectangleShape moneySlot(SLOT_WIDTH, SLOT_HEIGHT, LANDMARK_CARD_OWNED_COLOR, SLOT_X_POSITION, SLOT_TOP_Y_POSITION);
 
 RectangleShape wheatFieldSlot(SLOT_WIDTH, SLOT_HEIGHT, BLUE_CARD_COLOR, SLOT_X_POSITION, moneySlot.getY() + moneySlot.getHeight() + SLOT_Y_MARGIN);
 RectangleShape ranchSlot(SLOT_WIDTH, SLOT_HEIGHT, BLUE_CARD_COLOR, SLOT_X_POSITION, wheatFieldSlot.getY() + wheatFieldSlot.getHeight() + SLOT_Y_MARGIN);
@@ -275,7 +275,7 @@ struct GameData {
     bool gameBegin = true;
     turnPhase turnPhase = roll;
     bool boughtCard = false;
-
+    bool skipRadioTower = false;
 };
 
 GameData Game;

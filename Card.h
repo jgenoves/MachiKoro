@@ -76,7 +76,7 @@ public:
 
     // Virtual Methods
     virtual void draw() = 0;
-    virtual void activate(Player owner, vector<Player> &players, Player diceRoller) = 0;
+    virtual void activate(Player &owner, vector<Player> &players, Player &diceRoller) = 0;
 
     // Other Methods
 
@@ -96,7 +96,7 @@ public:
     WheatField();
     WheatField(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class Ranch : public Card{
@@ -104,7 +104,7 @@ public:
     Ranch();
     Ranch(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class Forest : public Card{
@@ -112,7 +112,7 @@ public:
     Forest();
     Forest(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class Mine : public Card{
@@ -120,7 +120,7 @@ public:
     Mine();
     Mine(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class AppleOrchard : public Card{
@@ -128,7 +128,7 @@ public:
     AppleOrchard();
     AppleOrchard(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class Bakery : public Card{
@@ -136,7 +136,7 @@ public:
     Bakery();
     Bakery(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class ConvenienceStore : public Card{
@@ -144,7 +144,7 @@ public:
     ConvenienceStore();
     ConvenienceStore(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class CheeseFactory : public Card{
@@ -152,7 +152,7 @@ public:
     CheeseFactory();
     CheeseFactory(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class FurnitureFactory : public Card{
@@ -160,7 +160,7 @@ public:
     FurnitureFactory();
     FurnitureFactory(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class FruitAndVegetableMarket : public Card{
@@ -168,7 +168,7 @@ public:
     FruitAndVegetableMarket();
     FruitAndVegetableMarket(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class Cafe : public Card{
@@ -176,7 +176,7 @@ public:
     Cafe();
     Cafe(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class FamilyRestaurant : public Card{
@@ -184,7 +184,7 @@ public:
     FamilyRestaurant();
     FamilyRestaurant(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class Stadium : public Card{
@@ -192,7 +192,7 @@ public:
     Stadium();
     Stadium(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class TVStation : public Card{
@@ -200,7 +200,7 @@ public:
     TVStation();
     TVStation(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 class BusinessCenter : public Card{
@@ -208,7 +208,7 @@ public:
     BusinessCenter();
     BusinessCenter(string newDescription, int newCost, range newRange, cardType newType, RectangleShape newRectangle, string newName, cardSymbol newSymbol);
     void draw() override;
-    void activate(Player owner, vector<Player> &players, Player diceRoller) override;
+    void activate(Player &owner, vector<Player> &players, Player &diceRoller) override;
 };
 
 #endif //PLAYER_H

@@ -318,8 +318,8 @@ void displayGame(){
     drawPlayerButtons();
 
     if(Game.turnPhase == roll){
-        cout << "roll phase\n";
-        if (Game.currentPlayer.getTrainStationBool()){
+        //cout << "roll phase\n";
+        if (Game.players[Game.currentPlayerIndex].getTrainStationBool()){
             // Draw another button that would roll two dice
             //rollDie2Button.draw();
         }
@@ -336,12 +336,13 @@ void displayGame(){
         // Draw the result of the dice roll
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
 
-        if (Game.currentPlayer.getRadioTowerBool()){
+        if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
             // Draw a button that allows a reroll
             //rerollButton.draw();
-
+            Game.skipRadioTower = true;
         }
         else {
+            Game.diceSum = Game.dice1Roll + Game.dice2Roll;
             Game.turnPhase = distribution;
         }
     }
@@ -355,48 +356,62 @@ void displayGame(){
         switch (Game.numOfPlayers) {
             //Case 1: 2 player game
             case (2):
-                Player owner;
                 switch (Game.currentPlayerIndex) {
                     //Activate red cards for player2 on player1's roll
                     case (0):
-                        owner = Game.players[1];
-                        for (shared_ptr<Card> card : owner.getEstablishments()) {
-                            if (card->getCardType() == restaurant && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
-                                card->activate(owner, Game.players, Game.currentPlayer);
+                        for (shared_ptr<Card> card : Game.players[1].getEstablishments()) {
+                            if (card->getCardType() == restaurant && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()) {
+                                cout << "Roll: " << Game.diceSum << "\n";
+                                cout << "activating card: " << card->getName() << "\n";
+                                card->activate(Game.players[1], Game.players, Game.players[Game.currentPlayerIndex]);
                             }
                         }
                         break;
                     //Activate red cards for player1 on player2's roll
                     case (1):
-                        owner = Game.players[0];
-                        for (shared_ptr<Card> card : owner.getEstablishments()) {
-                            if (card->getCardType() == restaurant && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
-                                card->activate(owner, Game.players, Game.currentPlayer);
+                        for (shared_ptr<Card> card : Game.players[0].getEstablishments()) {
+                            if (card->getCardType() == restaurant && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()) {
+                                cout << "Roll: " << Game.diceSum << "\n";
+                                cout << "activating card: " << card->getName() << "\n";
+                                card->activate(Game.players[0], Game.players, Game.players[Game.currentPlayerIndex]);
                             }
                         }
                         break;
                 }
                 break;
         }
+
+//        for(int i = 0; i < Game.players.size(); i++){
+//            for (int j = 0; j < Game.players[i].getEstablishments().size(); j++){
+//                shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
+//                if (card->getCardType() == primaryIndustry && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()){
+//                    card->activate(Game.players[i], Game.players, Game.currentPlayer);
+//                }
+//            }
+//        }
+
         //Activate all blue/primaryIndustry cards across the board
         for (Player player : Game.players) {
             for (shared_ptr<Card> card : player.getEstablishments()) {
-                if (card->getCardType() == primaryIndustry && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
-                    card->activate(player, Game.players, Game.currentPlayer);
+                if (card->getCardType() == primaryIndustry && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()) {
+                    cout << "Roll: " << Game.diceSum << "\n";
+                    cout << "activating card: " << card->getName() << "\n";
+                    card->activate(player, Game.players, Game.players[Game.currentPlayerIndex]);
                 }
             }
         }
         //Activate currentPlayers green/secondary industry cards and purple/majorEstablishment cards
-        for (shared_ptr<Card> card : Game.currentPlayer.getEstablishments()) {
-            if ((card->getCardType() == majorEstablishment || card->getCardType() == secondaryIndustry) && card->getActivationMin() <= Game.diceSum <= card->getActivationMax()) {
-                card->activate(Game.currentPlayer, Game.players, Game.currentPlayer);
+        for (shared_ptr<Card> card : Game.players[Game.currentPlayerIndex].getEstablishments()) {
+            if ((card->getCardType() == majorEstablishment || card->getCardType() == secondaryIndustry) && card->getActivationMin() <= Game.diceSum && Game.diceSum <= card->getActivationMax()) {
+                cout << "Roll: " << Game.diceSum << "\n";
+                cout << "activating card: " << card->getName() << "\n";
+                card->activate(Game.players[Game.currentPlayerIndex], Game.players, Game.players[Game.currentPlayerIndex]);
             }
         }
         Game.turnPhase = buy;
     } else if(Game.turnPhase == buy){
-        cout << "buy phase\n";
+        //cout << "buy phase\n";
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
-        //TODO implement buying of cards
         if(Game.boughtCard) {
             cout << "card bought" << endl;
             Game.turnPhase = endturn;
