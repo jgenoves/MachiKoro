@@ -49,13 +49,6 @@ void init() {
     Game.players[1].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[1].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
 
-    Game.currentPlayer = Game.players[0];
-
-    Game.focusedPlayer = Game.players[0];
-
-    for(shared_ptr<Card> card : Game.currentPlayer.getEstablishments()){
-        cout << card->getName() << endl;
-    }
 }
 
 /* Initialize OpenGL Graphics */
@@ -334,6 +327,9 @@ void displayGame(){
     mainMenuButton.draw();
     string message = "Main Menu";
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
+
+    message = "Player " + to_string(Game.currentPlayerIndex) + "'s turn";
+    drawText24(message, 1, 1, 1, 400, 40);
 
     drawMarket();
     rollDieButton.draw();
@@ -697,13 +693,26 @@ void mouse(int button, int state, int x, int y) {
     }
     else if (screen == game){
 
+        // Main Menu Button
         if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             screen = start;
         }
-        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.diceRolled && Game.turnPhase == roll){
+
+        // Game option buttons
+        else if (rollDieButton.isOverlapping(x,y) && !Game.diceRolled && Game.turnPhase == roll && button == GLUT_LEFT_BUTTON && state == GLUT_UP ){
             Game.dice1Roll = (rand() % 6) + 1;
             Game.diceRolled = true;
         }
+        else if (roll2diceButton.isOverlapping(x,y) && !Game.diceRolled && Game.turnPhase == roll && Game.players[Game.currentPlayerIndex].getTrainStationBool() && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            Game.dice1Roll = (rand() % 6) + 1;
+            Game.dice2Roll = (rand() % 6) + 1;
+            Game.diceRolled = true;
+        }
+        else if (skipBuyButton.isOverlapping(x,y) && !Game.boughtCard && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            Game.turnPhase = endturn;
+        }
+
+        // Market Buttons
         else if(wheatFieldButton.isOverlapping(x, y) && !Game.boughtCard && numOfWheatField >= 0 && Game.turnPhase == buy && Game.players[Game.currentPlayerIndex].getMoney() >= WHEAT_FIELD_COST && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - WHEAT_FIELD_COST);
@@ -794,6 +803,8 @@ void mouse(int button, int state, int x, int y) {
             numOfFruitandVeggieMarket--;
             Game.boughtCard = true;
         }
+
+        // Landmark Slot buttons
         else if(trainStationSlot.isOverlapping(x, y) && !Game.players[Game.currentPlayerIndex].getTrainStationBool() && !Game.boughtCard && Game.players[Game.currentPlayerIndex].getMoney() >= TRAIN_STATION_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].setTrainStationBool(true);
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - TRAIN_STATION_COST);
@@ -815,6 +826,7 @@ void mouse(int button, int state, int x, int y) {
             Game.boughtCard = true;
         }
 
+        // Player Buttons
         else if (player1button.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             //Game.focusedPlayer = Game.players[0];
             Game.focusedPlayerIndex = 0;

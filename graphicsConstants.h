@@ -270,8 +270,6 @@ vector<shared_ptr<Card>> cardsPlayer2;
 
 //GameData
 struct GameData {
-    Player currentPlayer;
-    Player focusedPlayer;
     int currentPlayerIndex = 0;
     int focusedPlayerIndex = 0;
     vector<Player> players;
