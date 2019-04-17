@@ -32,13 +32,13 @@ void init() {
 //    player3.getEstablishments()[0]->activate(player3, somePlayers, player3);
 //    cout << "Player 3 Money: " << player3.getMoney() << "\n";
 
-    cout << "wheat field min: " << WHEAT_FIELD_RANGE.minimum << "\n";
+//    cout << "wheat field min: " << WHEAT_FIELD_RANGE.minimum << "\n";
     width = WIDTH;
     height = HEIGHT;
 
     // Example of working inventory
-    Player player1 = Player(3);
-    Player player2 = Player(3);
+    Player player1 = Player(5);
+    Player player2 = Player(5);
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
@@ -85,64 +85,84 @@ void drawText10(string message, float r, float g, float b, double x, double y){
 void drawMarket(){
 
     wheatFieldButton.draw();
-    string message = "Wheat Field";
-    drawText24(message, 1, 1, 1, wheatFieldButton.getX() + 10, wheatFieldButton.getY() + 30);
+    string message = "Wheat";
+    drawText18(message, 1, 1, 1, wheatFieldButton.getX() + 5, wheatFieldButton.getY() + 30);
+    message = "Field";
+    drawText18(message, 1, 1, 1, wheatFieldButton.getX() + 5, wheatFieldButton.getY() + 60);
 
     ranchButton.draw();
     message = "Ranch";
-    drawText24(message, 1, 1, 1, ranchButton.getX() + 10, ranchButton.getY() + 30);
+    drawText18(message, 1, 1, 1, ranchButton.getX() + 5, ranchButton.getY() + 30);
 
     bakeryButton.draw();
     message = "Bakery";
-    drawText24(message, 1, 1, 1, bakeryButton.getX() + 10, bakeryButton.getY() + 30);
+    drawText18(message, 1, 1, 1, bakeryButton.getX() + 5, bakeryButton.getY() + 30);
 
     cafeButton.draw();
     message = "Cafe";
-    drawText24(message, 1, 1, 1, cafeButton.getX() + 10, cafeButton.getY() + 30);
+    drawText18(message, 1, 1, 1, cafeButton.getX() + 5, cafeButton.getY() + 30);
 
     convenienceStoreButton.draw();
-    message = "Convenience Store";
-    drawText24(message, 1, 1, 1, convenienceStoreButton.getX() + 10, convenienceStoreButton.getY() + 30);
+    message = "Convenience";
+    drawText18(message, 1, 1, 1, convenienceStoreButton.getX() + 5, convenienceStoreButton.getY() + 30);
+    message = "Store";
+    drawText18(message, 1, 1, 1, convenienceStoreButton.getX() + 5, convenienceStoreButton.getY() + 60);
 
     forestButton.draw();
     message = "Forest";
-    drawText24(message, 1, 1, 1, forestButton.getX() + 10, forestButton.getY() + 30);
+    drawText18(message, 1, 1, 1, forestButton.getX() + 5, forestButton.getY() + 30);
 
     tvStationButton.draw();
-    message = "TV Station";
-    drawText24(message, 1, 1, 1, tvStationButton.getX() + 10, tvStationButton.getY() + 30);
+    message = "TV";
+    drawText18(message, 1, 1, 1, tvStationButton.getX() + 5, tvStationButton.getY() + 30);
+    message = "Station";
+    drawText18(message, 1, 1, 1, tvStationButton.getX() + 5, tvStationButton.getY() + 60);
 
     stadiumButton.draw();
     message = "Stadium";
-    drawText24(message, 1, 1, 1, stadiumButton.getX() + 10, stadiumButton.getY() + 30);
+    drawText18(message, 1, 1, 1, stadiumButton.getX() + 5, stadiumButton.getY() + 30);
 
     businessCenterButton.draw();
-    message = "Business Center";
-    drawText24(message, 1, 1, 1, businessCenterButton.getX() + 10, businessCenterButton.getY() + 30);
+    message = "Business";
+    drawText18(message, 1, 1, 1, businessCenterButton.getX() + 5, businessCenterButton.getY() + 30);
+    message = "Center";
+    drawText18(message, 1, 1, 1, businessCenterButton.getX() + 5, businessCenterButton.getY() + 60);
 
     cheeseFactoryButton.draw();
-    message = "Cheese Factory";
-    drawText24(message, 1, 1, 1, cheeseFactoryButton.getX() + 10, cheeseFactoryButton.getY() + 30);
+    message = "Cheese";
+    drawText18(message, 1, 1, 1, cheeseFactoryButton.getX() + 5, cheeseFactoryButton.getY() + 30);
+    message = "Factory";
+    drawText18(message, 1, 1, 1, cheeseFactoryButton.getX() + 5, cheeseFactoryButton.getY() + 60);
 
     furnitureFactoryButton.draw();
-    message = "Furniture Factory";
-    drawText24(message, 1, 1, 1, furnitureFactoryButton.getX() + 10, furnitureFactoryButton.getY() + 30);
+    message = "Furniture";
+    drawText18(message, 1, 1, 1, furnitureFactoryButton.getX() + 5, furnitureFactoryButton.getY() + 30);
+    message = "Factory";
+    drawText18(message, 1, 1, 1, furnitureFactoryButton.getX() + 5, furnitureFactoryButton.getY() + 60);
 
     mineButton.draw();
     message = "Mine";
-    drawText24(message, 1, 1, 1, mineButton.getX() + 10, mineButton.getY() + 30);
+    drawText18(message, 1, 1, 1, mineButton.getX() + 5, mineButton.getY() + 30);
 
     familyRestaurantButton.draw();
-    message = "Family Restaurant";
-    drawText24(message, 1, 1, 1, familyRestaurantButton.getX() + 10, familyRestaurantButton.getY() + 30);
+    message = "Family";
+    drawText18(message, 1, 1, 1, familyRestaurantButton.getX() + 5, familyRestaurantButton.getY() + 30);
+    message = "Restaurant";
+    drawText18(message, 1, 1, 1, familyRestaurantButton.getX() + 5, familyRestaurantButton.getY() + 60);
 
     appleOrchardButton.draw();
-    message = "Apple Orchard";
-    drawText24(message, 1, 1, 1, appleOrchardButton.getX() + 10, appleOrchardButton.getY() + 30);
+    message = "Apple";
+    drawText18(message, 1, 1, 1, appleOrchardButton.getX() + 5, appleOrchardButton.getY() + 30);
+    message = "Orchard";
+    drawText18(message, 1, 1, 1, appleOrchardButton.getX() + 5, appleOrchardButton.getY() + 60);
 
     fruitAndVegetableMarketButton.draw();
-    message = "Fruit and Vegetable Market";
-    drawText24(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 10, fruitAndVegetableMarketButton.getY() + 30);
+    message = "Fruit and";
+    drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5, fruitAndVegetableMarketButton.getY() + 30);
+    message = "Vegetable";
+    drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5, fruitAndVegetableMarketButton.getY() + 60);
+    message = "Market";
+    drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5, fruitAndVegetableMarketButton.getY() + 90);
 
 }
 
@@ -328,7 +348,7 @@ void displayGame(){
     string message = "Main Menu";
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
 
-    message = "Player " + to_string(Game.currentPlayerIndex) + "'s turn";
+    message = "Player " + to_string(Game.currentPlayerIndex + 1) + "'s turn";
     drawText24(message, 1, 1, 1, 400, 40);
 
     drawMarket();
@@ -351,6 +371,9 @@ void displayGame(){
         rollDieButton.draw();
         string dieMessage = "Roll";
         drawText24(dieMessage, 0, 0, 0, rollDieButton.getX() + 10, rollDieButton.getY() + 20);
+        dieMessage = "Roll 2";
+        drawText24(dieMessage, 0, 0, 0, roll2diceButton.getX() + 10, roll2diceButton.getY() + 20);
+
         if(Game.diceRolled){
             Game.turnPhase = postRoll;
             Game.diceRolled = false;
@@ -360,6 +383,7 @@ void displayGame(){
         cout << "post roll phase\n";
         // Draw the result of the dice roll
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
         if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
             // Draw a button that allows a reroll
@@ -431,6 +455,8 @@ void displayGame(){
     else if(Game.turnPhase == buy){
         //cout << "buy phase\n";
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+
         if(Game.boughtCard) {
             cout << "card bought" << endl;
 //            if(Game.players[Game.currentPlayerIndex].checkWinner()){
@@ -562,6 +588,12 @@ void cursor(int x, int y) {
         }
         else {
             rollDieButton.setFill(ROLL_BUTTON_COLOR);
+        }
+        if (roll2diceButton.isOverlapping(x,y)){
+            roll2diceButton.setFill(ROLL_BUTTON_HOVER);
+        }
+        else {
+            roll2diceButton.setFill(ROLL_BUTTON_COLOR);
         }
 
         // Player buttons
@@ -701,6 +733,7 @@ void mouse(int button, int state, int x, int y) {
         // Game option buttons
         else if (rollDieButton.isOverlapping(x,y) && !Game.diceRolled && Game.turnPhase == roll && button == GLUT_LEFT_BUTTON && state == GLUT_UP ){
             Game.dice1Roll = (rand() % 6) + 1;
+            Game.dice2Roll = 0;
             Game.diceRolled = true;
         }
         else if (roll2diceButton.isOverlapping(x,y) && !Game.diceRolled && Game.turnPhase == roll && Game.players[Game.currentPlayerIndex].getTrainStationBool() && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
