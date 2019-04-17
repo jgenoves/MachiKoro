@@ -363,12 +363,7 @@ void displayGame(){
     drawPlayerButtons();
 
     if(Game.turnPhase == roll){
-        //cout << "roll phase\n";
-        if (Game.players[Game.currentPlayerIndex].getTrainStationBool()){
-            // Draw another button that would roll two dice
-            //rollDie2Button.draw();
-        }
-        rollDieButton.draw();
+
         string dieMessage = "Roll";
         drawText24(dieMessage, 0, 0, 0, rollDieButton.getX() + 10, rollDieButton.getY() + 20);
         dieMessage = "Roll 2";
@@ -468,21 +463,33 @@ void displayGame(){
             Game.turnPhase = endturn;
             //Game.boughtCard = false;
         }
-    }else if(Game.turnPhase == endturn){
+    }
+    else if(Game.turnPhase == endturn){
         cout << "end turn phase" << endl;
         //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
-        Game.currentPlayerIndex++;
-        //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
-        if (Game.currentPlayerIndex >= Game.players.size()){
-            Game.currentPlayerIndex = 0;
+        if (Game.players[Game.currentPlayerIndex].getAmusementParkBool() && Game.dice1Roll == Game.dice2Roll){
+            // Current player takes another turn
+            //Reset dice roll and dice sum values
+            Game.dice1Roll = 0;
+            Game.dice2Roll = 0;
+            Game.diceSum = 0;
+            Game.turnPhase = roll;
+            Game.boughtCard = false;
+        }
+        else {
+            Game.currentPlayerIndex++;
+            //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
+            if (Game.currentPlayerIndex >= Game.players.size()) {
+                Game.currentPlayerIndex = 0;
+            }
+            //Reset dice roll and dice sum values
+            Game.dice1Roll = 0;
+            Game.dice2Roll = 0;
+            Game.diceSum = 0;
+            Game.turnPhase = roll;
+            Game.boughtCard = false;
         }
 
-        //Reset dice roll and dice sum values
-        Game.dice1Roll = 0;
-        Game.dice2Roll = 0;
-        Game.diceSum = 0;
-        Game.turnPhase = roll;
-        Game.boughtCard = false;
     }
 }
 
