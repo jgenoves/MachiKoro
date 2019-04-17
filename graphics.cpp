@@ -11,7 +11,9 @@
 GLdouble width, height;
 int wd;
 
-Image i("cardTwo.BMP");
+Image i("radioTower2.BMP");
+
+Image *currentDisplay;
 
 //Function Declarations
 
@@ -330,7 +332,7 @@ void displayStart(){
 
 void displayGame(){
 
-
+    currentDisplay->draw();
     mainMenuButton.draw();
     string message = "Main Menu";
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
@@ -846,6 +848,7 @@ void resize(int width, int height){
 }
 /* Main function: GLUT runs as a console application starting at main()  */
 int graphicsPlay(int argc, char** argv) {
+    currentDisplay = &i;
 
     init();
 

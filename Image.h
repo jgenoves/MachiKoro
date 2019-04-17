@@ -128,10 +128,11 @@ struct Pixel {
 
 
 class Image: public Shape {
-private:
 protected:
     Vector2D start;
     Vector2D dimensions;
+
+    GLuint loadAndBuffer(const char *filename);
 
 public:
     std::vector<std::vector<Pixel>> pixels;
