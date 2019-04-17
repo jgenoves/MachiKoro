@@ -155,7 +155,7 @@ cardSymbol FRUIT_AND_VEGETABLE_MARKET_SYMBOL = fruit;
 enum screenType {start, game, endGame};
 screenType screen = start;
 
-enum turnPhase{roll, postRoll, distribution, buy, endturn};
+enum turnPhase{roll, postRoll, radioTower, distribution, buy, endturn};
 
 
 // Glut constants
@@ -170,6 +170,7 @@ color BUTTON_HOVER_COLOR = {0,1,0}; // Green
 int BUTTON_X_POSITION = 25;
 int BUTTON_Y_POSITION = 10;
 int BUTTON_Y_MARGIN = 20;
+int BUTTON_X_MARGIN = 20;
 
 // In game card button constants
 int CARD_BUTTON_WIDTH = 75;
@@ -262,12 +263,8 @@ RectangleShape player2button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_B
 RectangleShape rollDieButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX(), wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
 RectangleShape roll2diceButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
 RectangleShape skipBuyButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION, PLAYER_BUTTON_Y_POSITION - BUTTON_HEIGHT - BUTTON_Y_MARGIN);
-
-// Vectors
-vector<shared_ptr<Card>> cardsPlayer1;
-vector<shared_ptr<Card>> cardsPlayer2;
-
-
+RectangleShape rerollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION + BUTTON_X_MARGIN + BUTTON_WIDTH, PLAYER_BUTTON_Y_POSITION);
+RectangleShape keepRollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, rerollButton.getX(), rerollButton.getY() + rerollButton.getHeight() + BUTTON_Y_MARGIN);
 //GameData
 struct GameData {
     int currentPlayerIndex = 0;

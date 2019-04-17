@@ -351,9 +351,43 @@ void displayGame(){
     message = "Player " + to_string(Game.currentPlayerIndex + 1) + "'s turn";
     drawText24(message, 1, 1, 1, 400, 40);
 
+    switch (Game.turnPhase){
+        case (roll):
+            message = "Phase: Roll";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case (postRoll):
+            message = "Phase: Post Roll";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case (radioTower):
+            message = "Phase: RadioTower";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case(distribution):
+            message = "Phase: Distribution";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case(buy):
+            message = "Phase: Buy";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case(endturn):
+            message = "Phase: End Turn";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+    }
+
+
     drawMarket();
     rollDieButton.draw();
     roll2diceButton.draw();
+    rerollButton.draw();
+    message = "Reroll Dice";
+    drawText24(message, 1, 1, 1, rerollButton.getX() + 25, rerollButton.getY() + 45);
+    keepRollButton.draw();
+    message = "Keep Roll";
+    drawText24(message, 1, 1, 1, keepRollButton.getX() + 25, keepRollButton.getY() + 45);
     skipBuyButton.draw();
     message = "Skip Buy Phase";
     drawText24(message, 1, 1, 1, skipBuyButton.getX() + 25, skipBuyButton.getY() + 45);
@@ -381,14 +415,20 @@ void displayGame(){
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
         if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
-            // Draw a button that allows a reroll
-            //rerollButton.draw();
+            // Do not allow the dice to be rerolled more than once per turn
             Game.skipRadioTower = true;
+            Game.turnPhase = radioTower;
         }
         else {
             Game.diceSum = Game.dice1Roll + Game.dice2Roll;
             Game.turnPhase = distribution;
         }
+    }
+    else if (Game.turnPhase == radioTower){
+        //Reset dice roll and dice sum values
+        //Wait for player input
+        drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
     }
     else if (Game.turnPhase == distribution){
         cout << "distribution phase\n";
@@ -475,6 +515,7 @@ void displayGame(){
             Game.diceSum = 0;
             Game.turnPhase = roll;
             Game.boughtCard = false;
+            Game.skipRadioTower = false;
         }
         else {
             Game.currentPlayerIndex++;
@@ -488,6 +529,8 @@ void displayGame(){
             Game.diceSum = 0;
             Game.turnPhase = roll;
             Game.boughtCard = false;
+            Game.skipRadioTower = false;
+
         }
 
     }
@@ -753,7 +796,15 @@ void mouse(int button, int state, int x, int y) {
         else if (skipBuyButton.isOverlapping(x,y) && !Game.boughtCard && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.turnPhase = endturn;
         }
-
+        else if (rerollButton.isOverlapping(x,y) && Game.turnPhase == radioTower && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            Game.dice1Roll = 0;
+            Game.dice2Roll = 0;
+            Game.diceSum = 0;
+            Game.turnPhase = roll;
+        }
+        else if (keepRollButton.isOverlapping(x,y) && Game.turnPhase == radioTower && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+            Game.turnPhase = distribution;
+        }
         // Market Buttons
         else if(wheatFieldButton.isOverlapping(x, y) && !Game.boughtCard && numOfWheatField > 0 && Game.turnPhase == buy && Game.players[Game.currentPlayerIndex].getMoney() >= WHEAT_FIELD_COST && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
