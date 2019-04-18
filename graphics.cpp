@@ -37,8 +37,8 @@ void init() {
     height = HEIGHT;
 
     // Example of working inventory
-    Player player1 = Player(999);
-    Player player2 = Player(999);
+    Player player1 = Player(STARTING_MONEY);
+    Player player2 = Player(STARTING_MONEY);
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
@@ -82,88 +82,153 @@ void drawText10(string message, float r, float g, float b, double x, double y){
     }
 }
 
+void resetGame(){
+    for (int i = 0; i < Game.players.size(); i++){
+        Game.players[i].getEstablishments().clear();
+    }
+    Game.players.clear();
+
+    Player player1 = Player(STARTING_MONEY);
+    Player player2 = Player(STARTING_MONEY);
+
+    Game.players.push_back(player1);
+    Game.players.push_back(player2);
+
+    Game.players[0].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+    Game.players[0].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+
+    Game.players[1].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+    Game.players[1].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+
+    Game.currentPlayerIndex = 0;
+    Game.focusedPlayerIndex = 0;
+    Game.numOfPlayers = 2;
+    Game.gameOver = false;
+    Game.dice1Roll = 0;
+    Game.dice2Roll = 0;
+    Game.diceSum = 0;
+    Game.diceRolled = false;
+    Game.turnPhase = roll;
+    Game.boughtCard = false;
+    Game.skipRadioTower = false;
+
+    numOfWheatField = 6;
+    numOfRanch = 6;
+    numOfForest = 6;
+    numOfMine = 6;
+    numOfAppleOrchard = 6;
+    numOfBakery = 6;
+    numOfConvenienceStore = 6;
+    numOfCheeseFactory = 6;
+    numOfFurnitureFactory = 6;
+    numOfFruitandVeggieMarket = 6;
+    numOfCafe = 6;
+    numOfFamilyRestaurant = 6;
+    numOfStadium = 2;
+    numOfTVStation = 2;
+    numOfBusinessCenter = 2;
+}
+
 void drawMarket(){
-
-    wheatFieldButton.draw();
-    string message = "Wheat";
-    drawText18(message, 1, 1, 1, wheatFieldButton.getX() + 5, wheatFieldButton.getY() + 30);
-    message = "Field";
-    drawText18(message, 1, 1, 1, wheatFieldButton.getX() + 5, wheatFieldButton.getY() + 60);
-
-    ranchButton.draw();
-    message = "Ranch";
-    drawText18(message, 1, 1, 1, ranchButton.getX() + 5, ranchButton.getY() + 30);
-
-    bakeryButton.draw();
-    message = "Bakery";
-    drawText18(message, 1, 1, 1, bakeryButton.getX() + 5, bakeryButton.getY() + 30);
-
-    cafeButton.draw();
-    message = "Cafe";
-    drawText18(message, 1, 1, 1, cafeButton.getX() + 5, cafeButton.getY() + 30);
-
-    convenienceStoreButton.draw();
-    message = "Convenience";
-    drawText18(message, 1, 1, 1, convenienceStoreButton.getX() + 5, convenienceStoreButton.getY() + 30);
-    message = "Store";
-    drawText18(message, 1, 1, 1, convenienceStoreButton.getX() + 5, convenienceStoreButton.getY() + 60);
-
-    forestButton.draw();
-    message = "Forest";
-    drawText18(message, 1, 1, 1, forestButton.getX() + 5, forestButton.getY() + 30);
-
-    tvStationButton.draw();
-    message = "TV";
-    drawText18(message, 1, 1, 1, tvStationButton.getX() + 5, tvStationButton.getY() + 30);
-    message = "Station";
-    drawText18(message, 1, 1, 1, tvStationButton.getX() + 5, tvStationButton.getY() + 60);
-
-    stadiumButton.draw();
-    message = "Stadium";
-    drawText18(message, 1, 1, 1, stadiumButton.getX() + 5, stadiumButton.getY() + 30);
-
-    businessCenterButton.draw();
-    message = "Business";
-    drawText18(message, 1, 1, 1, businessCenterButton.getX() + 5, businessCenterButton.getY() + 30);
-    message = "Center";
-    drawText18(message, 1, 1, 1, businessCenterButton.getX() + 5, businessCenterButton.getY() + 60);
-
-    cheeseFactoryButton.draw();
-    message = "Cheese";
-    drawText18(message, 1, 1, 1, cheeseFactoryButton.getX() + 5, cheeseFactoryButton.getY() + 30);
-    message = "Factory";
-    drawText18(message, 1, 1, 1, cheeseFactoryButton.getX() + 5, cheeseFactoryButton.getY() + 60);
-
-    furnitureFactoryButton.draw();
-    message = "Furniture";
-    drawText18(message, 1, 1, 1, furnitureFactoryButton.getX() + 5, furnitureFactoryButton.getY() + 30);
-    message = "Factory";
-    drawText18(message, 1, 1, 1, furnitureFactoryButton.getX() + 5, furnitureFactoryButton.getY() + 60);
-
-    mineButton.draw();
-    message = "Mine";
-    drawText18(message, 1, 1, 1, mineButton.getX() + 5, mineButton.getY() + 30);
-
-    familyRestaurantButton.draw();
-    message = "Family";
-    drawText18(message, 1, 1, 1, familyRestaurantButton.getX() + 5, familyRestaurantButton.getY() + 30);
-    message = "Restaurant";
-    drawText18(message, 1, 1, 1, familyRestaurantButton.getX() + 5, familyRestaurantButton.getY() + 60);
-
-    appleOrchardButton.draw();
-    message = "Apple";
-    drawText18(message, 1, 1, 1, appleOrchardButton.getX() + 5, appleOrchardButton.getY() + 30);
-    message = "Orchard";
-    drawText18(message, 1, 1, 1, appleOrchardButton.getX() + 5, appleOrchardButton.getY() + 60);
-
-    fruitAndVegetableMarketButton.draw();
-    message = "Fruit and";
-    drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5, fruitAndVegetableMarketButton.getY() + 30);
-    message = "Vegetable";
-    drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5, fruitAndVegetableMarketButton.getY() + 60);
-    message = "Market";
-    drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5, fruitAndVegetableMarketButton.getY() + 90);
-
+    string message = "";
+    if (numOfWheatField > 0) {
+        wheatFieldButton.draw();
+        message = "Wheat";
+        drawText18(message, 1, 1, 1, wheatFieldButton.getX() + 5, wheatFieldButton.getY() + 30);
+        message = "Field";
+        drawText18(message, 1, 1, 1, wheatFieldButton.getX() + 5, wheatFieldButton.getY() + 60);
+    }
+    if (numOfRanch > 0) {
+        ranchButton.draw();
+        message = "Ranch";
+        drawText18(message, 1, 1, 1, ranchButton.getX() + 5, ranchButton.getY() + 30);
+    }
+    if (numOfBakery > 0) {
+        bakeryButton.draw();
+        message = "Bakery";
+        drawText18(message, 1, 1, 1, bakeryButton.getX() + 5, bakeryButton.getY() + 30);
+    }
+    if (numOfCafe > 0) {
+        cafeButton.draw();
+        message = "Cafe";
+        drawText18(message, 1, 1, 1, cafeButton.getX() + 5, cafeButton.getY() + 30);
+    }
+    if (numOfConvenienceStore > 0) {
+        convenienceStoreButton.draw();
+        message = "Convenience";
+        drawText18(message, 1, 1, 1, convenienceStoreButton.getX() + 5, convenienceStoreButton.getY() + 30);
+        message = "Store";
+        drawText18(message, 1, 1, 1, convenienceStoreButton.getX() + 5, convenienceStoreButton.getY() + 60);
+    }
+    if (numOfForest > 0) {
+        forestButton.draw();
+        message = "Forest";
+        drawText18(message, 1, 1, 1, forestButton.getX() + 5, forestButton.getY() + 30);
+    }
+    if (numOfTVStation > 0) {
+        tvStationButton.draw();
+        message = "TV";
+        drawText18(message, 1, 1, 1, tvStationButton.getX() + 5, tvStationButton.getY() + 30);
+        message = "Station";
+        drawText18(message, 1, 1, 1, tvStationButton.getX() + 5, tvStationButton.getY() + 60);
+    }
+    if (numOfStadium > 0) {
+        stadiumButton.draw();
+        message = "Stadium";
+        drawText18(message, 1, 1, 1, stadiumButton.getX() + 5, stadiumButton.getY() + 30);
+    }
+    if (numOfBusinessCenter > 0) {
+        businessCenterButton.draw();
+        message = "Business";
+        drawText18(message, 1, 1, 1, businessCenterButton.getX() + 5, businessCenterButton.getY() + 30);
+        message = "Center";
+        drawText18(message, 1, 1, 1, businessCenterButton.getX() + 5, businessCenterButton.getY() + 60);
+    }
+    if (numOfCheeseFactory > 0) {
+        cheeseFactoryButton.draw();
+        message = "Cheese";
+        drawText18(message, 1, 1, 1, cheeseFactoryButton.getX() + 5, cheeseFactoryButton.getY() + 30);
+        message = "Factory";
+        drawText18(message, 1, 1, 1, cheeseFactoryButton.getX() + 5, cheeseFactoryButton.getY() + 60);
+    }
+    if (numOfFurnitureFactory > 0) {
+        furnitureFactoryButton.draw();
+        message = "Furniture";
+        drawText18(message, 1, 1, 1, furnitureFactoryButton.getX() + 5, furnitureFactoryButton.getY() + 30);
+        message = "Factory";
+        drawText18(message, 1, 1, 1, furnitureFactoryButton.getX() + 5, furnitureFactoryButton.getY() + 60);
+    }
+    if (numOfMine > 0) {
+        mineButton.draw();
+        message = "Mine";
+        drawText18(message, 1, 1, 1, mineButton.getX() + 5, mineButton.getY() + 30);
+    }
+    if (numOfFamilyRestaurant > 0) {
+        familyRestaurantButton.draw();
+        message = "Family";
+        drawText18(message, 1, 1, 1, familyRestaurantButton.getX() + 5, familyRestaurantButton.getY() + 30);
+        message = "Restaurant";
+        drawText18(message, 1, 1, 1, familyRestaurantButton.getX() + 5, familyRestaurantButton.getY() + 60);
+    }
+    if (numOfAppleOrchard > 0) {
+        appleOrchardButton.draw();
+        message = "Apple";
+        drawText18(message, 1, 1, 1, appleOrchardButton.getX() + 5, appleOrchardButton.getY() + 30);
+        message = "Orchard";
+        drawText18(message, 1, 1, 1, appleOrchardButton.getX() + 5, appleOrchardButton.getY() + 60);
+    }
+    if (numOfFruitandVeggieMarket > 0) {
+        fruitAndVegetableMarketButton.draw();
+        message = "Fruit and";
+        drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5,
+                   fruitAndVegetableMarketButton.getY() + 30);
+        message = "Vegetable";
+        drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5,
+                   fruitAndVegetableMarketButton.getY() + 60);
+        message = "Market";
+        drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5,
+                   fruitAndVegetableMarketButton.getY() + 90);
+    }
 }
 
 void drawPlayerInventory(){
@@ -342,8 +407,6 @@ void displayStart(){
 }
 
 void displayGame(){
-
-
     mainMenuButton.draw();
     string message = "Main Menu";
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
@@ -445,7 +508,9 @@ void displayGame(){
                 switch (Game.currentPlayerIndex) {
                     //Activate red cards for player2 on player1's roll
                     case (0):
-                        for (int i = 0; Game.players[1].getEstablishments().size(); i++) {
+                      //  cout << to_string(Game.players[1].getEstablishments().size()) << "\n";
+                        for (int i = 0; i < Game.players[1].getEstablishments().size(); i++) {
+                            cout << to_string(i) << "\n";
                             if (Game.players[1].getEstablishments()[i]->getCardType() == restaurant && Game.players[1].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[1].getEstablishments()[i]->getActivationMax()) {
                                 cout << "num establishments: " << Game.players[i].getEstablishments().size() << "\n";
                                 cout << "activating card: " << Game.players[1].getEstablishments()[i]->getName() << "\n";
@@ -455,7 +520,7 @@ void displayGame(){
                         break;
                         //Activate red cards for player1 on player2's roll
                     case (1):
-                        for (int i = 0; Game.players[0].getEstablishments().size(); i++) {
+                        for (int i = 0; i < Game.players[0].getEstablishments().size(); i++) {
                             if (Game.players[0].getEstablishments()[i]->getCardType() == restaurant && Game.players[0].getEstablishments()[0]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[0].getEstablishments()[i]->getActivationMax()) {
                                 cout << "num establishments: " << Game.players[i].getEstablishments().size() << "\n";
                                 cout << "activating card: " << Game.players[1].getEstablishments()[i]->getName() << "\n";
@@ -506,35 +571,49 @@ void displayGame(){
     }
     else if(Game.turnPhase == endturn){
         cout << "end turn phase" << endl;
-        //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
-        if (Game.players[Game.currentPlayerIndex].getAmusementParkBool() && Game.dice1Roll == Game.dice2Roll){
-            // Current player takes another turn
-            //Reset dice roll and dice sum values
-            Game.dice1Roll = 0;
-            Game.dice2Roll = 0;
-            Game.diceSum = 0;
-            Game.turnPhase = roll;
-            Game.boughtCard = false;
-            Game.skipRadioTower = false;
+        if (Game.players[Game.currentPlayerIndex].checkWinner()){
+            Game.gameOver = true;
+            screen = endGame;
         }
         else {
-            Game.currentPlayerIndex++;
             //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
-            if (Game.currentPlayerIndex >= Game.players.size()) {
-                Game.currentPlayerIndex = 0;
+            if (Game.players[Game.currentPlayerIndex].getAmusementParkBool() && Game.dice1Roll == Game.dice2Roll) {
+                // Current player takes another turn
+                //Reset dice roll and dice sum values
+                Game.dice1Roll = 0;
+                Game.dice2Roll = 0;
+                Game.diceSum = 0;
+                Game.turnPhase = roll;
+                Game.boughtCard = false;
+                Game.skipRadioTower = false;
+            } else {
+                Game.currentPlayerIndex++;
+                //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
+                if (Game.currentPlayerIndex >= Game.players.size()) {
+                    Game.currentPlayerIndex = 0;
+                }
+                //Reset dice roll and dice sum values
+                Game.dice1Roll = 0;
+                Game.dice2Roll = 0;
+                Game.diceSum = 0;
+                Game.turnPhase = roll;
+                Game.boughtCard = false;
+                Game.skipRadioTower = false;
+
             }
-            //Reset dice roll and dice sum values
-            Game.dice1Roll = 0;
-            Game.dice2Roll = 0;
-            Game.diceSum = 0;
-            Game.turnPhase = roll;
-            Game.boughtCard = false;
-            Game.skipRadioTower = false;
-
         }
-
     }
 }
+
+void displayEndGame(){
+    mainMenuButton.draw();
+    string message = "Main Menu";
+    drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
+
+    message = "Player " + to_string(Game.currentPlayerIndex) + " WINS!";
+    drawText24(message, 1, 1, 1, 600,300);
+}
+
 
 /* Handler for window-repaint event. Call back when the window first appears and
  whenever the window needs to be re-painted. */
@@ -565,6 +644,7 @@ void display() {
     }
     if (screen == endGame){
         // Draw stuff
+        displayEndGame();
     }
 
     //i.draw();
@@ -662,6 +742,25 @@ void cursor(int x, int y) {
             player2button.setFill(BUTTON_COLOR);
         }
 
+        // Game options buttons
+        if (skipBuyButton.isOverlapping(x,y)){
+            skipBuyButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            skipBuyButton.setFill(BUTTON_COLOR);
+        }
+        if (rerollButton.isOverlapping(x,y)){
+            rerollButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            rerollButton.setFill(BUTTON_COLOR);
+        }
+        if (keepRollButton.isOverlapping(x,y)){
+            keepRollButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            keepRollButton.setFill(BUTTON_COLOR);
+        }
         // Market buttons
         if (wheatFieldButton.isOverlapping(x,y)){
             wheatFieldButton.setFill(BLUE_CARD_HOVER_COLOR);
@@ -854,7 +953,7 @@ void mouse(int button, int state, int x, int y) {
             numOfStadium--;
             Game.boughtCard = true;
         }
-        else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(BUSINESS_CENTER_NAME) == 0 && businessCenterButton.isOverlapping(x, y) && !Game.boughtCard && numOfCafe > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= BUSINESS_CENTER_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(BUSINESS_CENTER_NAME) == 0 && businessCenterButton.isOverlapping(x, y) && !Game.boughtCard && numOfBusinessCenter > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= BUSINESS_CENTER_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<BusinessCenter>(BusinessCenter(BUSINESS_CENTER_DESCRIPTION, BUSINESS_CENTER_COST, BUSINESS_CENTER_RANGE, BUSINESS_CENTER_TYPE, purpleCardRectangle, BUSINESS_CENTER_NAME, BUSINESS_CENTER_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
             numOfBusinessCenter--;
@@ -931,7 +1030,10 @@ void mouse(int button, int state, int x, int y) {
 
     }
     else if (screen == endGame){
-
+        if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            screen = start;
+            resetGame();
+        }
     }
 
     glutPostRedisplay();

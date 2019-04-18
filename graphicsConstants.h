@@ -10,6 +10,11 @@
 #include <vector>
 
 /*************************/
+/** General Game Constants **/
+/*************************/
+int STARTING_MONEY = 3;
+
+/*************************/
 /** Rectangle Constants **/
 /*************************/
 
@@ -113,7 +118,7 @@ RectangleShape redCardRectangle(CARD_BASE_DIMENSION, CARD_HEIGHT_DIMENSION, RED_
 RectangleShape blueCardRectangle(CARD_BASE_DIMENSION, CARD_HEIGHT_DIMENSION, BLUE_CARD_COLOR);
 RectangleShape greenCardRectangle(CARD_BASE_DIMENSION, CARD_HEIGHT_DIMENSION, GREEN_CARD_COLOR);
 RectangleShape purpleCardRectangle(CARD_BASE_DIMENSION, CARD_HEIGHT_DIMENSION, PURPLE_CARD_COLOR);
-RectangleShape landmarkCardRectangle(CARD_BASE_DIMENSION, CARD_HEIGHT_DIMENSION, LANDMARK_CARD_COLOR);
+//RectangleShape landmarkCardRectangle(CARD_BASE_DIMENSION, CARD_HEIGHT_DIMENSION, LANDMARK_CARD_COLOR);
 
 // cardTypes
 
@@ -201,7 +206,7 @@ int ROLL_BUTTON_Y_POSITION = 25;
 int PLAYER_BUTTON_X_POSITION = 400;
 int PLAYER_BUTTON_Y_POSITION = 600;
 int PLAYER_BUTTON_Y_MARGIN = 10;
-
+int PLAYER_BUTTON_X_MARGIN = 10;
 // Menu buttons
 RectangleShape startButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
 RectangleShape exitButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, startButton.getY() + BUTTON_HEIGHT + BUTTON_Y_MARGIN);
@@ -263,8 +268,8 @@ RectangleShape player2button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_B
 RectangleShape rollDieButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX(), wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
 RectangleShape roll2diceButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
 RectangleShape skipBuyButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION, PLAYER_BUTTON_Y_POSITION - BUTTON_HEIGHT - BUTTON_Y_MARGIN);
-RectangleShape rerollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION + BUTTON_X_MARGIN + BUTTON_WIDTH, PLAYER_BUTTON_Y_POSITION);
-RectangleShape keepRollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, rerollButton.getX(), rerollButton.getY() + rerollButton.getHeight() + BUTTON_Y_MARGIN);
+RectangleShape rerollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION + PLAYER_BUTTON_X_MARGIN + BUTTON_WIDTH, PLAYER_BUTTON_Y_POSITION);
+RectangleShape keepRollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, rerollButton.getX(), rerollButton.getY() + rerollButton.getHeight() + PLAYER_BUTTON_Y_MARGIN);
 //GameData
 struct GameData {
     int currentPlayerIndex = 0;
@@ -276,7 +281,6 @@ struct GameData {
     int dice2Roll = 0;
     int diceSum = 0;
     bool diceRolled = false;
-    //bool gameBegin = true;
     turnPhase turnPhase = roll;
     bool boughtCard = false;
     bool skipRadioTower = false;
