@@ -32,13 +32,13 @@ void init() {
 //    player3.getEstablishments()[0]->activate(player3, somePlayers, player3);
 //    cout << "Player 3 Money: " << player3.getMoney() << "\n";
 
-    cout << "wheat field min: " << WHEAT_FIELD_RANGE.minimum << "\n";
+//    cout << "wheat field min: " << WHEAT_FIELD_RANGE.minimum << "\n";
     width = WIDTH;
     height = HEIGHT;
 
     // Example of working inventory
-    Player player1 = Player(3);
-    Player player2 = Player(3);
+    Player player1 = Player(STARTING_MONEY);
+    Player player2 = Player(STARTING_MONEY);
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
@@ -49,13 +49,6 @@ void init() {
     Game.players[1].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[1].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
 
-    Game.currentPlayer = Game.players[0];
-
-    Game.focusedPlayer = Game.players[0];
-
-    for(shared_ptr<Card> card : Game.currentPlayer.getEstablishments()){
-        cout << card->getName() << endl;
-    }
 }
 
 /* Initialize OpenGL Graphics */
@@ -89,68 +82,153 @@ void drawText10(string message, float r, float g, float b, double x, double y){
     }
 }
 
+void resetGame(){
+    for (int i = 0; i < Game.players.size(); i++){
+        Game.players[i].getEstablishments().clear();
+    }
+    Game.players.clear();
+
+    Player player1 = Player(STARTING_MONEY);
+    Player player2 = Player(STARTING_MONEY);
+
+    Game.players.push_back(player1);
+    Game.players.push_back(player2);
+
+    Game.players[0].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+    Game.players[0].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+
+    Game.players[1].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+    Game.players[1].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+
+    Game.currentPlayerIndex = 0;
+    Game.focusedPlayerIndex = 0;
+    Game.numOfPlayers = 2;
+    Game.gameOver = false;
+    Game.dice1Roll = 0;
+    Game.dice2Roll = 0;
+    Game.diceSum = 0;
+    Game.diceRolled = false;
+    Game.turnPhase = roll;
+    Game.boughtCard = false;
+    Game.skipRadioTower = false;
+
+    numOfWheatField = 6;
+    numOfRanch = 6;
+    numOfForest = 6;
+    numOfMine = 6;
+    numOfAppleOrchard = 6;
+    numOfBakery = 6;
+    numOfConvenienceStore = 6;
+    numOfCheeseFactory = 6;
+    numOfFurnitureFactory = 6;
+    numOfFruitandVeggieMarket = 6;
+    numOfCafe = 6;
+    numOfFamilyRestaurant = 6;
+    numOfStadium = 2;
+    numOfTVStation = 2;
+    numOfBusinessCenter = 2;
+}
+
 void drawMarket(){
-
-    wheatFieldButton.draw();
-    string message = "Wheat Field";
-    drawText24(message, 1, 1, 1, wheatFieldButton.getX() + 10, wheatFieldButton.getY() + 30);
-
-    ranchButton.draw();
-    message = "Ranch";
-    drawText24(message, 1, 1, 1, ranchButton.getX() + 10, ranchButton.getY() + 30);
-
-    bakeryButton.draw();
-    message = "Bakery";
-    drawText24(message, 1, 1, 1, bakeryButton.getX() + 10, bakeryButton.getY() + 30);
-
-    cafeButton.draw();
-    message = "Cafe";
-    drawText24(message, 1, 1, 1, cafeButton.getX() + 10, cafeButton.getY() + 30);
-
-    convenienceStoreButton.draw();
-    message = "Convenience Store";
-    drawText24(message, 1, 1, 1, convenienceStoreButton.getX() + 10, convenienceStoreButton.getY() + 30);
-
-    forestButton.draw();
-    message = "Forest";
-    drawText24(message, 1, 1, 1, forestButton.getX() + 10, forestButton.getY() + 30);
-
-    tvStationButton.draw();
-    message = "TV Station";
-    drawText24(message, 1, 1, 1, tvStationButton.getX() + 10, tvStationButton.getY() + 30);
-
-    stadiumButton.draw();
-    message = "Stadium";
-    drawText24(message, 1, 1, 1, stadiumButton.getX() + 10, stadiumButton.getY() + 30);
-
-    businessCenterButton.draw();
-    message = "Business Center";
-    drawText24(message, 1, 1, 1, businessCenterButton.getX() + 10, businessCenterButton.getY() + 30);
-
-    cheeseFactoryButton.draw();
-    message = "Cheese Factory";
-    drawText24(message, 1, 1, 1, cheeseFactoryButton.getX() + 10, cheeseFactoryButton.getY() + 30);
-
-    furnitureFactoryButton.draw();
-    message = "Furniture Factory";
-    drawText24(message, 1, 1, 1, furnitureFactoryButton.getX() + 10, furnitureFactoryButton.getY() + 30);
-
-    mineButton.draw();
-    message = "Mine";
-    drawText24(message, 1, 1, 1, mineButton.getX() + 10, mineButton.getY() + 30);
-
-    familyRestaurantButton.draw();
-    message = "Family Restaurant";
-    drawText24(message, 1, 1, 1, familyRestaurantButton.getX() + 10, familyRestaurantButton.getY() + 30);
-
-    appleOrchardButton.draw();
-    message = "Apple Orchard";
-    drawText24(message, 1, 1, 1, appleOrchardButton.getX() + 10, appleOrchardButton.getY() + 30);
-
-    fruitAndVegetableMarketButton.draw();
-    message = "Fruit and Vegetable Market";
-    drawText24(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 10, fruitAndVegetableMarketButton.getY() + 30);
-
+    string message = "";
+    if (numOfWheatField > 0) {
+        wheatFieldButton.draw();
+        message = "Wheat";
+        drawText18(message, 1, 1, 1, wheatFieldButton.getX() + 5, wheatFieldButton.getY() + 30);
+        message = "Field";
+        drawText18(message, 1, 1, 1, wheatFieldButton.getX() + 5, wheatFieldButton.getY() + 60);
+    }
+    if (numOfRanch > 0) {
+        ranchButton.draw();
+        message = "Ranch";
+        drawText18(message, 1, 1, 1, ranchButton.getX() + 5, ranchButton.getY() + 30);
+    }
+    if (numOfBakery > 0) {
+        bakeryButton.draw();
+        message = "Bakery";
+        drawText18(message, 1, 1, 1, bakeryButton.getX() + 5, bakeryButton.getY() + 30);
+    }
+    if (numOfCafe > 0) {
+        cafeButton.draw();
+        message = "Cafe";
+        drawText18(message, 1, 1, 1, cafeButton.getX() + 5, cafeButton.getY() + 30);
+    }
+    if (numOfConvenienceStore > 0) {
+        convenienceStoreButton.draw();
+        message = "Convenience";
+        drawText18(message, 1, 1, 1, convenienceStoreButton.getX() + 5, convenienceStoreButton.getY() + 30);
+        message = "Store";
+        drawText18(message, 1, 1, 1, convenienceStoreButton.getX() + 5, convenienceStoreButton.getY() + 60);
+    }
+    if (numOfForest > 0) {
+        forestButton.draw();
+        message = "Forest";
+        drawText18(message, 1, 1, 1, forestButton.getX() + 5, forestButton.getY() + 30);
+    }
+    if (numOfTVStation > 0) {
+        tvStationButton.draw();
+        message = "TV";
+        drawText18(message, 1, 1, 1, tvStationButton.getX() + 5, tvStationButton.getY() + 30);
+        message = "Station";
+        drawText18(message, 1, 1, 1, tvStationButton.getX() + 5, tvStationButton.getY() + 60);
+    }
+    if (numOfStadium > 0) {
+        stadiumButton.draw();
+        message = "Stadium";
+        drawText18(message, 1, 1, 1, stadiumButton.getX() + 5, stadiumButton.getY() + 30);
+    }
+    if (numOfBusinessCenter > 0) {
+        businessCenterButton.draw();
+        message = "Business";
+        drawText18(message, 1, 1, 1, businessCenterButton.getX() + 5, businessCenterButton.getY() + 30);
+        message = "Center";
+        drawText18(message, 1, 1, 1, businessCenterButton.getX() + 5, businessCenterButton.getY() + 60);
+    }
+    if (numOfCheeseFactory > 0) {
+        cheeseFactoryButton.draw();
+        message = "Cheese";
+        drawText18(message, 1, 1, 1, cheeseFactoryButton.getX() + 5, cheeseFactoryButton.getY() + 30);
+        message = "Factory";
+        drawText18(message, 1, 1, 1, cheeseFactoryButton.getX() + 5, cheeseFactoryButton.getY() + 60);
+    }
+    if (numOfFurnitureFactory > 0) {
+        furnitureFactoryButton.draw();
+        message = "Furniture";
+        drawText18(message, 1, 1, 1, furnitureFactoryButton.getX() + 5, furnitureFactoryButton.getY() + 30);
+        message = "Factory";
+        drawText18(message, 1, 1, 1, furnitureFactoryButton.getX() + 5, furnitureFactoryButton.getY() + 60);
+    }
+    if (numOfMine > 0) {
+        mineButton.draw();
+        message = "Mine";
+        drawText18(message, 1, 1, 1, mineButton.getX() + 5, mineButton.getY() + 30);
+    }
+    if (numOfFamilyRestaurant > 0) {
+        familyRestaurantButton.draw();
+        message = "Family";
+        drawText18(message, 1, 1, 1, familyRestaurantButton.getX() + 5, familyRestaurantButton.getY() + 30);
+        message = "Restaurant";
+        drawText18(message, 1, 1, 1, familyRestaurantButton.getX() + 5, familyRestaurantButton.getY() + 60);
+    }
+    if (numOfAppleOrchard > 0) {
+        appleOrchardButton.draw();
+        message = "Apple";
+        drawText18(message, 1, 1, 1, appleOrchardButton.getX() + 5, appleOrchardButton.getY() + 30);
+        message = "Orchard";
+        drawText18(message, 1, 1, 1, appleOrchardButton.getX() + 5, appleOrchardButton.getY() + 60);
+    }
+    if (numOfFruitandVeggieMarket > 0) {
+        fruitAndVegetableMarketButton.draw();
+        message = "Fruit and";
+        drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5,
+                   fruitAndVegetableMarketButton.getY() + 30);
+        message = "Vegetable";
+        drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5,
+                   fruitAndVegetableMarketButton.getY() + 60);
+        message = "Market";
+        drawText18(message, 1, 1, 1, fruitAndVegetableMarketButton.getX() + 5,
+                   fruitAndVegetableMarketButton.getY() + 90);
+    }
 }
 
 void drawPlayerInventory(){
@@ -329,15 +407,50 @@ void displayStart(){
 }
 
 void displayGame(){
-
-
     mainMenuButton.draw();
     string message = "Main Menu";
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
 
+    message = "Player " + to_string(Game.currentPlayerIndex + 1) + "'s turn";
+    drawText24(message, 1, 1, 1, 400, 40);
+
+    switch (Game.turnPhase){
+        case (roll):
+            message = "Phase: Roll";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case (postRoll):
+            message = "Phase: Post Roll";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case (radioTower):
+            message = "Phase: RadioTower";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case(distribution):
+            message = "Phase: Distribution";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case(buy):
+            message = "Phase: Buy";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case(endturn):
+            message = "Phase: End Turn";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+    }
+
+
     drawMarket();
     rollDieButton.draw();
     roll2diceButton.draw();
+    rerollButton.draw();
+    message = "Reroll Dice";
+    drawText24(message, 1, 1, 1, rerollButton.getX() + 25, rerollButton.getY() + 45);
+    keepRollButton.draw();
+    message = "Keep Roll";
+    drawText24(message, 1, 1, 1, keepRollButton.getX() + 25, keepRollButton.getY() + 45);
     skipBuyButton.draw();
     message = "Skip Buy Phase";
     drawText24(message, 1, 1, 1, skipBuyButton.getX() + 25, skipBuyButton.getY() + 45);
@@ -347,14 +460,12 @@ void displayGame(){
     drawPlayerButtons();
 
     if(Game.turnPhase == roll){
-        //cout << "roll phase\n";
-        if (Game.players[Game.currentPlayerIndex].getTrainStationBool()){
-            // Draw another button that would roll two dice
-            //rollDie2Button.draw();
-        }
-        rollDieButton.draw();
+
         string dieMessage = "Roll";
         drawText24(dieMessage, 0, 0, 0, rollDieButton.getX() + 10, rollDieButton.getY() + 20);
+        dieMessage = "Roll 2";
+        drawText24(dieMessage, 0, 0, 0, roll2diceButton.getX() + 10, roll2diceButton.getY() + 20);
+
         if(Game.diceRolled){
             Game.turnPhase = postRoll;
             Game.diceRolled = false;
@@ -364,21 +475,30 @@ void displayGame(){
         cout << "post roll phase\n";
         // Draw the result of the dice roll
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
         if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
-            // Draw a button that allows a reroll
-            //rerollButton.draw();
+            // Do not allow the dice to be rerolled more than once per turn
             Game.skipRadioTower = true;
+            Game.turnPhase = radioTower;
         }
         else {
             Game.diceSum = Game.dice1Roll + Game.dice2Roll;
             Game.turnPhase = distribution;
         }
     }
+    else if (Game.turnPhase == radioTower){
+        //Reset dice roll and dice sum values
+        //Wait for player input
+        drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+    }
     else if (Game.turnPhase == distribution){
         cout << "distribution phase\n";
         // Draw the result of the dice roll
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+
+        cout << "Roll: " << Game.diceSum << "\n";
 
         //Red/restaurant cards need to be activated in a counter clockwise fashion. This implementation does that for 2 players right now
         //Perhaps there is a more efficient way to do this.
@@ -388,9 +508,11 @@ void displayGame(){
                 switch (Game.currentPlayerIndex) {
                     //Activate red cards for player2 on player1's roll
                     case (0):
-                        for (int i = 0; Game.players[1].getEstablishments().size(); i++) {
+                      //  cout << to_string(Game.players[1].getEstablishments().size()) << "\n";
+                        for (int i = 0; i < Game.players[1].getEstablishments().size(); i++) {
+                            cout << to_string(i) << "\n";
                             if (Game.players[1].getEstablishments()[i]->getCardType() == restaurant && Game.players[1].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[1].getEstablishments()[i]->getActivationMax()) {
-                                cout << "Roll: " << Game.diceSum << "\n";
+                                cout << "num establishments: " << Game.players[i].getEstablishments().size() << "\n";
                                 cout << "activating card: " << Game.players[1].getEstablishments()[i]->getName() << "\n";
                                 Game.players[1].getEstablishments()[i]->activate(Game.players[1], Game.players, Game.players[Game.currentPlayerIndex]);
                             }
@@ -398,9 +520,9 @@ void displayGame(){
                         break;
                         //Activate red cards for player1 on player2's roll
                     case (1):
-                        for (int i = 0; Game.players[0].getEstablishments().size(); i++) {
+                        for (int i = 0; i < Game.players[0].getEstablishments().size(); i++) {
                             if (Game.players[0].getEstablishments()[i]->getCardType() == restaurant && Game.players[0].getEstablishments()[0]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[0].getEstablishments()[i]->getActivationMax()) {
-                                cout << "Roll: " << Game.diceSum << "\n";
+                                cout << "num establishments: " << Game.players[i].getEstablishments().size() << "\n";
                                 cout << "activating card: " << Game.players[1].getEstablishments()[i]->getName() << "\n";
                                 Game.players[0].getEstablishments()[i]->activate(Game.players[0], Game.players, Game.players[Game.currentPlayerIndex]);
                             }
@@ -415,7 +537,7 @@ void displayGame(){
             for (int j = 0; j < Game.players[i].getEstablishments().size(); j++){
                 //shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
                 if (Game.players[i].getEstablishments()[i]->getCardType() == primaryIndustry && Game.players[i].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[i].getEstablishments()[i]->getActivationMax()){
-                    cout << "Roll: " << Game.diceSum << "\n";
+                    cout << "num establishments: " << Game.players[i].getEstablishments().size() << "\n";
                     cout << "activating card: " << Game.players[i].getEstablishments()[i]->getName() << "\n";
                     Game.players[i].getEstablishments()[i]->activate(Game.players[i], Game.players, Game.players[Game.currentPlayerIndex]);
                 }
@@ -425,8 +547,8 @@ void displayGame(){
         for (int i = 0; i < Game.players[Game.currentPlayerIndex].getEstablishments().size(); i++){
             //shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
             if (Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getCardType() == secondaryIndustry && Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMax()){
-                cout << "Roll: " << Game.diceSum << "\n";
-                cout << "activating card: " << Game.players[i].getEstablishments()[i]->getName() << "\n";
+                cout << "num establishments: " << Game.players[Game.currentPlayerIndex].getEstablishments().size() << "\n";
+                cout << "activating card: " << Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getName() << "\n";
                 Game.players[Game.currentPlayerIndex].getEstablishments()[i]->activate(Game.players[Game.currentPlayerIndex], Game.players, Game.players[Game.currentPlayerIndex]);
             }
         }
@@ -435,6 +557,8 @@ void displayGame(){
     else if(Game.turnPhase == buy){
         //cout << "buy phase\n";
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+
         if(Game.boughtCard) {
             cout << "card bought" << endl;
 //            if(Game.players[Game.currentPlayerIndex].checkWinner()){
@@ -444,23 +568,52 @@ void displayGame(){
             Game.turnPhase = endturn;
             //Game.boughtCard = false;
         }
-    }else if(Game.turnPhase == endturn){
+    }
+    else if(Game.turnPhase == endturn){
         cout << "end turn phase" << endl;
-        //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
-        Game.currentPlayerIndex++;
-        //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
-        if (Game.currentPlayerIndex >= Game.players.size()){
-            Game.currentPlayerIndex = 0;
+        if (Game.players[Game.currentPlayerIndex].checkWinner()){
+            Game.gameOver = true;
+            screen = endGame;
         }
+        else {
+            //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
+            if (Game.players[Game.currentPlayerIndex].getAmusementParkBool() && Game.dice1Roll == Game.dice2Roll) {
+                // Current player takes another turn
+                //Reset dice roll and dice sum values
+                Game.dice1Roll = 0;
+                Game.dice2Roll = 0;
+                Game.diceSum = 0;
+                Game.turnPhase = roll;
+                Game.boughtCard = false;
+                Game.skipRadioTower = false;
+            } else {
+                Game.currentPlayerIndex++;
+                //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
+                if (Game.currentPlayerIndex >= Game.players.size()) {
+                    Game.currentPlayerIndex = 0;
+                }
+                //Reset dice roll and dice sum values
+                Game.dice1Roll = 0;
+                Game.dice2Roll = 0;
+                Game.diceSum = 0;
+                Game.turnPhase = roll;
+                Game.boughtCard = false;
+                Game.skipRadioTower = false;
 
-        //Reset dice roll and dice sum values
-        Game.dice1Roll = 0;
-        Game.dice2Roll = 0;
-        Game.diceSum = 0;
-        Game.turnPhase = roll;
-        Game.boughtCard = false;
+            }
+        }
     }
 }
+
+void displayEndGame(){
+    mainMenuButton.draw();
+    string message = "Main Menu";
+    drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
+
+    message = "Player " + to_string(Game.currentPlayerIndex) + " WINS!";
+    drawText24(message, 1, 1, 1, 600,300);
+}
+
 
 /* Handler for window-repaint event. Call back when the window first appears and
  whenever the window needs to be re-painted. */
@@ -491,6 +644,7 @@ void display() {
     }
     if (screen == endGame){
         // Draw stuff
+        displayEndGame();
     }
 
     //i.draw();
@@ -567,6 +721,12 @@ void cursor(int x, int y) {
         else {
             rollDieButton.setFill(ROLL_BUTTON_COLOR);
         }
+        if (roll2diceButton.isOverlapping(x,y)){
+            roll2diceButton.setFill(ROLL_BUTTON_HOVER);
+        }
+        else {
+            roll2diceButton.setFill(ROLL_BUTTON_COLOR);
+        }
 
         // Player buttons
         if (player1button.isOverlapping(x,y)){
@@ -582,6 +742,25 @@ void cursor(int x, int y) {
             player2button.setFill(BUTTON_COLOR);
         }
 
+        // Game options buttons
+        if (skipBuyButton.isOverlapping(x,y)){
+            skipBuyButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            skipBuyButton.setFill(BUTTON_COLOR);
+        }
+        if (rerollButton.isOverlapping(x,y)){
+            rerollButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            rerollButton.setFill(BUTTON_COLOR);
+        }
+        if (keepRollButton.isOverlapping(x,y)){
+            keepRollButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            keepRollButton.setFill(BUTTON_COLOR);
+        }
         // Market buttons
         if (wheatFieldButton.isOverlapping(x,y)){
             wheatFieldButton.setFill(BLUE_CARD_HOVER_COLOR);
@@ -697,103 +876,127 @@ void mouse(int button, int state, int x, int y) {
     }
     else if (screen == game){
 
+        // Main Menu Button
         if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             screen = start;
         }
-        else if (rollDieButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP && !Game.diceRolled && Game.turnPhase == roll){
+
+        // Game option buttons
+        else if (rollDieButton.isOverlapping(x,y) && !Game.diceRolled && Game.turnPhase == roll && button == GLUT_LEFT_BUTTON && state == GLUT_UP ){
             Game.dice1Roll = (rand() % 6) + 1;
+            Game.dice2Roll = 0;
             Game.diceRolled = true;
         }
-        else if(wheatFieldButton.isOverlapping(x, y) && !Game.boughtCard && numOfWheatField >= 0 && Game.turnPhase == buy && Game.players[Game.currentPlayerIndex].getMoney() >= WHEAT_FIELD_COST && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if (roll2diceButton.isOverlapping(x,y) && !Game.diceRolled && Game.turnPhase == roll && Game.players[Game.currentPlayerIndex].getTrainStationBool() && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            Game.dice1Roll = (rand() % 6) + 1;
+            Game.dice2Roll = (rand() % 6) + 1;
+            Game.diceRolled = true;
+        }
+        else if (skipBuyButton.isOverlapping(x,y) && !Game.boughtCard && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            Game.turnPhase = endturn;
+        }
+        else if (rerollButton.isOverlapping(x,y) && Game.turnPhase == radioTower && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            Game.dice1Roll = 0;
+            Game.dice2Roll = 0;
+            Game.diceSum = 0;
+            Game.turnPhase = roll;
+        }
+        else if (keepRollButton.isOverlapping(x,y) && Game.turnPhase == radioTower && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+            Game.turnPhase = distribution;
+        }
+        // Market Buttons
+        else if(wheatFieldButton.isOverlapping(x, y) && !Game.boughtCard && numOfWheatField > 0 && Game.turnPhase == buy && Game.players[Game.currentPlayerIndex].getMoney() >= WHEAT_FIELD_COST && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - WHEAT_FIELD_COST);
             numOfWheatField--;
             Game.boughtCard = true;
         }
-        else if(ranchButton.isOverlapping(x, y) && !Game.boughtCard && numOfRanch >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= RANCH_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(ranchButton.isOverlapping(x, y) && !Game.boughtCard && numOfRanch > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= RANCH_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Ranch>(Ranch(RANCH_DESCRIPTION, RANCH_COST, RANCH_RANGE, RANCH_TYPE, blueCardRectangle, RANCH_NAME, RANCH_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - RANCH_COST);
             numOfRanch--;
             Game.boughtCard = true;
         }
-        else if(bakeryButton.isOverlapping(x, y) && !Game.boughtCard && numOfBakery >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= BAKERY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(bakeryButton.isOverlapping(x, y) && !Game.boughtCard && numOfBakery > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= BAKERY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - RANCH_COST);
             numOfBakery--;
             Game.boughtCard = true;
         }
-        else if(cafeButton.isOverlapping(x, y) && !Game.boughtCard && numOfCafe >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CAFE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(cafeButton.isOverlapping(x, y) && !Game.boughtCard && numOfCafe > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CAFE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Cafe>(Cafe(CAFE_DESCRIPTION, CAFE_COST, CAFE_RANGE, CAFE_TYPE, redCardRectangle, CAFE_NAME, CAFE_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
             numOfCafe--;
             Game.boughtCard = true;
         }
-        else if(convenienceStoreButton.isOverlapping(x, y) && !Game.boughtCard && numOfConvenienceStore >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CONVENIENCE_STORE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(convenienceStoreButton.isOverlapping(x, y) && !Game.boughtCard && numOfConvenienceStore > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CONVENIENCE_STORE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<ConvenienceStore>(ConvenienceStore(CONVENIENCE_STORE_DESCRIPTION, CONVENIENCE_STORE_COST, CONVENIENCE_STORE_RANGE, CONVENIENCE_STORE_TYPE, greenCardRectangle, CONVENIENCE_STORE_NAME, CONVENIENCE_STORE_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CONVENIENCE_STORE_COST);
             numOfConvenienceStore--;
             Game.boughtCard = true;
         }
-        else if(forestButton.isOverlapping(x, y) && !Game.boughtCard && numOfForest >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FOREST_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(forestButton.isOverlapping(x, y) && !Game.boughtCard && numOfForest > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FOREST_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Forest>(Forest(FOREST_DESCRIPTION, FOREST_COST, FOREST_RANGE, FOREST_TYPE, blueCardRectangle, FOREST_NAME, FOREST_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FOREST_COST);
             numOfForest--;
             Game.boughtCard = true;
         }
-        else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(TV_STATION_NAME) == 0 && tvStationButton.isOverlapping(x, y) && !Game.boughtCard && numOfTVStation >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= TV_STATION_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(TV_STATION_NAME) == 0 && tvStationButton.isOverlapping(x, y) && !Game.boughtCard && numOfTVStation > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= TV_STATION_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<TVStation>(TVStation(TV_STATION_DESCRIPTION, TV_STATION_COST, TV_STATION_RANGE, TV_STATION_TYPE, purpleCardRectangle, TV_STATION_NAME, TV_STATION_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - TV_STATION_COST);
             numOfTVStation--;
             Game.boughtCard = true;
         }
-        else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(STADIUM_NAME) == 0 && stadiumButton.isOverlapping(x, y) && !Game.boughtCard && numOfStadium >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= STADIUM_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(STADIUM_NAME) == 0 && stadiumButton.isOverlapping(x, y) && !Game.boughtCard && numOfStadium > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= STADIUM_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Stadium>(Stadium(STADIUM_DESCRIPTION, STADIUM_COST, STADIUM_RANGE, STADIUM_TYPE, purpleCardRectangle, STADIUM_NAME, STADIUM_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - STADIUM_COST);
             numOfStadium--;
             Game.boughtCard = true;
         }
-        else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(BUSINESS_CENTER_NAME) == 0 && businessCenterButton.isOverlapping(x, y) && !Game.boughtCard && numOfCafe >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= BUSINESS_CENTER_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(BUSINESS_CENTER_NAME) == 0 && businessCenterButton.isOverlapping(x, y) && !Game.boughtCard && numOfBusinessCenter > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= BUSINESS_CENTER_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<BusinessCenter>(BusinessCenter(BUSINESS_CENTER_DESCRIPTION, BUSINESS_CENTER_COST, BUSINESS_CENTER_RANGE, BUSINESS_CENTER_TYPE, purpleCardRectangle, BUSINESS_CENTER_NAME, BUSINESS_CENTER_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
             numOfBusinessCenter--;
             Game.boughtCard = true;
         }
-        else if(cheeseFactoryButton.isOverlapping(x, y) && !Game.boughtCard && numOfCheeseFactory >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CHEESE_FACTORY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(cheeseFactoryButton.isOverlapping(x, y) && !Game.boughtCard && numOfCheeseFactory > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CHEESE_FACTORY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<CheeseFactory>(CheeseFactory(CHEESE_FACTORY_DESCRIPTION, CHEESE_FACTORY_COST, CHEESE_FACTORY_RANGE, CHEESE_FACTORY_TYPE, greenCardRectangle, CHEESE_FACTORY_NAME, CHEESE_FACTORY_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CHEESE_FACTORY_COST);
             numOfCheeseFactory--;
             Game.boughtCard = true;
         }
-        else if(furnitureFactoryButton.isOverlapping(x, y) && !Game.boughtCard && numOfFurnitureFactory >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FURNITURE_FACTORY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(furnitureFactoryButton.isOverlapping(x, y) && !Game.boughtCard && numOfFurnitureFactory > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FURNITURE_FACTORY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<FurnitureFactory>(FurnitureFactory(FURNITURE_FACTORY_DESCRIPTION, FURNITURE_FACTORY_COST, FURNITURE_FACTORY_RANGE, FURNITURE_FACTORY_TYPE, greenCardRectangle, FURNITURE_FACTORY_NAME, FURNITURE_FACTORY_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FURNITURE_FACTORY_COST);
             numOfFurnitureFactory--;
             Game.boughtCard = true;
         }
-        else if(mineButton.isOverlapping(x, y) && !Game.boughtCard && numOfMine >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= MINE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(mineButton.isOverlapping(x, y) && !Game.boughtCard && numOfMine > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= MINE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Mine>(Mine(MINE_DESCRIPTION, MINE_COST, MINE_RANGE, MINE_TYPE, blueCardRectangle, MINE_NAME, MINE_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - MINE_COST);
             numOfMine--;
             Game.boughtCard = true;
         }
-        else if(familyRestaurantButton.isOverlapping(x, y) && !Game.boughtCard && numOfFamilyRestaurant >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FAMILY_RESTAURANT_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(familyRestaurantButton.isOverlapping(x, y) && !Game.boughtCard && numOfFamilyRestaurant > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FAMILY_RESTAURANT_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<FamilyRestaurant>(FamilyRestaurant(FAMILY_RESTAURANT_DESCRIPTION, FAMILY_RESTAURANT_COST, FAMILY_RESTAURANT_RANGE, FAMILY_RESTAURANT_TYPE, redCardRectangle, FAMILY_RESTAURANT_NAME, FAMILY_RESTAURANT_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FAMILY_RESTAURANT_COST);
             numOfFamilyRestaurant--;
             Game.boughtCard = true;
         }
-        else if(appleOrchardButton.isOverlapping(x, y) && !Game.boughtCard && numOfAppleOrchard >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= APPLE_ORCHARD_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(appleOrchardButton.isOverlapping(x, y) && !Game.boughtCard && numOfAppleOrchard > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= APPLE_ORCHARD_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<AppleOrchard>(AppleOrchard(APPLE_ORCHARD_DESCRIPTION, APPLE_ORCHARD_COST, APPLE_ORCHARD_RANGE, APPLE_ORCHARD_TYPE, blueCardRectangle, APPLE_ORCHARD_NAME, APPLE_ORCHARD_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - APPLE_ORCHARD_COST);
             numOfAppleOrchard--;
             Game.boughtCard = true;
         }
-        else if(fruitAndVegetableMarketButton.isOverlapping(x, y) && !Game.boughtCard && numOfFruitandVeggieMarket >= 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FRUIT_AND_VEGETABLE_MARKET_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+        else if(fruitAndVegetableMarketButton.isOverlapping(x, y) && !Game.boughtCard && numOfFruitandVeggieMarket > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FRUIT_AND_VEGETABLE_MARKET_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Cafe>(Cafe(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FRUIT_AND_VEGETABLE_MARKET_COST);
             numOfFruitandVeggieMarket--;
             Game.boughtCard = true;
         }
+
+        // Landmark Slot buttons
         else if(trainStationSlot.isOverlapping(x, y) && !Game.players[Game.currentPlayerIndex].getTrainStationBool() && !Game.boughtCard && Game.players[Game.currentPlayerIndex].getMoney() >= TRAIN_STATION_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             Game.players[Game.currentPlayerIndex].setTrainStationBool(true);
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - TRAIN_STATION_COST);
@@ -815,6 +1018,7 @@ void mouse(int button, int state, int x, int y) {
             Game.boughtCard = true;
         }
 
+        // Player Buttons
         else if (player1button.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
             //Game.focusedPlayer = Game.players[0];
             Game.focusedPlayerIndex = 0;
@@ -826,7 +1030,10 @@ void mouse(int button, int state, int x, int y) {
 
     }
     else if (screen == endGame){
-
+        if (mainMenuButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            screen = start;
+            resetGame();
+        }
     }
 
     glutPostRedisplay();
