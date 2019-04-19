@@ -11,6 +11,7 @@
 GLdouble width, height;
 int wd;
 
+Image i("testbmp.bmp");
 //Function Declarations
 
 void init() {
@@ -405,6 +406,7 @@ void displayStart(){
 }
 
 void displayGame(){
+    i.draw();
     mainMenuButton.draw();
     string message = "Main Menu";
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);

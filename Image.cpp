@@ -7,7 +7,7 @@
 #include "Image.h"
 using namespace std;
 
-Image::Image(std::string filename): Shape(850,100), dimensions(0.,0.), start(0,0) {
+Image::Image(std::string filename): Shape(900,100), dimensions(0.,0.), start(0,0) {
     readBMP(filename);
     //readPNG(filename, pixels);
 }
@@ -32,7 +32,7 @@ double Image::calculatePerimeter() const {return 0.;}
 
 
 void Image::readBMP(string filename) {
-    filename = "../" + filename;
+    filename = "../cardImages/" + filename;
     static constexpr size_t HEADER_SIZE = 54;
 
     std::ifstream bmp(filename, std::ios::binary);
@@ -52,6 +52,7 @@ void Image::readBMP(string filename) {
     std::cout << "height: " << height << std::endl;
     std::cout << "depth: " << depth << "-bit" << std::endl;
 
+    dimensions = Vector2D(width, height);
     std::vector<char> img(dataOffset - HEADER_SIZE);
     bmp.read(img.data(), img.size());
 
