@@ -11,8 +11,6 @@
 GLdouble width, height;
 int wd;
 
-Image i("cardTwo.BMP");
-
 //Function Declarations
 
 void init() {

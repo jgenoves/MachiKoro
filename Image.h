@@ -132,8 +132,6 @@ protected:
     Vector2D start;
     Vector2D dimensions;
 
-    GLuint loadAndBuffer(const char *filename);
-
 public:
     std::vector<std::vector<Pixel>> pixels;
 
@@ -143,8 +141,10 @@ public:
 
     double calculateArea() const override;
     double calculatePerimeter() const override;
+
+    void readBMP(std::string filename);
+
 };
 
-void readBMP(std::string filename, Image &i);
 
 #endif //GAMEENGINE_IMAGE_H

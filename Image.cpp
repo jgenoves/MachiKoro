@@ -7,8 +7,8 @@
 #include "Image.h"
 using namespace std;
 
-Image::Image(std::string filename): Shape(0,0), dimensions(173.,264.), start(0,0) {
-    readBMP(filename, pixels);
+Image::Image(std::string filename): Shape(850,100), dimensions(0.,0.), start(0,0) {
+    readBMP(filename);
     //readPNG(filename, pixels);
 }
 
@@ -31,7 +31,7 @@ double Image::calculateArea() const {return 0.;}
 double Image::calculatePerimeter() const {return 0.;}
 
 
-void readBMP(string filename, vector<vector<Pixel>> &pixels) {
+void Image::readBMP(string filename) {
     filename = "../" + filename;
     static constexpr size_t HEADER_SIZE = 54;
 
