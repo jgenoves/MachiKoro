@@ -439,6 +439,14 @@ void displayGame(){
             message = "Phase: End Turn";
             drawText24(message, 1, 1, 1, 600, 40);
             break;
+        case(businessCenter):
+            message = "Phase: Business Center";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case(tvStation):
+            message = "Phase: Business Center";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
     }
 
 
@@ -546,13 +554,59 @@ void displayGame(){
         //Activate currentPlayers green/secondary industry cards and purple/majorEstablishment cards
         for (int i = 0; i < Game.players[Game.currentPlayerIndex].getEstablishments().size(); i++){
             //shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
-            if (Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getCardType() == secondaryIndustry && Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMax()){
-                cout << "num establishments: " << Game.players[Game.currentPlayerIndex].getEstablishments().size() << "\n";
+            if ((Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getCardType() == secondaryIndustry || Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getCardType() == majorEstablishment) && Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMax()){
+                //cout << "num establishments: " << Game.players[Game.currentPlayerIndex].getEstablishments().size() << "\n";
                 cout << "activating card: " << Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getName() << "\n";
                 Game.players[Game.currentPlayerIndex].getEstablishments()[i]->activate(Game.players[Game.currentPlayerIndex], Game.players, Game.players[Game.currentPlayerIndex]);
+                if (Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getName() == BUSINESS_CENTER_NAME){
+                    Game.skipBusinessCenter = false;
+                }
+                else if (Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getName() == TV_STATION_NAME){
+                    Game.skipTVStation = false;
+                }
             }
         }
-        Game.turnPhase = buy;
+        if (Game.skipBusinessCenter && Game.skipTVStation){
+            Game.turnPhase = buy;
+        }
+        else if (!Game.skipBusinessCenter){
+            Game.turnPhase = businessCenter;
+        }
+        else if (!Game.skipTVStation){
+            Game.turnPhase = tvStation;
+        }
+    }
+    else if(Game.turnPhase == businessCenter){
+        drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+
+        if (Game.businessCenterUsed) {
+            Game.skipBusinessCenter = true;
+            Game.businessCenterUsed = false;
+            if (Game.skipTVStation){
+                Game.turnPhase = buy;
+            }
+            else{
+                Game.turnPhase = tvStation;
+            }
+        }
+
+    }
+    else if(Game.turnPhase == tvStation){
+        drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+
+        if (Game.tvStationUsed) {
+            Game.skipTVStation = true;
+            Game.tvStationUsed = false;
+            if (Game.skipBusinessCenter){
+                Game.turnPhase = buy;
+            }
+            else{
+                Game.turnPhase = businessCenter;
+            }
+        }
+
     }
     else if(Game.turnPhase == buy){
         //cout << "buy phase\n";
@@ -1018,14 +1072,57 @@ void mouse(int button, int state, int x, int y) {
             Game.boughtCard = true;
         }
 
-        // Player Buttons
-        else if (player1button.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
-            //Game.focusedPlayer = Game.players[0];
-            Game.focusedPlayerIndex = 0;
+        if (Game.turnPhase != tvStation) {
+            // Player Buttons
+            if (player1button.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                //Game.focusedPlayer = Game.players[0];
+                Game.focusedPlayerIndex = 0;
+            } else if (player2button.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                //Game.focusedPlayer = Game.players[1];
+                Game.focusedPlayerIndex = 1;
+            }
         }
-        else if (player2button.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
-            //Game.focusedPlayer = Game.players[1];
-            Game.focusedPlayerIndex = 1;
+
+        if (Game.turnPhase == businessCenter){
+
+        }
+        else if(Game.turnPhase == tvStation){
+            // Press player 1 button
+            if (player1button.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                if (Game.currentPlayerIndex == 0){
+                    Game.focusedPlayerIndex = 0;
+                }
+                else if (Game.currentPlayerIndex == 1){
+                    if (Game.players[0].getMoney() >= 5){
+                        Game.players[0].setMoney(Game.players[0].getMoney() - 5);
+                        Game.players[1].setMoney(Game.players[1].getMoney() + 5);
+                        if (Game.skipBusinessCenter == true){
+                            Game.turnPhase = buy;
+                        }
+                        else {
+                            Game.turnPhase = businessCenter;
+                        }
+                    }
+                }
+            }
+            // Press player 2 button
+            else if (player2button.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                if (Game.currentPlayerIndex == 1){
+                    Game.focusedPlayerIndex = 1;
+                }
+                else if (Game.currentPlayerIndex == 0){
+                    if (Game.players[1].getMoney() >= 5){
+                        Game.players[1].setMoney(Game.players[1].getMoney() - 5);
+                        Game.players[0].setMoney(Game.players[0].getMoney() + 5);
+                        if (Game.skipBusinessCenter == true){
+                            Game.turnPhase = buy;
+                        }
+                        else {
+                            Game.turnPhase = businessCenter;
+                        }
+                    }
+                }
+            }
         }
 
     }
