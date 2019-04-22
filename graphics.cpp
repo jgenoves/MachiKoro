@@ -110,6 +110,10 @@ void resetGame(){
     Game.turnPhase = roll;
     Game.boughtCard = false;
     Game.skipRadioTower = false;
+    Game.skipBusinessCenter = true;
+    Game.skipTVStation = true;
+    Game.businessCenterUsed = false;
+    Game.tvStationUsed = false;
 
     numOfWheatField = 6;
     numOfRanch = 6;
@@ -126,6 +130,118 @@ void resetGame(){
     numOfStadium = 2;
     numOfTVStation = 2;
     numOfBusinessCenter = 2;
+}
+
+void moveCards(string card1Name, string card2Name, int player1Index, int player2Index) {
+//    Game.players[0].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+//    Game.players[0].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+//    Game.players[0].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+//    Game.players[1].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+//    Game.players[1].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+//    Game.players[1].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+
+
+    Game.players[player1Index].removeCard(card1Name);
+    Game.players[player2Index].removeCard(card2Name);
+
+    // Give currentPlayer the other player's card
+    if (card2Name == WHEAT_FIELD_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+
+    }
+    else if(card2Name == BAKERY_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+
+    }
+    else if(card2Name == RANCH_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<Ranch>(Ranch(RANCH_DESCRIPTION, RANCH_COST, RANCH_RANGE, RANCH_TYPE, blueCardRectangle, RANCH_NAME, RANCH_SYMBOL)));
+
+    }
+    else if(card2Name == CAFE_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<Cafe>(Cafe(CAFE_DESCRIPTION, CAFE_COST, CAFE_RANGE, CAFE_TYPE, redCardRectangle, CAFE_NAME, CAFE_SYMBOL)));
+
+    }
+    else if(card2Name == CONVENIENCE_STORE_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<ConvenienceStore>(ConvenienceStore(CONVENIENCE_STORE_DESCRIPTION, CONVENIENCE_STORE_COST, CONVENIENCE_STORE_RANGE, CONVENIENCE_STORE_TYPE, greenCardRectangle, CONVENIENCE_STORE_NAME, CONVENIENCE_STORE_SYMBOL)));
+
+    }
+    else if(card2Name == FOREST_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<Forest>(Forest(FOREST_DESCRIPTION, FOREST_COST, FOREST_RANGE, FOREST_TYPE, blueCardRectangle, FOREST_NAME, FOREST_SYMBOL)));
+
+    }
+    else if(card2Name == CHEESE_FACTORY_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<CheeseFactory>(CheeseFactory(CHEESE_FACTORY_DESCRIPTION, CHEESE_FACTORY_COST, CHEESE_FACTORY_RANGE, CHEESE_FACTORY_TYPE, greenCardRectangle, CHEESE_FACTORY_NAME, CHEESE_FACTORY_SYMBOL)));
+
+    }
+    else if(card2Name == FURNITURE_FACTORY_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<FurnitureFactory>(FurnitureFactory(FURNITURE_FACTORY_DESCRIPTION, FURNITURE_FACTORY_COST, FURNITURE_FACTORY_RANGE, FURNITURE_FACTORY_TYPE, greenCardRectangle, FURNITURE_FACTORY_NAME, FURNITURE_FACTORY_SYMBOL)));
+
+    }
+    else if(card2Name == MINE_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<Mine>(Mine(MINE_DESCRIPTION, MINE_COST, MINE_RANGE, MINE_TYPE, blueCardRectangle, MINE_NAME, MINE_SYMBOL)));
+
+    }
+    else if(card2Name == FAMILY_RESTAURANT_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<FamilyRestaurant>(FamilyRestaurant(FAMILY_RESTAURANT_DESCRIPTION, FAMILY_RESTAURANT_COST, FAMILY_RESTAURANT_RANGE, FAMILY_RESTAURANT_TYPE, redCardRectangle, FAMILY_RESTAURANT_NAME, FAMILY_RESTAURANT_SYMBOL)));
+
+    }
+    else if(card2Name == APPLE_ORCHARD_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<AppleOrchard>(AppleOrchard(APPLE_ORCHARD_DESCRIPTION, APPLE_ORCHARD_COST, APPLE_ORCHARD_RANGE, APPLE_ORCHARD_TYPE, blueCardRectangle, APPLE_ORCHARD_NAME, APPLE_ORCHARD_SYMBOL)));
+
+    }
+    else if(card2Name == FRUIT_AND_VEGETABLE_MARKET_NAME){
+        Game.players[player1Index].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+    }
+
+    // Give other player the currentPlayer's card
+    if (card1Name == WHEAT_FIELD_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+
+    }
+    else if(card1Name == BAKERY_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+
+    }
+    else if(card1Name == RANCH_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<Ranch>(Ranch(RANCH_DESCRIPTION, RANCH_COST, RANCH_RANGE, RANCH_TYPE, blueCardRectangle, RANCH_NAME, RANCH_SYMBOL)));
+
+    }
+    else if(card1Name == CAFE_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<Cafe>(Cafe(CAFE_DESCRIPTION, CAFE_COST, CAFE_RANGE, CAFE_TYPE, redCardRectangle, CAFE_NAME, CAFE_SYMBOL)));
+
+    }
+    else if(card1Name == CONVENIENCE_STORE_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<ConvenienceStore>(ConvenienceStore(CONVENIENCE_STORE_DESCRIPTION, CONVENIENCE_STORE_COST, CONVENIENCE_STORE_RANGE, CONVENIENCE_STORE_TYPE, greenCardRectangle, CONVENIENCE_STORE_NAME, CONVENIENCE_STORE_SYMBOL)));
+
+    }
+    else if(card1Name == FOREST_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<Forest>(Forest(FOREST_DESCRIPTION, FOREST_COST, FOREST_RANGE, FOREST_TYPE, blueCardRectangle, FOREST_NAME, FOREST_SYMBOL)));
+
+    }
+    else if(card1Name == CHEESE_FACTORY_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<CheeseFactory>(CheeseFactory(CHEESE_FACTORY_DESCRIPTION, CHEESE_FACTORY_COST, CHEESE_FACTORY_RANGE, CHEESE_FACTORY_TYPE, greenCardRectangle, CHEESE_FACTORY_NAME, CHEESE_FACTORY_SYMBOL)));
+
+    }
+    else if(card1Name == FURNITURE_FACTORY_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<FurnitureFactory>(FurnitureFactory(FURNITURE_FACTORY_DESCRIPTION, FURNITURE_FACTORY_COST, FURNITURE_FACTORY_RANGE, FURNITURE_FACTORY_TYPE, greenCardRectangle, FURNITURE_FACTORY_NAME, FURNITURE_FACTORY_SYMBOL)));
+
+    }
+    else if(card1Name == MINE_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<Mine>(Mine(MINE_DESCRIPTION, MINE_COST, MINE_RANGE, MINE_TYPE, blueCardRectangle, MINE_NAME, MINE_SYMBOL)));
+
+    }
+    else if(card1Name == FAMILY_RESTAURANT_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<FamilyRestaurant>(FamilyRestaurant(FAMILY_RESTAURANT_DESCRIPTION, FAMILY_RESTAURANT_COST, FAMILY_RESTAURANT_RANGE, FAMILY_RESTAURANT_TYPE, redCardRectangle, FAMILY_RESTAURANT_NAME, FAMILY_RESTAURANT_SYMBOL)));
+
+    }
+    else if(card1Name == APPLE_ORCHARD_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<AppleOrchard>(AppleOrchard(APPLE_ORCHARD_DESCRIPTION, APPLE_ORCHARD_COST, APPLE_ORCHARD_RANGE, APPLE_ORCHARD_TYPE, blueCardRectangle, APPLE_ORCHARD_NAME, APPLE_ORCHARD_SYMBOL)));
+
+    }
+    else if(card1Name == FRUIT_AND_VEGETABLE_MARKET_NAME){
+        Game.players[player2Index].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+    }
+
 }
 
 void drawMarket(){
@@ -439,6 +555,14 @@ void displayGame(){
             message = "Phase: End Turn";
             drawText24(message, 1, 1, 1, 600, 40);
             break;
+        case(businessCenter):
+            message = "Phase: Business Center";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
+        case(tvStation):
+            message = "Phase: TV Station";
+            drawText24(message, 1, 1, 1, 600, 40);
+            break;
     }
 
 
@@ -546,13 +670,70 @@ void displayGame(){
         //Activate currentPlayers green/secondary industry cards and purple/majorEstablishment cards
         for (int i = 0; i < Game.players[Game.currentPlayerIndex].getEstablishments().size(); i++){
             //shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
-            if (Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getCardType() == secondaryIndustry && Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMax()){
-                cout << "num establishments: " << Game.players[Game.currentPlayerIndex].getEstablishments().size() << "\n";
+            if ((Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getCardType() == secondaryIndustry || Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getCardType() == majorEstablishment) && Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMax()){
+                //cout << "num establishments: " << Game.players[Game.currentPlayerIndex].getEstablishments().size() << "\n";
                 cout << "activating card: " << Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getName() << "\n";
                 Game.players[Game.currentPlayerIndex].getEstablishments()[i]->activate(Game.players[Game.currentPlayerIndex], Game.players, Game.players[Game.currentPlayerIndex]);
+                if (Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getName() == BUSINESS_CENTER_NAME){
+                    Game.skipBusinessCenter = false;
+                }
+                else if (Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getName() == TV_STATION_NAME){
+                    Game.skipTVStation = false;
+                }
             }
         }
-        Game.turnPhase = buy;
+        if (Game.skipBusinessCenter && Game.skipTVStation){
+            Game.turnPhase = buy;
+        }
+        else if (!Game.skipBusinessCenter){
+            Game.turnPhase = businessCenter;
+        }
+        else if (!Game.skipTVStation){
+            Game.turnPhase = tvStation;
+        }
+    }
+    else if(Game.turnPhase == businessCenter){
+        drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+
+        if (Game.businessCenterCurrentPlayerCard != "" && Game.businessCenterTargetPlayerCard != ""){
+            //TODO: Trade cards with target player
+            cout << "calling move cards with card1 = '" << Game.businessCenterCurrentPlayerCard << "' and card2 = '" << Game.businessCenterTargetPlayerCard << "'\n";
+            cout << "Player " << Game.currentPlayerIndex + 1 << " activated the card, targeting player " << Game.businessCenterTargetPlayerIndex + 1 << "\n";
+            moveCards(Game.businessCenterCurrentPlayerCard, Game.businessCenterTargetPlayerCard, Game.currentPlayerIndex, Game.businessCenterTargetPlayerIndex);
+            Game.businessCenterCurrentPlayerCard = "";
+            Game.businessCenterTargetPlayerCard = "";
+            Game.businessCenterUsed = true;
+        }
+
+
+        if (Game.businessCenterUsed) {
+            Game.skipBusinessCenter = true;
+            Game.businessCenterUsed = false;
+            if (Game.skipTVStation){
+                Game.turnPhase = buy;
+            }
+            else{
+                Game.turnPhase = tvStation;
+            }
+        }
+
+    }
+    else if(Game.turnPhase == tvStation){
+        drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
+        drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+
+        if (Game.tvStationUsed) {
+            Game.skipTVStation = true;
+            Game.tvStationUsed = false;
+            if (Game.skipBusinessCenter){
+                Game.turnPhase = buy;
+            }
+            else{
+                Game.turnPhase = businessCenter;
+            }
+        }
+
     }
     else if(Game.turnPhase == buy){
         //cout << "buy phase\n";
@@ -586,6 +767,12 @@ void displayGame(){
                 Game.turnPhase = roll;
                 Game.boughtCard = false;
                 Game.skipRadioTower = false;
+                Game.skipBusinessCenter = true;
+                Game.skipTVStation = true;
+                Game.businessCenterUsed = false;
+                Game.tvStationUsed = false;
+                Game.businessCenterCurrentPlayerCard = "";
+                Game.businessCenterTargetPlayerCard = "";
             } else {
                 Game.currentPlayerIndex++;
                 //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
@@ -599,7 +786,12 @@ void displayGame(){
                 Game.turnPhase = roll;
                 Game.boughtCard = false;
                 Game.skipRadioTower = false;
-
+                Game.skipBusinessCenter = true;
+                Game.skipTVStation = true;
+                Game.businessCenterUsed = false;
+                Game.tvStationUsed = false;
+                Game.businessCenterCurrentPlayerCard = "";
+                Game.businessCenterTargetPlayerCard = "";
             }
         }
     }
@@ -990,7 +1182,7 @@ void mouse(int button, int state, int x, int y) {
             Game.boughtCard = true;
         }
         else if(fruitAndVegetableMarketButton.isOverlapping(x, y) && !Game.boughtCard && numOfFruitandVeggieMarket > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FRUIT_AND_VEGETABLE_MARKET_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
-            Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Cafe>(Cafe(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+            Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FRUIT_AND_VEGETABLE_MARKET_COST);
             numOfFruitandVeggieMarket--;
             Game.boughtCard = true;
@@ -1018,14 +1210,173 @@ void mouse(int button, int state, int x, int y) {
             Game.boughtCard = true;
         }
 
-        // Player Buttons
-        else if (player1button.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
-            //Game.focusedPlayer = Game.players[0];
-            Game.focusedPlayerIndex = 0;
+        if (Game.turnPhase != tvStation) {
+            // Player Buttons
+            if (player1button.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                //Game.focusedPlayer = Game.players[0];
+                Game.focusedPlayerIndex = 0;
+            } else if (player2button.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                //Game.focusedPlayer = Game.players[1];
+                Game.focusedPlayerIndex = 1;
+            }
         }
-        else if (player2button.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
-            //Game.focusedPlayer = Game.players[1];
-            Game.focusedPlayerIndex = 1;
+
+        if (Game.turnPhase == businessCenter){
+            if (wheatFieldSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(WHEAT_FIELD_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = WHEAT_FIELD_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = WHEAT_FIELD_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (bakerySlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(BAKERY_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = BAKERY_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = BAKERY_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (ranchSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(RANCH_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = RANCH_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = RANCH_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+                }
+            }
+            else if (cafeSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(CAFE_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = CAFE_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = CAFE_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (convenienceStoreSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(CONVENIENCE_STORE_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = CONVENIENCE_STORE_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = CONVENIENCE_STORE_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (forestSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(FOREST_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = FOREST_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = FOREST_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (cheeseFactorySlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(CHEESE_FACTORY_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = CHEESE_FACTORY_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = CHEESE_FACTORY_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (furnitureFactorySlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(FURNITURE_FACTORY_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = FURNITURE_FACTORY_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = FURNITURE_FACTORY_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (mineSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(MINE_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = MINE_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = MINE_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (familyRestaurantSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(FAMILY_RESTAURANT_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = FAMILY_RESTAURANT_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = FAMILY_RESTAURANT_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+
+                }
+            }
+            else if (appleOrchardSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(APPLE_ORCHARD_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = APPLE_ORCHARD_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = APPLE_ORCHARD_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+                }
+            }
+            else if (fruitAndVegetableMarketSlot.isOverlapping(x, y) && Game.players[Game.focusedPlayerIndex].getNumberOfEstablishment(FRUIT_AND_VEGETABLE_MARKET_NAME) > 0 && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+                if (Game.focusedPlayerIndex == Game.currentPlayerIndex){
+                    Game.businessCenterCurrentPlayerCard = FRUIT_AND_VEGETABLE_MARKET_NAME;
+                }
+                else {
+                    Game.businessCenterTargetPlayerCard = FRUIT_AND_VEGETABLE_MARKET_NAME;
+                    Game.businessCenterTargetPlayerIndex = Game.focusedPlayerIndex;
+                }
+            }
+        }
+        else if(Game.turnPhase == tvStation){
+            // Press player 1 button
+            if (player1button.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                if (Game.currentPlayerIndex == 0){
+                    Game.focusedPlayerIndex = 0;
+                }
+                else if (Game.currentPlayerIndex == 1){
+                    if (Game.players[0].getMoney() >= 5){
+                        Game.players[0].setMoney(Game.players[0].getMoney() - 5);
+                        Game.players[1].setMoney(Game.players[1].getMoney() + 5);
+                        if (Game.skipBusinessCenter == true){
+                            Game.turnPhase = buy;
+                        }
+                        else {
+                            Game.turnPhase = businessCenter;
+                        }
+                    }
+                }
+            }
+            // Press player 2 button
+            else if (player2button.isOverlapping(x, y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+                if (Game.currentPlayerIndex == 1){
+                    Game.focusedPlayerIndex = 1;
+                }
+                else if (Game.currentPlayerIndex == 0){
+                    if (Game.players[1].getMoney() >= 5){
+                        Game.players[1].setMoney(Game.players[1].getMoney() - 5);
+                        Game.players[0].setMoney(Game.players[0].getMoney() + 5);
+                        if (Game.skipBusinessCenter == true){
+                            Game.turnPhase = buy;
+                        }
+                        else {
+                            Game.turnPhase = businessCenter;
+                        }
+                    }
+                }
+            }
         }
 
     }

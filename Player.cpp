@@ -119,14 +119,11 @@ int Player::getNumberOfEstablishment(string name) const{
 
 int Player::getNumberOfEstablishment(cardSymbol symbol) const {
     int count = 0;
-
-
         for (int i = 0; i < establishments.size(); i++) {
             if (establishments[i]->getCardSymbol() == symbol) {
                 count++;
             }
         }
-
     return count;
 }
 void Player::setAllLandmarksFalse(){
@@ -136,6 +133,15 @@ void Player::setAllLandmarksFalse(){
     radioTower = false;
 }
 
+void Player::removeCard(string cardToRemove){
+    for (int i = 0; i < establishments.size(); i++){
+        if (establishments[i]->getName() == cardToRemove){
+            cout << "Number of cards before: " << establishments.size() << "\n";
+            cout << "removing card: " << cardToRemove << "\n";
+            establishments.erase(establishments.begin() + i);
+            cout << "Number of cards after: " << establishments.size() << "\n";
 
-
-
+            break;
+        }
+    }
+}
