@@ -15,9 +15,10 @@ Player::Player(int newMoney){
     setAllLandmarksFalse();
 }
 
-Player::Player(int newMoney, bool isHuman){
+Player::Player(int newMoney, bool isHumanBool){
     setMoney(newMoney);
-    setHuman(isHuman);
+    setHuman(isHumanBool);
+    setAllLandmarksFalse();
 }
 Player::Player(int newMoney, vector<shared_ptr<Card>> &newEstablishments){
     setMoney(newMoney);

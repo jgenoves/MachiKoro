@@ -36,8 +36,10 @@ void init() {
     height = HEIGHT;
 
     // Example of working inventory
-    Player player1 = Player(STARTING_MONEY);
-    Player player2 = Player(STARTING_MONEY);
+    bool human = true;
+    Player player1 = Player(STARTING_MONEY, human);
+    Player player2 = Player(STARTING_MONEY, human);
+
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
@@ -87,8 +89,9 @@ void resetGame(){
     }
     Game.players.clear();
 
-    Player player1 = Player(STARTING_MONEY);
-    Player player2 = Player(STARTING_MONEY);
+    bool human = true;
+    Player player1 = Player(STARTING_MONEY, human);
+    Player player2 = Player(STARTING_MONEY, human);
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
@@ -473,6 +476,8 @@ void displayGame(){
                 Game.dice2Roll = 0;
                 Game.diceRolled = true;
             }else{
+
+                //TODO: If the computer has the train station, we can generate a number between lets say 1 in 3 to decide if it wants to roll two die or one
                 Game.dice1Roll = (rand() % 6) + 1;
                 Game.dice2Roll = (rand() % 6) + 1;
                 Game.diceRolled = true;
@@ -491,10 +496,19 @@ void displayGame(){
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
+
         if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
             // Do not allow the dice to be rerolled more than once per turn
             Game.skipRadioTower = true;
             Game.turnPhase = radioTower;
+        }
+        else if(!Game.players[Game.currentPlayerIndex].getIsHuman() && Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower && !Game.boughtCard){
+
+            //TODO: Generate number to determine if the computer will reroll the dice or not
+            bool compReroll = false;
+
+
+
         }
         else {
             Game.diceSum = Game.dice1Roll + Game.dice2Roll;
@@ -506,6 +520,22 @@ void displayGame(){
         //Wait for player input
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+
+            if(!Game.players[Game.currentPlayerIndex].getTrainStationBool()){
+                Game.dice1Roll = (rand() % 6) + 1;
+                Game.dice2Roll = 0;
+                Game.diceRolled = true;
+            }else{
+
+                //TODO: If the computer has the train station, we can generate a number between lets say 1 in 3 to decide if it wants to roll two die or one
+                Game.dice1Roll = (rand() % 6) + 1;
+                Game.dice2Roll = (rand() % 6) + 1;
+                Game.diceRolled = true;
+            }
+
+        }
     }
     else if (Game.turnPhase == distribution){
         cout << "distribution phase\n";
