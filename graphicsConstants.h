@@ -288,6 +288,9 @@ struct GameData {
     bool skipRadioTower = false;
     bool skipBusinessCenter = true;
     bool skipTVStation = true;
+    string businessCenterCurrentPlayerCard = "";
+    string businessCenterTargetPlayerCard = "";
+    int businessCenterTargetPlayerIndex = 0;
 };
 
 GameData Game;
