@@ -5,6 +5,7 @@
 
 #include "graphics.h"
 #include "graphicsConstants.h"
+
 #include "Image.h"
 
 
@@ -470,19 +471,7 @@ void displayGame(){
         drawText24(dieMessage, 0, 0, 0, roll2diceButton.getX() + 10, roll2diceButton.getY() + 20);
 
         if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
-
-            if(!Game.players[Game.currentPlayerIndex].getTrainStationBool()){
-                Game.dice1Roll = (rand() % 6) + 1;
-                Game.dice2Roll = 0;
-                Game.diceRolled = true;
-            }else{
-
-                //TODO: If the computer has the train station, we can generate a number between lets say 1 in 3 to decide if it wants to roll two die or one
-                Game.dice1Roll = (rand() % 6) + 1;
-                Game.dice2Roll = (rand() % 6) + 1;
-                Game.diceRolled = true;
-            }
-
+            cpuRollDice();
         }
 
         if(Game.diceRolled){
@@ -496,24 +485,21 @@ void displayGame(){
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
-
-        if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
-            // Do not allow the dice to be rerolled more than once per turn
-            Game.skipRadioTower = true;
-            Game.turnPhase = radioTower;
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+            cpuPostRoll();
         }
-        else if(!Game.players[Game.currentPlayerIndex].getIsHuman() && Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower && !Game.boughtCard){
-
-            //TODO: Generate number to determine if the computer will reroll the dice or not
-            bool compReroll = false;
-
-
-
+        else{
+            if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
+                // Do not allow the dice to be rerolled more than once per turn
+                Game.skipRadioTower = true;
+                Game.turnPhase = radioTower;
+            }
+            else {
+                Game.diceSum = Game.dice1Roll + Game.dice2Roll;
+                Game.turnPhase = distribution;
+            }
         }
-        else {
-            Game.diceSum = Game.dice1Roll + Game.dice2Roll;
-            Game.turnPhase = distribution;
-        }
+
     }
     else if (Game.turnPhase == radioTower){
         //Reset dice roll and dice sum values
@@ -522,20 +508,9 @@ void displayGame(){
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
         if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
-
-            if(!Game.players[Game.currentPlayerIndex].getTrainStationBool()){
-                Game.dice1Roll = (rand() % 6) + 1;
-                Game.dice2Roll = 0;
-                Game.diceRolled = true;
-            }else{
-
-                //TODO: If the computer has the train station, we can generate a number between lets say 1 in 3 to decide if it wants to roll two die or one
-                Game.dice1Roll = (rand() % 6) + 1;
-                Game.dice2Roll = (rand() % 6) + 1;
-                Game.diceRolled = true;
-            }
-
+            cpuRollDice();
         }
+
     }
     else if (Game.turnPhase == distribution){
         cout << "distribution phase\n";
@@ -603,6 +578,10 @@ void displayGame(){
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+            cpuBuyCard();
+        }
+
         if(Game.boughtCard) {
             cout << "card bought" << endl;
 //            if(Game.players[Game.currentPlayerIndex].checkWinner()){
@@ -657,6 +636,112 @@ void displayEndGame(){
     message = "Player " + to_string(Game.currentPlayerIndex) + " WINS!";
     drawText24(message, 1, 1, 1, 600,300);
 }
+
+
+
+
+
+
+
+
+void cpuRollDice(){
+
+    if(!Game.players[Game.currentPlayerIndex].getTrainStationBool()){
+        Game.dice1Roll = (rand() % 6) + 1;
+        Game.dice2Roll = 0;
+        Game.diceRolled = true;
+    }else{
+
+        //TODO: If the computer has the train station, we can generate a number between lets say 1 in 3 to decide if it wants to roll two die or one
+        Game.dice1Roll = (rand() % 6) + 1;
+        Game.dice2Roll = (rand() % 6) + 1;
+        Game.diceRolled = true;
+    }
+
+}
+
+
+void cpuPostRoll(){
+
+
+    if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
+
+        bool cpuReRoll = false;
+        //TODO: Generate number to determine if the cpu will want to reroll or not.
+        // Do not allow the dice to be rerolled more than once per turn
+
+        if(cpuReRoll){
+            Game.skipRadioTower = true;
+            Game.turnPhase = radioTower;
+        }
+        else{
+            Game.diceSum = Game.dice1Roll + Game.dice2Roll;
+            Game.turnPhase = distribution;
+        }
+
+    }
+    else {
+        Game.diceSum = Game.dice1Roll + Game.dice2Roll;
+        Game.turnPhase = distribution;
+    }
+
+}
+
+
+void cpuBuyCard(){
+
+    int cpuMoney = Game.players[Game.currentPlayerIndex].getMoney();
+
+
+    //Prioritize buying landmarks first
+    if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= TRAIN_STATION_COST && !Game.boughtCard){
+        Game.players[Game.currentPlayerIndex].setTrainStationBool(true);
+        Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - TRAIN_STATION_COST);
+        Game.boughtCard = true;
+    }
+    else if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= SHOPPING_MALL_COST && !Game.boughtCard){
+        Game.players[Game.currentPlayerIndex].setShoppingMallBool(true);
+        Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - SHOPPING_MALL_COST);
+        Game.boughtCard = true;
+    }
+    else if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= AMUSEMENT_PARK_COST && !Game.boughtCard){
+        Game.players[Game.currentPlayerIndex].setAmusementParkBool(true);
+        Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - AMUSEMENT_PARK_COST);
+        Game.boughtCard = true;
+    }
+    else if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= RADIO_TOWER_COST && !Game.boughtCard){
+        Game.players[Game.currentPlayerIndex].setRadioTowerBool(true);
+        Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - RADIO_TOWER_COST);
+        Game.boughtCard = true;
+    }
+
+    //TODO: Generate number to determine if cpu will skip turn or buy card
+
+    bool buyCard = false;
+
+    if(buyCard && !Game.boughtCard){
+
+    }
+    else{
+        Game.turnPhase = endturn;
+    }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Handler for window-repaint event. Call back when the window first appears and

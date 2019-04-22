@@ -41,6 +41,14 @@ void displayStart();
 
 void displayGame();
 
+
+
+//Functions to control computer player
+
+void cpuRollDice();
+void cpuPostRoll();
+void cpuBuyCard();
+
 // Callback functions for GLUT */
 
 
