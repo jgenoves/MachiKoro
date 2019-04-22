@@ -14,6 +14,11 @@ Player::Player(int newMoney){
     setMoney(newMoney);
     setAllLandmarksFalse();
 }
+
+Player::Player(int newMoney, bool isHuman){
+    setMoney(newMoney);
+    setHuman(isHuman);
+}
 Player::Player(int newMoney, vector<shared_ptr<Card>> &newEstablishments){
     setMoney(newMoney);
     setEstablishments(newEstablishments);
@@ -135,6 +140,7 @@ void Player::setAllLandmarksFalse(){
     amusementPark = false;
     radioTower = false;
 }
+
 
 
 

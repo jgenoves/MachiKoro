@@ -466,6 +466,20 @@ void displayGame(){
         dieMessage = "Roll 2";
         drawText24(dieMessage, 0, 0, 0, roll2diceButton.getX() + 10, roll2diceButton.getY() + 20);
 
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+
+            if(!Game.players[Game.currentPlayerIndex].getTrainStationBool()){
+                Game.dice1Roll = (rand() % 6) + 1;
+                Game.dice2Roll = 0;
+                Game.diceRolled = true;
+            }else{
+                Game.dice1Roll = (rand() % 6) + 1;
+                Game.dice2Roll = (rand() % 6) + 1;
+                Game.diceRolled = true;
+            }
+
+        }
+
         if(Game.diceRolled){
             Game.turnPhase = postRoll;
             Game.diceRolled = false;

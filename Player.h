@@ -18,6 +18,7 @@ public:
     // Constructors
     Player();
     Player(int newMoney);
+    Player(int newMoney, bool isHuman);
     Player(int newMoney, vector<shared_ptr<Card>> &newEstablishments);
 
     // Copy Constructor
@@ -62,6 +63,8 @@ protected:
     bool amusementPark;
     bool radioTower;
 };
+
+
 
 #endif //CARD_H
 
