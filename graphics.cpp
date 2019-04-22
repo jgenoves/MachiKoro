@@ -646,15 +646,14 @@ void displayEndGame(){
 
 void cpuRollDice(){
 
-    if(!Game.players[Game.currentPlayerIndex].getTrainStationBool()){
-        Game.dice1Roll = (rand() % 6) + 1;
-        Game.dice2Roll = 0;
-        Game.diceRolled = true;
-    }else{
-
+    if(Game.players[Game.currentPlayerIndex].getTrainStationBool()){
         //TODO: If the computer has the train station, we can generate a number between lets say 1 in 3 to decide if it wants to roll two die or one
         Game.dice1Roll = (rand() % 6) + 1;
         Game.dice2Roll = (rand() % 6) + 1;
+        Game.diceRolled = true;
+    }else{
+        Game.dice1Roll = (rand() % 6) + 1;
+        Game.dice2Roll = 0;
         Game.diceRolled = true;
     }
 
@@ -667,7 +666,7 @@ void cpuPostRoll(){
     if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
 
         bool cpuReRoll = false;
-        //TODO: Generate number to determine if the cpu will want to reroll or not.
+        //TODO: Generate number to determine if the cpu will want to reroll or not, or a method to reroll if none of the cards activate
         // Do not allow the dice to be rerolled more than once per turn
 
         if(cpuReRoll){
@@ -720,7 +719,7 @@ void cpuBuyCard(){
     bool buyCard = false;
 
     if(buyCard && !Game.boughtCard){
-
+        
     }
     else{
         Game.turnPhase = endturn;
