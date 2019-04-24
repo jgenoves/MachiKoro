@@ -649,10 +649,27 @@ void displayEndGame(){
 
 void cpuRollDice(){
 
+
+
+
     if(Game.players[Game.currentPlayerIndex].getTrainStationBool()){
-        //TODO: If the computer has the train station, we can generate a number between lets say 1 in 3 to decide if it wants to roll two die or one
+
+        bool rollTwice = false;
+
+        int rollTwiceNum = (rand() % 5) + 1;
         Game.dice1Roll = (rand() % 6) + 1;
-        Game.dice2Roll = (rand() % 6) + 1;
+
+        if(rollTwiceNum == 1){
+            rollTwice = true;
+        }
+
+        if(rollTwice) {
+            Game.dice2Roll = (rand() % 6) + 1;
+        }
+        else{
+             Game.dice2Roll = 0;
+        }
+
         Game.diceRolled = true;
     }else{
         Game.dice1Roll = (rand() % 6) + 1;
