@@ -719,7 +719,7 @@ void cpuBuyCard(){
     bool buyCard = false;
 
     if(buyCard && !Game.boughtCard){
-        
+
     }
     else{
         Game.turnPhase = endturn;
