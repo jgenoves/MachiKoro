@@ -660,10 +660,10 @@ void displayGame(){
         for(int i = 0; i < Game.players.size(); i++){
             for (int j = 0; j < Game.players[i].getEstablishments().size(); j++){
                 //shared_ptr<Card> card = Game.players[i].getEstablishments()[i];
-                if (Game.players[i].getEstablishments()[i]->getCardType() == primaryIndustry && Game.players[i].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[i].getEstablishments()[i]->getActivationMax()){
+                if (Game.players[i].getEstablishments()[j]->getCardType() == primaryIndustry && Game.players[i].getEstablishments()[i]->getActivationMin() <= Game.diceSum && Game.diceSum <= Game.players[i].getEstablishments()[i]->getActivationMax()){
                     cout << "num establishments: " << Game.players[i].getEstablishments().size() << "\n";
-                    cout << "activating card: " << Game.players[i].getEstablishments()[i]->getName() << "\n";
-                    Game.players[i].getEstablishments()[i]->activate(Game.players[i], Game.players, Game.players[Game.currentPlayerIndex]);
+                    cout << "activating card: " << Game.players[i].getEstablishments()[j]->getName() << "\n";
+                    Game.players[i].getEstablishments()[j]->activate(Game.players[i], Game.players, Game.players[Game.currentPlayerIndex]);
                 }
             }
         }
