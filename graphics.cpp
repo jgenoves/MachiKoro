@@ -705,17 +705,17 @@ void cpuBuyCard(){
         Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - TRAIN_STATION_COST);
         Game.boughtCard = true;
     }
-    else if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= SHOPPING_MALL_COST && !Game.boughtCard){
+    else if(!Game.players[Game.currentPlayerIndex].getShoppingMallBool() && cpuMoney >= SHOPPING_MALL_COST && !Game.boughtCard){
         Game.players[Game.currentPlayerIndex].setShoppingMallBool(true);
         Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - SHOPPING_MALL_COST);
         Game.boughtCard = true;
     }
-    else if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= AMUSEMENT_PARK_COST && !Game.boughtCard){
+    else if(!Game.players[Game.currentPlayerIndex].getAmusementParkBool() && cpuMoney >= AMUSEMENT_PARK_COST && !Game.boughtCard){
         Game.players[Game.currentPlayerIndex].setAmusementParkBool(true);
         Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - AMUSEMENT_PARK_COST);
         Game.boughtCard = true;
     }
-    else if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= RADIO_TOWER_COST && !Game.boughtCard){
+    else if(!Game.players[Game.currentPlayerIndex].getRadioTowerBool() && cpuMoney >= RADIO_TOWER_COST && !Game.boughtCard){
         Game.players[Game.currentPlayerIndex].setRadioTowerBool(true);
         Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - RADIO_TOWER_COST);
         Game.boughtCard = true;
@@ -813,7 +813,7 @@ void cpuBuyCard(){
             availableCards.push_back(numOfMine);
 
             availableCards.push_back(numOfTVStation);
-        } else if (cpuMoney == 8) {
+        } else if (cpuMoney >= 8) {
             availableCards.push_back(numOfWheatField);
             availableCards.push_back(numOfRanch);
             availableCards.push_back(numOfBakery);
