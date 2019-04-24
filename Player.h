@@ -35,9 +35,7 @@ public:
     bool getRadioTowerBool() const;
     int getID() const;
     bool getIsHuman() const;
-    bool getTVStation() const;
-    bool getBusinessCenter() const;
-    bool getStadium() const;
+
 
     // Setters
     void setMoney(int newMoney);
@@ -48,9 +46,7 @@ public:
     void setRadioTowerBool(bool newValue);
     void setID(int newID);
     void setHuman(bool isHumanBool);
-    void setTVStation(bool statement);
-    void setBusinessCenter(bool statement);
-    void setStadium(bool statement);
+
 
     // Other Methods
     bool checkWinner() const;
@@ -69,9 +65,6 @@ protected:
     bool amusementPark;
     bool radioTower;
 
-    bool tvStation;
-    bool businessCenter;
-    bool stadium;
 };
 
 

@@ -67,15 +67,7 @@ int Player::getID() const{
 bool Player::getIsHuman() const{
     return isHuman;
 }
-bool Player::getTVStation() const {
-    return tvStation;
-}
-bool Player::getBusinessCenter() const {
-    return businessCenter;
-}
-bool Player::getStadium() const {
-    return stadium;
-}
+
 
 // Setters
 void Player::setMoney(int newMoney){
@@ -106,15 +98,6 @@ void Player::setID(int newID){
 }
 void Player::setHuman(bool isHumanBool) {
     isHuman = isHumanBool;
-}
-void Player::setTVStation(bool statement) {
-    tvStation = statement;
-}
-void Player::setBusinessCenter(bool statement) {
-    businessCenter = statement;
-}
-void Player::setStadium(bool statement) {
-    stadium = statement;
 }
 
 
