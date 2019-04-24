@@ -54,6 +54,7 @@ public:
     int getNumberOfEstablishment(string name) const;
     int getNumberOfEstablishment(cardSymbol symbol) const;
     void setAllLandmarksFalse();
+    void removeCard(string cardToRemove);
 
 protected:
     bool isHuman;

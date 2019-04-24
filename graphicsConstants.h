@@ -12,7 +12,7 @@
 /*************************/
 /** General Game Constants **/
 /*************************/
-int STARTING_MONEY = 3;
+int STARTING_MONEY = 900;
 
 /*************************/
 /** Rectangle Constants **/
@@ -161,7 +161,7 @@ cardSymbol FRUIT_AND_VEGETABLE_MARKET_SYMBOL = fruit;
 enum screenType {start, game, endGame};
 screenType screen = start;
 
-enum turnPhase{roll, postRoll, radioTower, distribution, buy, endturn};
+enum turnPhase{roll, postRoll, radioTower, distribution, buy, endturn, businessCenter, tvStation};
 
 
 // Glut constants
@@ -284,7 +284,14 @@ struct GameData {
     bool diceRolled = false;
     turnPhase turnPhase = roll;
     bool boughtCard = false;
+    bool businessCenterUsed = false;
+    bool tvStationUsed = false;
     bool skipRadioTower = false;
+    bool skipBusinessCenter = true;
+    bool skipTVStation = true;
+    string businessCenterCurrentPlayerCard = "";
+    string businessCenterTargetPlayerCard = "";
+    int businessCenterTargetPlayerIndex = 0;
 };
 
 GameData Game;
