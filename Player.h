@@ -18,6 +18,7 @@ public:
     // Constructors
     Player();
     Player(int newMoney);
+    Player(int newMoney, bool isHuman);
     Player(int newMoney, vector<shared_ptr<Card>> &newEstablishments);
 
     // Copy Constructor
@@ -35,6 +36,7 @@ public:
     int getID() const;
     bool getIsHuman() const;
 
+
     // Setters
     void setMoney(int newMoney);
     void setEstablishments(vector<shared_ptr<Card>> &newEstablishments);
@@ -44,6 +46,7 @@ public:
     void setRadioTowerBool(bool newValue);
     void setID(int newID);
     void setHuman(bool isHumanBool);
+
 
     // Other Methods
     bool checkWinner() const;
@@ -62,7 +65,10 @@ protected:
     bool shoppingMall;
     bool amusementPark;
     bool radioTower;
+
 };
+
+
 
 #endif //CARD_H
 

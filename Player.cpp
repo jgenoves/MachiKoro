@@ -14,6 +14,12 @@ Player::Player(int newMoney){
     setMoney(newMoney);
     setAllLandmarksFalse();
 }
+
+Player::Player(int newMoney, bool isHumanBool){
+    setMoney(newMoney);
+    setHuman(isHumanBool);
+    setAllLandmarksFalse();
+}
 Player::Player(int newMoney, vector<shared_ptr<Card>> &newEstablishments){
     setMoney(newMoney);
     setEstablishments(newEstablishments);
@@ -62,6 +68,7 @@ bool Player::getIsHuman() const{
     return isHuman;
 }
 
+
 // Setters
 void Player::setMoney(int newMoney){
     if (newMoney >= 0){
@@ -92,6 +99,9 @@ void Player::setID(int newID){
 void Player::setHuman(bool isHumanBool) {
     isHuman = isHumanBool;
 }
+
+
+
 // Other Methods
 bool Player::checkWinner() const{
     if (trainStation && shoppingMall && amusementPark && radioTower){
@@ -145,3 +155,4 @@ void Player::removeCard(string cardToRemove){
         }
     }
 }
+

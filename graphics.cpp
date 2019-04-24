@@ -5,6 +5,8 @@
 
 #include "graphics.h"
 #include "graphicsConstants.h"
+#include <thread>
+#include <chrono>
 #include "Image.h"
 
 
@@ -39,8 +41,12 @@ void init() {
     Player player1 = Player(STARTING_MONEY);
     Player player2 = Player(STARTING_MONEY);
 
+
     Game.players.push_back(player1);
     Game.players.push_back(player2);
+
+    Game.players[0].setHuman(true);
+    Game.players[1].setHuman(false);
 
     Game.players[0].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[0].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
@@ -87,8 +93,9 @@ void resetGame(){
     }
     Game.players.clear();
 
-    Player player1 = Player(STARTING_MONEY);
-    Player player2 = Player(STARTING_MONEY);
+    bool human = true;
+    Player player1 = Player(STARTING_MONEY, human);
+    Player player2 = Player(STARTING_MONEY, human);
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
@@ -590,6 +597,10 @@ void displayGame(){
         dieMessage = "Roll 2";
         drawText24(dieMessage, 0, 0, 0, roll2diceButton.getX() + 10, roll2diceButton.getY() + 20);
 
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+            cpuRollDice();
+        }
+
         if(Game.diceRolled){
             Game.turnPhase = postRoll;
             Game.diceRolled = false;
@@ -601,21 +612,32 @@ void displayGame(){
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
-        if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
-            // Do not allow the dice to be rerolled more than once per turn
-            Game.skipRadioTower = true;
-            Game.turnPhase = radioTower;
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+            cpuPostRoll();
         }
-        else {
-            Game.diceSum = Game.dice1Roll + Game.dice2Roll;
-            Game.turnPhase = distribution;
+        else{
+            if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
+                // Do not allow the dice to be rerolled more than once per turn
+                Game.skipRadioTower = true;
+                Game.turnPhase = radioTower;
+            }
+            else {
+                Game.diceSum = Game.dice1Roll + Game.dice2Roll;
+                Game.turnPhase = distribution;
+            }
         }
+
     }
     else if (Game.turnPhase == radioTower){
         //Reset dice roll and dice sum values
         //Wait for player input
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
+
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+            cpuRollDice();
+        }
+
     }
     else if (Game.turnPhase == distribution){
         cout << "distribution phase\n";
@@ -740,6 +762,10 @@ void displayGame(){
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+            cpuBuyCard();
+        }
+
         if(Game.boughtCard) {
             cout << "card bought" << endl;
 //            if(Game.players[Game.currentPlayerIndex].checkWinner()){
@@ -805,6 +831,418 @@ void displayEndGame(){
     message = "Player " + to_string(Game.currentPlayerIndex) + " WINS!";
     drawText24(message, 1, 1, 1, 600,300);
 }
+
+
+
+
+
+
+
+
+void cpuRollDice(){
+
+
+
+
+    if(Game.players[Game.currentPlayerIndex].getTrainStationBool()){
+
+        bool rollTwice = false;
+
+        int rollTwiceNum = (rand() % 5) + 1;
+        Game.dice1Roll = (rand() % 6) + 1;
+
+        if(rollTwiceNum == 1){
+            rollTwice = true;
+        }
+
+        if(rollTwice) {
+            Game.dice2Roll = (rand() % 6) + 1;
+        }
+        else{
+             Game.dice2Roll = 0;
+        }
+
+        Game.diceRolled = true;
+    }else{
+        Game.dice1Roll = (rand() % 6) + 1;
+        Game.dice2Roll = 0;
+        Game.diceRolled = true;
+    }
+
+    cout << "cpu rolled: " << Game.diceRolled << endl;
+
+
+
+}
+
+
+void cpuPostRoll(){
+
+
+    if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
+
+        bool cpuReRoll = false;
+        //TODO: Generate number to determine if the cpu will want to reroll or not, or a method to reroll if none of the cards activate
+        // Do not allow the dice to be rerolled more than once per turn
+
+        if(cpuReRoll){
+            Game.skipRadioTower = true;
+            Game.turnPhase = radioTower;
+        }
+        else{
+            Game.diceSum = Game.dice1Roll + Game.dice2Roll;
+            Game.turnPhase = distribution;
+        }
+
+    }
+    else {
+        Game.diceSum = Game.dice1Roll + Game.dice2Roll;
+        Game.turnPhase = distribution;
+    }
+
+}
+
+
+void cpuBuyCard(){
+
+    int cpuMoney = Game.players[Game.currentPlayerIndex].getMoney();
+
+
+    //Prioritize buying landmarks first
+    if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= TRAIN_STATION_COST && !Game.boughtCard){
+        Game.players[Game.currentPlayerIndex].setTrainStationBool(true);
+        Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - TRAIN_STATION_COST);
+        Game.boughtCard = true;
+    }
+    else if(!Game.players[Game.currentPlayerIndex].getShoppingMallBool() && cpuMoney >= SHOPPING_MALL_COST && !Game.boughtCard){
+        Game.players[Game.currentPlayerIndex].setShoppingMallBool(true);
+        Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - SHOPPING_MALL_COST);
+        Game.boughtCard = true;
+    }
+    else if(!Game.players[Game.currentPlayerIndex].getAmusementParkBool() && cpuMoney >= AMUSEMENT_PARK_COST && !Game.boughtCard){
+        Game.players[Game.currentPlayerIndex].setAmusementParkBool(true);
+        Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - AMUSEMENT_PARK_COST);
+        Game.boughtCard = true;
+    }
+    else if(!Game.players[Game.currentPlayerIndex].getRadioTowerBool() && cpuMoney >= RADIO_TOWER_COST && !Game.boughtCard){
+        Game.players[Game.currentPlayerIndex].setRadioTowerBool(true);
+        Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - RADIO_TOWER_COST);
+        Game.boughtCard = true;
+    }
+
+
+    int buyCardNumGen = (rand() % 3) + 1;
+
+    bool buyCard = true;
+
+    if(buyCardNumGen == 1){
+        buyCard = false;
+    }
+
+    if(buyCard && !Game.boughtCard) {
+        vector<int> availableCards;
+        if (cpuMoney == 0) {
+            Game.turnPhase = endturn;
+        } else if (cpuMoney == 1) {
+            availableCards.push_back(numOfWheatField);
+            availableCards.push_back(numOfRanch);
+            availableCards.push_back(numOfBakery);
+        } else if (cpuMoney == 2) {
+            availableCards.push_back(numOfWheatField);
+            availableCards.push_back(numOfRanch);
+            availableCards.push_back(numOfBakery);
+
+            availableCards.push_back(numOfCafe);
+            availableCards.push_back(numOfFruitandVeggieMarket);
+            availableCards.push_back(numOfConvenienceStore);
+        } else if (cpuMoney >= 3 && cpuMoney <= 4) {
+            availableCards.push_back(numOfWheatField);
+            availableCards.push_back(numOfRanch);
+            availableCards.push_back(numOfBakery);
+
+            availableCards.push_back(numOfCafe);
+            availableCards.push_back(numOfFruitandVeggieMarket);
+            availableCards.push_back(numOfConvenienceStore);
+
+            availableCards.push_back(numOfForest);
+            availableCards.push_back(numOfFurnitureFactory);
+            availableCards.push_back(numOfFamilyRestaurant);
+            availableCards.push_back(numOfAppleOrchard);
+
+        } else if (cpuMoney == 5) {
+            availableCards.push_back(numOfWheatField);
+            availableCards.push_back(numOfRanch);
+            availableCards.push_back(numOfBakery);
+
+            availableCards.push_back(numOfCafe);
+            availableCards.push_back(numOfFruitandVeggieMarket);
+            availableCards.push_back(numOfConvenienceStore);
+
+            availableCards.push_back(numOfForest);
+            availableCards.push_back(numOfFurnitureFactory);
+            availableCards.push_back(numOfFamilyRestaurant);
+            availableCards.push_back(numOfAppleOrchard);
+
+            availableCards.push_back(numOfCheeseFactory);
+        } else if (cpuMoney == 6) {
+            availableCards.push_back(numOfWheatField);
+            availableCards.push_back(numOfRanch);
+            availableCards.push_back(numOfBakery);
+
+            availableCards.push_back(numOfCafe);
+            availableCards.push_back(numOfFruitandVeggieMarket);
+            availableCards.push_back(numOfConvenienceStore);
+
+            availableCards.push_back(numOfForest);
+            availableCards.push_back(numOfFurnitureFactory);
+            availableCards.push_back(numOfFamilyRestaurant);
+            availableCards.push_back(numOfAppleOrchard);
+
+            availableCards.push_back(numOfCheeseFactory);
+
+            availableCards.push_back(numOfStadium);
+            availableCards.push_back(numOfMine);
+        } else if (cpuMoney == 7) {
+            availableCards.push_back(numOfWheatField);
+            availableCards.push_back(numOfRanch);
+            availableCards.push_back(numOfBakery);
+
+            availableCards.push_back(numOfCafe);
+            availableCards.push_back(numOfFruitandVeggieMarket);
+            availableCards.push_back(numOfConvenienceStore);
+
+            availableCards.push_back(numOfForest);
+            availableCards.push_back(numOfFurnitureFactory);
+            availableCards.push_back(numOfFamilyRestaurant);
+            availableCards.push_back(numOfAppleOrchard);
+
+            availableCards.push_back(numOfCheeseFactory);
+
+            availableCards.push_back(numOfStadium);
+            availableCards.push_back(numOfMine);
+
+            availableCards.push_back(numOfTVStation);
+        } else if (cpuMoney >= 8) {
+            availableCards.push_back(numOfWheatField);
+            availableCards.push_back(numOfRanch);
+            availableCards.push_back(numOfBakery);
+
+            availableCards.push_back(numOfCafe);
+            availableCards.push_back(numOfFruitandVeggieMarket);
+            availableCards.push_back(numOfConvenienceStore);
+
+            availableCards.push_back(numOfForest);
+            availableCards.push_back(numOfFurnitureFactory);
+            availableCards.push_back(numOfFamilyRestaurant);
+            availableCards.push_back(numOfAppleOrchard);
+
+            availableCards.push_back(numOfCheeseFactory);
+
+            availableCards.push_back(numOfStadium);
+            availableCards.push_back(numOfMine);
+
+            availableCards.push_back(numOfTVStation);
+
+            availableCards.push_back(numOfBusinessCenter);
+        }
+
+
+        /** Array Indexes:
+         *  0 - WheatField
+         *  1 - Ranch
+         *  2 - Bakery
+         *  3 - Cafe
+         *  4 - Fruit and Veggie Market
+         *  5 - Convenience Store
+         *  6 - Forest
+         *  7 - Furniture Factory
+         *  8 - Family Restaurant
+         *  9 - Apple Orchard
+         *  10 - Cheese Factory
+         *  11 - Stadium
+         *  12 - Mine
+         *  13 - TV Station
+         *  14 - Business Center
+         */
+
+        if (cpuMoney != 0) {
+            int arraySize = availableCards.size();
+
+            int cardIndexToBuy = (rand() % arraySize) + 1;
+
+            //Make sure the CPU is buying a card that is still available on the board
+            while (availableCards[cardIndexToBuy] == 0) {
+                cardIndexToBuy = (rand() % arraySize) + 1;
+            }
+
+            switch (cardIndexToBuy) {
+                case (0):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<WheatField>(
+                            WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE,
+                                       blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - WHEAT_FIELD_COST);
+                    numOfWheatField--;
+                    Game.boughtCard = true;
+                    break;
+                case (1):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Ranch>(
+                            Ranch(RANCH_DESCRIPTION, RANCH_COST, RANCH_RANGE, RANCH_TYPE, blueCardRectangle, RANCH_NAME,
+                                  RANCH_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - RANCH_COST);
+                    numOfRanch--;
+                    Game.boughtCard = true;
+                    break;
+                case (2):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Bakery>(
+                            Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle,
+                                   BAKERY_NAME, BAKERY_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - RANCH_COST);
+                    numOfBakery--;
+                    Game.boughtCard = true;
+                    break;
+                case (3):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Cafe>(
+                            Cafe(CAFE_DESCRIPTION, CAFE_COST, CAFE_RANGE, CAFE_TYPE, redCardRectangle, CAFE_NAME,
+                                 CAFE_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
+                    numOfCafe--;
+                    Game.boughtCard = true;
+                    break;
+                case (4):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Cafe>(
+                            Cafe(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST,
+                                 FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle,
+                                 FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - FRUIT_AND_VEGETABLE_MARKET_COST);
+                    numOfFruitandVeggieMarket--;
+                    Game.boughtCard = true;
+                    break;
+                case (5):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<ConvenienceStore>(
+                            ConvenienceStore(CONVENIENCE_STORE_DESCRIPTION, CONVENIENCE_STORE_COST,
+                                             CONVENIENCE_STORE_RANGE, CONVENIENCE_STORE_TYPE, greenCardRectangle,
+                                             CONVENIENCE_STORE_NAME, CONVENIENCE_STORE_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - CONVENIENCE_STORE_COST);
+                    numOfConvenienceStore--;
+                    Game.boughtCard = true;
+                    break;
+                case (6):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Forest>(
+                            Forest(FOREST_DESCRIPTION, FOREST_COST, FOREST_RANGE, FOREST_TYPE, blueCardRectangle,
+                                   FOREST_NAME, FOREST_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - FOREST_COST);
+                    numOfForest--;
+                    Game.boughtCard = true;
+                    break;
+                case (7):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<FurnitureFactory>(
+                            FurnitureFactory(FURNITURE_FACTORY_DESCRIPTION, FURNITURE_FACTORY_COST,
+                                             FURNITURE_FACTORY_RANGE, FURNITURE_FACTORY_TYPE, greenCardRectangle,
+                                             FURNITURE_FACTORY_NAME, FURNITURE_FACTORY_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - FURNITURE_FACTORY_COST);
+                    numOfFurnitureFactory--;
+                    Game.boughtCard = true;
+                    break;
+                case (8):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<FamilyRestaurant>(
+                            FamilyRestaurant(FAMILY_RESTAURANT_DESCRIPTION, FAMILY_RESTAURANT_COST,
+                                             FAMILY_RESTAURANT_RANGE, FAMILY_RESTAURANT_TYPE, redCardRectangle,
+                                             FAMILY_RESTAURANT_NAME, FAMILY_RESTAURANT_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - FAMILY_RESTAURANT_COST);
+                    numOfFamilyRestaurant--;
+                    Game.boughtCard = true;
+                    break;
+                case (9):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<AppleOrchard>(
+                            AppleOrchard(APPLE_ORCHARD_DESCRIPTION, APPLE_ORCHARD_COST, APPLE_ORCHARD_RANGE,
+                                         APPLE_ORCHARD_TYPE, blueCardRectangle, APPLE_ORCHARD_NAME,
+                                         APPLE_ORCHARD_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - APPLE_ORCHARD_COST);
+                    numOfAppleOrchard--;
+                    Game.boughtCard = true;
+                    break;
+                case (10):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<CheeseFactory>(
+                            CheeseFactory(CHEESE_FACTORY_DESCRIPTION, CHEESE_FACTORY_COST, CHEESE_FACTORY_RANGE,
+                                          CHEESE_FACTORY_TYPE, greenCardRectangle, CHEESE_FACTORY_NAME,
+                                          CHEESE_FACTORY_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - CHEESE_FACTORY_COST);
+                    numOfCheeseFactory--;
+                    Game.boughtCard = true;
+                    break;
+                case (11):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Stadium>(
+                            Stadium(STADIUM_DESCRIPTION, STADIUM_COST, STADIUM_RANGE, STADIUM_TYPE, purpleCardRectangle,
+                                    STADIUM_NAME, STADIUM_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - STADIUM_COST);
+                    numOfStadium--;
+                    Game.boughtCard = true;
+                    break;
+                case (12):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Mine>(
+                            Mine(MINE_DESCRIPTION, MINE_COST, MINE_RANGE, MINE_TYPE, blueCardRectangle, MINE_NAME,
+                                 MINE_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - MINE_COST);
+                    numOfMine--;
+                    Game.boughtCard = true;
+                    break;
+                case (13):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<TVStation>(
+                            TVStation(TV_STATION_DESCRIPTION, TV_STATION_COST, TV_STATION_RANGE, TV_STATION_TYPE,
+                                      purpleCardRectangle, TV_STATION_NAME, TV_STATION_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - TV_STATION_COST);
+                    numOfTVStation--;
+                    Game.boughtCard = true;
+                case (14):
+                    Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<BusinessCenter>(
+                            BusinessCenter(BUSINESS_CENTER_DESCRIPTION, BUSINESS_CENTER_COST, BUSINESS_CENTER_RANGE,
+                                           BUSINESS_CENTER_TYPE, purpleCardRectangle, BUSINESS_CENTER_NAME,
+                                           BUSINESS_CENTER_SYMBOL)));
+                    Game.players[Game.currentPlayerIndex].setMoney(
+                            Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
+                    numOfBusinessCenter--;
+                    Game.boughtCard = true;
+                    break;
+            }
+
+            cout << "cpu bought card: " << cardIndexToBuy << endl;
+        }
+    }
+    else{
+        Game.turnPhase = endturn;
+    }
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Handler for window-repaint event. Call back when the window first appears and
