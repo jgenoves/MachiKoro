@@ -721,9 +721,14 @@ void cpuBuyCard(){
         Game.boughtCard = true;
     }
 
-    //TODO: Generate number to determine if cpu will skip turn or buy card
+
+    int buyCardNumGen = (rand() % 3) + 1;
 
     bool buyCard = true;
+
+    if(buyCardNumGen == 1){
+        buyCard = false;
+    }
 
     if(buyCard && !Game.boughtCard) {
         vector<int> availableCards;
