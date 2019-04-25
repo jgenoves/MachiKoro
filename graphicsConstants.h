@@ -7,6 +7,7 @@
 
 #include "Shapes.h"
 #include "Card.h"
+#include "Image.h"
 #include <vector>
 
 /*************************/
@@ -314,5 +315,32 @@ int numOfStadium = 2;
 int numOfTVStation = 2;
 int numOfBusinessCenter = 2;
 
+// Card Images
+Image ranchFile("ranch.BMP");
+Image farmersMarketFile("farmersMarket.BMP");
+Image shoppingMall2File("shoppingMall2.BMP");
+Image radioTower2File("radioTower2.BMP");
+Image furnitureFactoryFile("furnitureFactory.BMP");
+Image cheeseFactoryFile("cheeseFactory.BMP");
+Image amusementParkFile("amusementPark.BMP");
+Image convenienceStoreFile("convenienceStore.BMP");
+Image shoppingMallFile("shoppingMall.BMP");
+Image appleOrchardFile("appleOrchard.BMP");
+Image trainStationFile("trainStation.BMP");
+Image wheatFieldFile("wheatField.BMP");
+Image trainStation2File("trainStation2.BMP");
+Image tvStationFile("tvStation.BMP");
+Image cardOneOneFile("cardOneOne.bmp");
+Image businessCenterFile("businessCenter.BMP");
+Image cafeFile("cafe.BMP");
+Image familyRestaurantFile("familyRestaurant.BMP");
+Image cardOneOneBigFile("cardOneOneBig.bmp");
+Image amusementPark2File("amusementPark2.BMP");
+Image testbmpFile("testbmp.bmp");
+Image radioTowerFile("radioTower.BMP");
+Image stadiumFile("stadium.BMP");
+Image mineFile("mine.BMP");
+Image bakeryFile("bakery.bmp");
+Image forestFile("forest.BMP");
 
 #endif //GRAPHICS_GRAPHICSCONSTANTS_H
