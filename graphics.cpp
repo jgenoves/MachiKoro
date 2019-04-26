@@ -1663,6 +1663,40 @@ void cursor(int x, int y) {
         }
 
 
+        if (trainStationSlot.isOverlapping(x,y)) {
+            if (Game.players[Game.focusedPlayerIndex].getTrainStationBool()) {
+                cardImage = trainStationFile;
+            } else {
+                cardImage = trainStation2File;
+            }
+        }
+
+        if (shoppingMallSlot.isOverlapping(x,y)) {
+            if (Game.players[Game.focusedPlayerIndex].getShoppingMallBool()) {
+                cardImage = shoppingMallFile;
+            } else {
+                cardImage = shoppingMall2File;
+            }
+        }
+
+        if (amusementParkSlot.isOverlapping(x,y)) {
+            if (Game.players[Game.focusedPlayerIndex].getAmusementParkBool()) {
+                cardImage = amusementParkFile;
+            } else {
+                cardImage = amusementPark2File;
+            }
+        }
+
+        if (radioTowerSlot.isOverlapping(x,y)) {
+            if (Game.players[Game.focusedPlayerIndex].getRadioTowerBool()) {
+                cardImage = radioTowerFile;
+            } else {
+                cardImage = radioTower2File;
+            }
+        }
+
+
+
 
 
 
