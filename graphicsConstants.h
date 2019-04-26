@@ -343,4 +343,12 @@ Image mineFile("mine.BMP");
 Image bakeryFile("bakery.bmp");
 Image forestFile("forest.BMP");
 
+// variables to keep track of last turn
+int previousPlayerIndex = 0;
+int previousMoney = 0;
+int afterMoney = 0;
+int netProfit = 0;
+int previousDiceRoll = 0;
+string previousCardBought = "";
+
 #endif //GRAPHICS_GRAPHICSCONSTANTS_H
