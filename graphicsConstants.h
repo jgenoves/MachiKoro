@@ -9,6 +9,7 @@
 #include "Card.h"
 #include "Image.h"
 #include <vector>
+#include <memory>
 
 /*************************/
 /** General Game Constants **/
@@ -316,32 +317,30 @@ int numOfTVStation = 2;
 int numOfBusinessCenter = 2;
 
 // Card Images
-Image ranchFile("ranch.BMP");
-Image farmersMarketFile("farmersMarket.BMP");
-Image shoppingMall2File("shoppingMall2.BMP");
-Image radioTower2File("radioTower2.BMP");
-Image furnitureFactoryFile("furnitureFactory.BMP");
-Image cheeseFactoryFile("cheeseFactory.BMP");
-Image amusementParkFile("amusementPark.BMP");
-Image convenienceStoreFile("convenienceStore.BMP");
-Image shoppingMallFile("shoppingMall.BMP");
-Image appleOrchardFile("appleOrchard.BMP");
-Image trainStationFile("trainStation.BMP");
-Image wheatFieldFile("wheatField.BMP");
-Image trainStation2File("trainStation2.BMP");
-Image tvStationFile("tvStation.BMP");
-Image cardOneOneFile("cardOneOne.bmp");
-Image businessCenterFile("businessCenter.BMP");
-Image cafeFile("cafe.BMP");
-Image familyRestaurantFile("familyRestaurant.BMP");
-Image cardOneOneBigFile("cardOneOneBig.bmp");
-Image amusementPark2File("amusementPark2.BMP");
-Image testbmpFile("testbmp.bmp");
-Image radioTowerFile("radioTower.BMP");
-Image stadiumFile("stadium.BMP");
-Image mineFile("mine.BMP");
-Image bakeryFile("bakery.bmp");
-Image forestFile("forest.BMP");
+unique_ptr<Image> ranchFile = make_unique<Image>(Image("ranch.BMP"));
+unique_ptr<Image> farmersMarketFile = make_unique<Image>(Image("farmersMarket.BMP"));
+unique_ptr<Image> shoppingMall2File = make_unique<Image>(Image("shoppingMall2.BMP"));
+unique_ptr<Image> radioTower2File = make_unique<Image>(Image("radioTower2.BMP"));
+unique_ptr<Image> furnitureFactoryFile = make_unique<Image>(Image("furnitureFactory.BMP"));
+unique_ptr<Image> cheeseFactoryFile = make_unique<Image>(Image("cheeseFactory.BMP"));
+unique_ptr<Image> amusementParkFile = make_unique<Image>(Image("amusementPark.BMP"));
+unique_ptr<Image> convenienceStoreFile = make_unique<Image>(Image("convenienceStore.BMP"));
+unique_ptr<Image> shoppingMallFile = make_unique<Image>(Image("shoppingMall.BMP"));
+unique_ptr<Image> appleOrchardFile = make_unique<Image>(Image("appleOrchard.BMP"));
+unique_ptr<Image> trainStationFile = make_unique<Image>(Image("trainStation.BMP"));
+unique_ptr<Image> wheatFieldFile = make_unique<Image>(Image("wheatField.BMP"));
+unique_ptr<Image> trainStation2File = make_unique<Image>(Image("trainStation2.BMP"));
+unique_ptr<Image> tvStationFile = make_unique<Image>(Image("tvStation.BMP"));
+unique_ptr<Image> businessCenterFile = make_unique<Image>(Image("businessCenter.BMP"));
+unique_ptr<Image> cafeFile = make_unique<Image>(Image("cafe.BMP"));
+unique_ptr<Image> familyRestaurantFile = make_unique<Image>(Image("familyRestaurant.BMP"));
+unique_ptr<Image> amusementPark2File = make_unique<Image>(Image("amusementPark2.BMP"));
+unique_ptr<Image> radioTowerFile = make_unique<Image>(Image("radioTower.BMP"));
+unique_ptr<Image> stadiumFile = make_unique<Image>(Image("stadium.BMP"));
+unique_ptr<Image> mineFile = make_unique<Image>(Image("mine.BMP"));
+unique_ptr<Image> bakeryFile = make_unique<Image>(Image("bakery.bmp"));
+unique_ptr<Image> forestFile = make_unique<Image>(Image("forest.BMP"));
+
 
 // variables to keep track of last turn
 int previousPlayerIndex = 0;
