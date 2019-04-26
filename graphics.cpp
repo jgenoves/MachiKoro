@@ -461,44 +461,44 @@ void drawPlayerInventory(){
     drawText18(message, 1, 1, 1, fruitAndVegetableMarketSlot.getX() + (fruitAndVegetableMarketSlot.getBase() - 30), fruitAndVegetableMarketSlot.getY() + 20);
 
     if(Game.players[Game.focusedPlayerIndex].getTrainStationBool()){
-        trainStationSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
+        //trainStationSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
         trainStationSlot.draw();
     }
     else{
-        trainStationSlot.setFill(LANDMARK_CARD_COLOR);
+        //trainStationSlot.setFill(LANDMARK_CARD_COLOR);
         trainStationSlot.draw();
     }
     message = "Train Station";
     drawText18(message, 1, 1, 1, trainStationSlot.getX() + 10, trainStationSlot.getY() + 20);
 
     if(Game.players[Game.focusedPlayerIndex].getShoppingMallBool()){
-        shoppingMallSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
+        //shoppingMallSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
         shoppingMallSlot.draw();
     }
     else{
-        shoppingMallSlot.setFill(LANDMARK_CARD_COLOR);
+        //shoppingMallSlot.setFill(LANDMARK_CARD_COLOR);
         shoppingMallSlot.draw();
     }
     message = "Shopping Mall";
     drawText18(message, 1, 1, 1, shoppingMallSlot.getX() + 10, shoppingMallSlot.getY() + 20);
 
     if(Game.players[Game.focusedPlayerIndex].getAmusementParkBool()){
-        amusementParkSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
+        //amusementParkSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
         amusementParkSlot.draw();
     }
     else{
-        amusementParkSlot.setFill(LANDMARK_CARD_COLOR);
+        //amusementParkSlot.setFill(LANDMARK_CARD_COLOR);
         amusementParkSlot.draw();
     }
     message = "Amusement Park";
     drawText18(message, 1, 1, 1, amusementParkSlot.getX() + 10, amusementParkSlot.getY() + 20);
 
     if(Game.players[Game.focusedPlayerIndex].getRadioTowerBool()){
-        radioTowerSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
+        //radioTowerSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
         radioTowerSlot.draw();
     }
     else{
-        radioTowerSlot.setFill(LANDMARK_CARD_COLOR);
+        //radioTowerSlot.setFill(LANDMARK_CARD_COLOR);
         radioTowerSlot.draw();
     }
     message = "Radio Tower";
@@ -1666,37 +1666,67 @@ void cursor(int x, int y) {
         if (trainStationSlot.isOverlapping(x,y)) {
             if (Game.players[Game.focusedPlayerIndex].getTrainStationBool()) {
                 cardImage = trainStationFile;
+                trainStationSlot.setFill(LANDMARK_CARD_OWNED_HOVER_COLOR);
+
             } else {
                 cardImage = trainStation2File;
+                trainStationSlot.setFill(LANDMARK_CARD_HOVER_COLOR);
+            }
+        } else {
+            if (Game.players[Game.focusedPlayerIndex].getTrainStationBool()) {
+                trainStationSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
+            } else {
+                trainStationSlot.setFill(LANDMARK_CARD_COLOR);
             }
         }
 
         if (shoppingMallSlot.isOverlapping(x,y)) {
             if (Game.players[Game.focusedPlayerIndex].getShoppingMallBool()) {
                 cardImage = shoppingMallFile;
+                shoppingMallSlot.setFill(LANDMARK_CARD_OWNED_HOVER_COLOR);
             } else {
                 cardImage = shoppingMall2File;
+                shoppingMallSlot.setFill(LANDMARK_CARD_HOVER_COLOR);
+            }
+        } else {
+            if (Game.players[Game.focusedPlayerIndex].getShoppingMallBool()) {
+                shoppingMallSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
+            } else {
+                shoppingMallSlot.setFill(LANDMARK_CARD_COLOR);
             }
         }
 
         if (amusementParkSlot.isOverlapping(x,y)) {
             if (Game.players[Game.focusedPlayerIndex].getAmusementParkBool()) {
                 cardImage = amusementParkFile;
+                amusementParkSlot.setFill(LANDMARK_CARD_OWNED_HOVER_COLOR);
             } else {
                 cardImage = amusementPark2File;
+                amusementParkSlot.setFill(LANDMARK_CARD_HOVER_COLOR);
+            }
+        } else {
+            if (Game.players[Game.focusedPlayerIndex].getAmusementParkBool()) {
+                amusementParkSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
+            } else {
+                amusementParkSlot.setFill(LANDMARK_CARD_COLOR);
             }
         }
 
         if (radioTowerSlot.isOverlapping(x,y)) {
             if (Game.players[Game.focusedPlayerIndex].getRadioTowerBool()) {
                 cardImage = radioTowerFile;
+                radioTowerSlot.setFill(LANDMARK_CARD_OWNED_HOVER_COLOR);
             } else {
                 cardImage = radioTower2File;
+                radioTowerSlot.setFill(LANDMARK_CARD_HOVER_COLOR);
+            }
+        } else {
+            if (Game.players[Game.focusedPlayerIndex].getRadioTowerBool()) {
+                radioTowerSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
+            } else {
+                radioTowerSlot.setFill(LANDMARK_CARD_COLOR);
             }
         }
-
-
-
 
 
 

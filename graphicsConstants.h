@@ -34,6 +34,9 @@ color RED_CARD_HOVER_COLOR = {(220.0/255),(20.0/255),(60.0/255)}; // Red
 color BLUE_CARD_HOVER_COLOR = {(65.0/255),(105.0/255),(225.0/255)}; // Blue
 color GREEN_CARD_HOVER_COLOR = {(34.0/255),(180.0/255),(34.0/255)}; // Green
 color PURPLE_CARD_HOVER_COLOR = {(153.0/255), (50.0/255), (204.0/255)}; // Purple
+color LANDMARK_CARD_HOVER_COLOR = {.6,.6,.6};
+color LANDMARK_CARD_OWNED_HOVER_COLOR = {(224.0/255),(224.0/255),(20.0/255)}; // Yellow
+
 /********************/
 /** Card Constants **/
 /********************/
