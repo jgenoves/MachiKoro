@@ -184,7 +184,7 @@ int BUTTON_Y_MARGIN = 20;
 int BUTTON_X_MARGIN = 20;
 
 // In game card button constants
-int CARD_BUTTON_WIDTH = 75;
+int CARD_BUTTON_WIDTH = 100;
 int CARD_BUTTON_HEIGHT = 100;
 color CARD_BUTTON_COLOR = {1,0,0}; // Red
 color CARD_BUTTON_HOVER_COLOR = {0,1,0}; // Green
@@ -353,5 +353,10 @@ int afterMoney = 0;
 int netProfit = 0;
 int previousDiceRoll = 0;
 string previousCardBought = "";
+
+int updatedNetProfit = 0;
+int updatedDiceRoll = 0;
+int updatedPlayerIndex = 0;
+string updatedCardBought = "";
 
 #endif //GRAPHICS_GRAPHICSCONSTANTS_H

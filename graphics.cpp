@@ -47,7 +47,7 @@ void init() {
     Game.players.push_back(player2);
 
     Game.players[0].setHuman(true);
-    Game.players[1].setHuman(false);
+    Game.players[1].setHuman(true);
 
     Game.players[0].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[0].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
@@ -518,6 +518,26 @@ void drawPlayerButtons(){
 
 }
 
+void updatePreviousTurnStats(){
+    updatedNetProfit = netProfit;
+    updatedDiceRoll = previousDiceRoll;
+    updatedPlayerIndex = previousPlayerIndex;
+    updatedCardBought = previousCardBought;
+}
+
+void displayPreviousTurn(){
+    int topMessageY = 500;
+    int topMessageX = 650;
+    int messageMargin = 20;
+    string message = "Previous Player: " + to_string(updatedPlayerIndex + 1);
+    drawText18(message, 1, 1, 1, topMessageX, topMessageY);
+    message = "Previous Roll: " + to_string(updatedDiceRoll);
+    drawText18(message, 1, 1, 1, topMessageX, messageMargin + topMessageY);
+//    message = "Player's Profit: " + to_string(updatedNetProfit);
+//    drawText18(message, 1, 1, 1, topMessageX, 3*messageMargin + topMessageY);
+    message = "Card Bought: " + updatedCardBought;
+    drawText18(message, 1, 1, 1, topMessageX, 2*messageMargin + topMessageY);
+}
 
 void displayStart(){
 
@@ -590,9 +610,10 @@ void displayGame(){
     message = "Skip Buy Phase";
     drawText24(message, 1, 1, 1, skipBuyButton.getX() + 25, skipBuyButton.getY() + 45);
 
-
     drawPlayerInventory();
     drawPlayerButtons();
+
+    displayPreviousTurn();
 
     if(Game.turnPhase == roll){
 
@@ -644,6 +665,9 @@ void displayGame(){
 
     }
     else if (Game.turnPhase == distribution){
+        previousDiceRoll = Game.diceSum;
+        previousMoney = Game.players[Game.currentPlayerIndex].getMoney();
+
         cout << "distribution phase\n";
         // Draw the result of the dice roll
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
@@ -766,6 +790,8 @@ void displayGame(){
 
     }
     else if(Game.turnPhase == buy){
+        //afterMoney = Game.players[Game.currentPlayerIndex].getMoney();
+        //netProfit = afterMoney - previousMoney;
         //cout << "buy phase\n";
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
@@ -785,6 +811,8 @@ void displayGame(){
         }
     }
     else if(Game.turnPhase == endturn){
+        previousPlayerIndex = Game.currentPlayerIndex;
+        updatePreviousTurnStats();
         cout << "end turn phase" << endl;
         if (Game.players[Game.currentPlayerIndex].checkWinner()){
             Game.gameOver = true;
@@ -839,11 +867,6 @@ void displayEndGame(){
     message = "Player " + to_string(Game.currentPlayerIndex) + " WINS!";
     drawText24(message, 1, 1, 1, 600,300);
 }
-
-
-
-
-
 
 
 
@@ -912,7 +935,7 @@ void cpuPostRoll(){
 
 
 void cpuBuyCard(){
-
+    netProfit = afterMoney - previousMoney;
     int cpuMoney = Game.players[Game.currentPlayerIndex].getMoney();
 
 
@@ -920,21 +943,25 @@ void cpuBuyCard(){
     if(!Game.players[Game.currentPlayerIndex].getTrainStationBool() && cpuMoney >= TRAIN_STATION_COST && !Game.boughtCard){
         Game.players[Game.currentPlayerIndex].setTrainStationBool(true);
         Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - TRAIN_STATION_COST);
+        previousCardBought = "Train Station";
         Game.boughtCard = true;
     }
     else if(!Game.players[Game.currentPlayerIndex].getShoppingMallBool() && cpuMoney >= SHOPPING_MALL_COST && !Game.boughtCard){
         Game.players[Game.currentPlayerIndex].setShoppingMallBool(true);
         Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - SHOPPING_MALL_COST);
+        previousCardBought = "Shopping Mall";
         Game.boughtCard = true;
     }
     else if(!Game.players[Game.currentPlayerIndex].getAmusementParkBool() && cpuMoney >= AMUSEMENT_PARK_COST && !Game.boughtCard){
         Game.players[Game.currentPlayerIndex].setAmusementParkBool(true);
         Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - AMUSEMENT_PARK_COST);
+        previousCardBought = "Amusement Park";
         Game.boughtCard = true;
     }
     else if(!Game.players[Game.currentPlayerIndex].getRadioTowerBool() && cpuMoney >= RADIO_TOWER_COST && !Game.boughtCard){
         Game.players[Game.currentPlayerIndex].setRadioTowerBool(true);
         Game.players[Game.currentPlayerIndex].setMoney(cpuMoney - RADIO_TOWER_COST);
+        previousCardBought = "Radio Tower";
         Game.boughtCard = true;
     }
 
@@ -1091,6 +1118,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - WHEAT_FIELD_COST);
                     numOfWheatField--;
+                    previousCardBought = WHEAT_FIELD_NAME;
                     Game.boughtCard = true;
                     break;
                 case (1):
@@ -1100,6 +1128,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - RANCH_COST);
                     numOfRanch--;
+                    previousCardBought = RANCH_NAME;
                     Game.boughtCard = true;
                     break;
                 case (2):
@@ -1109,6 +1138,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - RANCH_COST);
                     numOfBakery--;
+                    previousCardBought = BAKERY_NAME;
                     Game.boughtCard = true;
                     break;
                 case (3):
@@ -1118,6 +1148,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
                     numOfCafe--;
+                    previousCardBought = CAFE_NAME;
                     Game.boughtCard = true;
                     break;
                 case (4):
@@ -1128,6 +1159,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - FRUIT_AND_VEGETABLE_MARKET_COST);
                     numOfFruitandVeggieMarket--;
+                    previousCardBought = FRUIT_AND_VEGETABLE_MARKET_NAME;
                     Game.boughtCard = true;
                     break;
                 case (5):
@@ -1138,6 +1170,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - CONVENIENCE_STORE_COST);
                     numOfConvenienceStore--;
+                    previousCardBought = CONVENIENCE_STORE_NAME;
                     Game.boughtCard = true;
                     break;
                 case (6):
@@ -1147,6 +1180,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - FOREST_COST);
                     numOfForest--;
+                    previousCardBought = FOREST_NAME;
                     Game.boughtCard = true;
                     break;
                 case (7):
@@ -1157,6 +1191,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - FURNITURE_FACTORY_COST);
                     numOfFurnitureFactory--;
+                    previousCardBought = FURNITURE_FACTORY_NAME;
                     Game.boughtCard = true;
                     break;
                 case (8):
@@ -1167,6 +1202,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - FAMILY_RESTAURANT_COST);
                     numOfFamilyRestaurant--;
+                    previousCardBought = FAMILY_RESTAURANT_NAME;
                     Game.boughtCard = true;
                     break;
                 case (9):
@@ -1177,6 +1213,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - APPLE_ORCHARD_COST);
                     numOfAppleOrchard--;
+                    previousCardBought = APPLE_ORCHARD_NAME;
                     Game.boughtCard = true;
                     break;
                 case (10):
@@ -1187,6 +1224,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - CHEESE_FACTORY_COST);
                     numOfCheeseFactory--;
+                    previousCardBought = CHEESE_FACTORY_NAME;
                     Game.boughtCard = true;
                     break;
                 case (11):
@@ -1196,6 +1234,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - STADIUM_COST);
                     numOfStadium--;
+                    previousCardBought = STADIUM_NAME;
                     Game.boughtCard = true;
                     break;
                 case (12):
@@ -1205,6 +1244,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - MINE_COST);
                     numOfMine--;
+                    previousCardBought = MINE_NAME;
                     Game.boughtCard = true;
                     break;
                 case (13):
@@ -1214,7 +1254,9 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - TV_STATION_COST);
                     numOfTVStation--;
+                    previousCardBought = TV_STATION_NAME;
                     Game.boughtCard = true;
+                    break;
                 case (14):
                     Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<BusinessCenter>(
                             BusinessCenter(BUSINESS_CENTER_DESCRIPTION, BUSINESS_CENTER_COST, BUSINESS_CENTER_RANGE,
@@ -1223,6 +1265,7 @@ void cpuBuyCard(){
                     Game.players[Game.currentPlayerIndex].setMoney(
                             Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
                     numOfBusinessCenter--;
+                    previousCardBought = BUSINESS_CENTER_NAME;
                     Game.boughtCard = true;
                     break;
             }
@@ -1784,115 +1827,153 @@ void mouse(int button, int state, int x, int y) {
         }
         // Market Buttons
         else if(wheatFieldButton.isOverlapping(x, y) && !Game.boughtCard && numOfWheatField > 0 && Game.turnPhase == buy && Game.players[Game.currentPlayerIndex].getMoney() >= WHEAT_FIELD_COST && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - WHEAT_FIELD_COST);
             numOfWheatField--;
+            previousCardBought = WHEAT_FIELD_NAME;
             Game.boughtCard = true;
         }
         else if(ranchButton.isOverlapping(x, y) && !Game.boughtCard && numOfRanch > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= RANCH_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Ranch>(Ranch(RANCH_DESCRIPTION, RANCH_COST, RANCH_RANGE, RANCH_TYPE, blueCardRectangle, RANCH_NAME, RANCH_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - RANCH_COST);
             numOfRanch--;
+            previousCardBought = RANCH_NAME;
             Game.boughtCard = true;
         }
         else if(bakeryButton.isOverlapping(x, y) && !Game.boughtCard && numOfBakery > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= BAKERY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - RANCH_COST);
             numOfBakery--;
+            previousCardBought = BAKERY_NAME;
             Game.boughtCard = true;
         }
         else if(cafeButton.isOverlapping(x, y) && !Game.boughtCard && numOfCafe > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CAFE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Cafe>(Cafe(CAFE_DESCRIPTION, CAFE_COST, CAFE_RANGE, CAFE_TYPE, redCardRectangle, CAFE_NAME, CAFE_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
             numOfCafe--;
+            previousCardBought = CAFE_NAME;
             Game.boughtCard = true;
         }
         else if(convenienceStoreButton.isOverlapping(x, y) && !Game.boughtCard && numOfConvenienceStore > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CONVENIENCE_STORE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<ConvenienceStore>(ConvenienceStore(CONVENIENCE_STORE_DESCRIPTION, CONVENIENCE_STORE_COST, CONVENIENCE_STORE_RANGE, CONVENIENCE_STORE_TYPE, greenCardRectangle, CONVENIENCE_STORE_NAME, CONVENIENCE_STORE_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CONVENIENCE_STORE_COST);
             numOfConvenienceStore--;
+            previousCardBought = CONVENIENCE_STORE_NAME;
             Game.boughtCard = true;
         }
         else if(forestButton.isOverlapping(x, y) && !Game.boughtCard && numOfForest > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FOREST_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Forest>(Forest(FOREST_DESCRIPTION, FOREST_COST, FOREST_RANGE, FOREST_TYPE, blueCardRectangle, FOREST_NAME, FOREST_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FOREST_COST);
             numOfForest--;
+            previousCardBought = FOREST_NAME;
             Game.boughtCard = true;
         }
         else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(TV_STATION_NAME) == 0 && tvStationButton.isOverlapping(x, y) && !Game.boughtCard && numOfTVStation > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= TV_STATION_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<TVStation>(TVStation(TV_STATION_DESCRIPTION, TV_STATION_COST, TV_STATION_RANGE, TV_STATION_TYPE, purpleCardRectangle, TV_STATION_NAME, TV_STATION_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - TV_STATION_COST);
             numOfTVStation--;
+            previousCardBought = TV_STATION_NAME;
             Game.boughtCard = true;
         }
         else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(STADIUM_NAME) == 0 && stadiumButton.isOverlapping(x, y) && !Game.boughtCard && numOfStadium > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= STADIUM_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Stadium>(Stadium(STADIUM_DESCRIPTION, STADIUM_COST, STADIUM_RANGE, STADIUM_TYPE, purpleCardRectangle, STADIUM_NAME, STADIUM_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - STADIUM_COST);
             numOfStadium--;
+            previousCardBought = STADIUM_NAME;
             Game.boughtCard = true;
         }
         else if(Game.players[Game.currentPlayerIndex].getNumberOfEstablishment(BUSINESS_CENTER_NAME) == 0 && businessCenterButton.isOverlapping(x, y) && !Game.boughtCard && numOfBusinessCenter > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= BUSINESS_CENTER_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<BusinessCenter>(BusinessCenter(BUSINESS_CENTER_DESCRIPTION, BUSINESS_CENTER_COST, BUSINESS_CENTER_RANGE, BUSINESS_CENTER_TYPE, purpleCardRectangle, BUSINESS_CENTER_NAME, BUSINESS_CENTER_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CAFE_COST);
             numOfBusinessCenter--;
+            previousCardBought = BUSINESS_CENTER_NAME;
             Game.boughtCard = true;
         }
         else if(cheeseFactoryButton.isOverlapping(x, y) && !Game.boughtCard && numOfCheeseFactory > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= CHEESE_FACTORY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<CheeseFactory>(CheeseFactory(CHEESE_FACTORY_DESCRIPTION, CHEESE_FACTORY_COST, CHEESE_FACTORY_RANGE, CHEESE_FACTORY_TYPE, greenCardRectangle, CHEESE_FACTORY_NAME, CHEESE_FACTORY_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - CHEESE_FACTORY_COST);
             numOfCheeseFactory--;
+            previousCardBought = CHEESE_FACTORY_NAME;
             Game.boughtCard = true;
         }
         else if(furnitureFactoryButton.isOverlapping(x, y) && !Game.boughtCard && numOfFurnitureFactory > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FURNITURE_FACTORY_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<FurnitureFactory>(FurnitureFactory(FURNITURE_FACTORY_DESCRIPTION, FURNITURE_FACTORY_COST, FURNITURE_FACTORY_RANGE, FURNITURE_FACTORY_TYPE, greenCardRectangle, FURNITURE_FACTORY_NAME, FURNITURE_FACTORY_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FURNITURE_FACTORY_COST);
             numOfFurnitureFactory--;
+            previousCardBought = FURNITURE_FACTORY_NAME;
             Game.boughtCard = true;
         }
         else if(mineButton.isOverlapping(x, y) && !Game.boughtCard && numOfMine > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= MINE_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<Mine>(Mine(MINE_DESCRIPTION, MINE_COST, MINE_RANGE, MINE_TYPE, blueCardRectangle, MINE_NAME, MINE_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - MINE_COST);
             numOfMine--;
+            previousCardBought = MINE_NAME;
             Game.boughtCard = true;
         }
         else if(familyRestaurantButton.isOverlapping(x, y) && !Game.boughtCard && numOfFamilyRestaurant > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FAMILY_RESTAURANT_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<FamilyRestaurant>(FamilyRestaurant(FAMILY_RESTAURANT_DESCRIPTION, FAMILY_RESTAURANT_COST, FAMILY_RESTAURANT_RANGE, FAMILY_RESTAURANT_TYPE, redCardRectangle, FAMILY_RESTAURANT_NAME, FAMILY_RESTAURANT_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FAMILY_RESTAURANT_COST);
             numOfFamilyRestaurant--;
+            previousCardBought = FAMILY_RESTAURANT_NAME;
             Game.boughtCard = true;
         }
         else if(appleOrchardButton.isOverlapping(x, y) && !Game.boughtCard && numOfAppleOrchard > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= APPLE_ORCHARD_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<AppleOrchard>(AppleOrchard(APPLE_ORCHARD_DESCRIPTION, APPLE_ORCHARD_COST, APPLE_ORCHARD_RANGE, APPLE_ORCHARD_TYPE, blueCardRectangle, APPLE_ORCHARD_NAME, APPLE_ORCHARD_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - APPLE_ORCHARD_COST);
             numOfAppleOrchard--;
+            previousCardBought = APPLE_ORCHARD_NAME;
             Game.boughtCard = true;
         }
         else if(fruitAndVegetableMarketButton.isOverlapping(x, y) && !Game.boughtCard && numOfFruitandVeggieMarket > 0 && Game.players[Game.currentPlayerIndex].getMoney() >= FRUIT_AND_VEGETABLE_MARKET_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - FRUIT_AND_VEGETABLE_MARKET_COST);
             numOfFruitandVeggieMarket--;
+            previousCardBought = FRUIT_AND_VEGETABLE_MARKET_NAME;
             Game.boughtCard = true;
         }
 
         // Landmark Slot buttons
         else if(trainStationSlot.isOverlapping(x, y) && !Game.players[Game.currentPlayerIndex].getTrainStationBool() && !Game.boughtCard && Game.players[Game.currentPlayerIndex].getMoney() >= TRAIN_STATION_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].setTrainStationBool(true);
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - TRAIN_STATION_COST);
+            previousCardBought = "Train Station";
             Game.boughtCard = true;
         }
         else if(shoppingMallSlot.isOverlapping(x, y) && !Game.players[Game.currentPlayerIndex].getShoppingMallBool() && !Game.boughtCard && Game.players[Game.currentPlayerIndex].getMoney() >= SHOPPING_MALL_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].setShoppingMallBool(true);
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - SHOPPING_MALL_COST);
+            previousCardBought = "Shopping Mall";
             Game.boughtCard = true;
         }
         else if(amusementParkSlot.isOverlapping(x, y) && !Game.players[Game.currentPlayerIndex].getAmusementParkBool() && !Game.boughtCard && Game.players[Game.currentPlayerIndex].getMoney() >= AMUSEMENT_PARK_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].setAmusementParkBool(true);
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - AMUSEMENT_PARK_COST);
+            previousCardBought = "Amusement Park";
             Game.boughtCard = true;
         }
         else if(radioTowerSlot.isOverlapping(x, y) && !Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.boughtCard && Game.players[Game.currentPlayerIndex].getMoney() >= RADIO_TOWER_COST && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            netProfit = afterMoney - previousMoney;
             Game.players[Game.currentPlayerIndex].setRadioTowerBool(true);
             Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() - RADIO_TOWER_COST);
+            previousCardBought = "Radio Tower";
             Game.boughtCard = true;
         }
 
