@@ -93,12 +93,15 @@ void resetGame(){
     }
     Game.players.clear();
 
-    bool human = true;
-    Player player1 = Player(STARTING_MONEY, human);
-    Player player2 = Player(STARTING_MONEY, human);
+
+    Player player1 = Player(STARTING_MONEY);
+    Player player2 = Player(STARTING_MONEY);
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
+
+    Game.players[0].setHuman(true);
+    Game.players[1].setHuman(false);
 
     Game.players[0].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[0].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
@@ -718,6 +721,10 @@ void displayGame(){
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+            cpuTradeCard();
+        }
+
         if (Game.businessCenterCurrentPlayerCard != "" && Game.businessCenterTargetPlayerCard != ""){
             //TODO: Trade cards with target player
             cout << "calling move cards with card1 = '" << Game.businessCenterCurrentPlayerCard << "' and card2 = '" << Game.businessCenterTargetPlayerCard << "'\n";
@@ -1068,11 +1075,11 @@ void cpuBuyCard(){
         if (cpuMoney != 0) {
             int arraySize = availableCards.size();
 
-            int cardIndexToBuy = (rand() % arraySize) + 1;
+            int cardIndexToBuy = (rand() % arraySize);
 
             //Make sure the CPU is buying a card that is still available on the board
             while (availableCards[cardIndexToBuy] == 0) {
-                cardIndexToBuy = (rand() % arraySize) + 1;
+                cardIndexToBuy = (rand() % arraySize);
             }
 
             switch (cardIndexToBuy) {
@@ -1226,12 +1233,60 @@ void cpuBuyCard(){
         Game.turnPhase = endturn;
     }
 
+}
+
+void cpuTradeCard(){
+
+
+
+    //CPU decides which card to trade
+    int cpuCardArraySize = Game.players[Game.currentPlayerIndex].getEstablishments().size();
+
+    int cpuCardIndexToTrade = (rand() % cpuCardArraySize);
+
+    vector<shared_ptr<Card>> cpuCards = Game.players[Game.currentPlayerIndex].getEstablishments();
+
+        //Can trade a business center, so if that is the card selected, select another card
+    while(cpuCards[cpuCardIndexToTrade]->getName() == BUSINESS_CENTER_NAME){
+        cpuCardIndexToTrade = (rand() % cpuCardArraySize);
+    }
+
+    Game.businessCenterCurrentPlayerCard = cpuCards[cpuCardIndexToTrade]->getName();
+
+
+
+
+    //CPU decides which player to trade with
+    int playersArraySize = Game.players.size();
+
+    int playerIndexToTrade = (rand() % playersArraySize);
+
+    while(Game.currentPlayerIndex == playerIndexToTrade){
+        playerIndexToTrade = (rand() % playersArraySize);
+    }
+
+    Game.businessCenterTargetPlayerIndex = playerIndexToTrade;
+
+
+
+    //CPU picks a card from the player's inventory to trade
+    int playerCardArraySize = Game.players[playerIndexToTrade].getEstablishments().size();
+
+    int playerCardIndexToTrade = (rand() % playerCardArraySize);
+
+    vector<shared_ptr<Card>> playerCards = Game.players[playerIndexToTrade].getEstablishments();
+
+        //Cant trade for another business center, so if selected, select another card
+    while(playerCards[playerCardIndexToTrade]->getName() == BUSINESS_CENTER_NAME){
+        playerCardIndexToTrade = (rand() % playerCardArraySize);
+    }
+
+    Game.businessCenterTargetPlayerCard = playerCards[playerCardIndexToTrade]->getName();
 
 
 
 
 }
-
 
 
 
