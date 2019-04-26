@@ -14,8 +14,9 @@ Image::Image(std::string filename): Shape(900,100), dimensions(0.,0.), start(0,0
 
 void Image::draw() const {
     glBegin (GL_POINTS);
-    for (int h = start.y; h < start.y + dimensions.y; h++) {
-        for (int w = start.x; w < start.x + dimensions.x; w++) {
+    int border = 4;
+    for (int h = start.y + border; h < start.y + dimensions.y - border; h++) {
+        for (int w = start.x + border; w < start.x + dimensions.x - border; w++) {
             if (h < pixels.size() and w < pixels[0].size()) {
                 Pixel p = pixels[h][w];
                 glColor3f(p.color.r, p.color.g, p.color.b);

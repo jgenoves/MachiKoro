@@ -7,15 +7,16 @@
 #include "graphicsConstants.h"
 #include <thread>
 #include <chrono>
+#include <memory>
 #include "Image.h"
 
 
 GLdouble width, height;
 int wd;
 
-Image* cardImage = &wheatFieldFile;
-//Function Declarations
 
+//Function Declarations
+unique_ptr<Image> cardImage;
 void init() {
 //    Player player3(50);
 //    Player player4(80);
@@ -1394,7 +1395,7 @@ void cursor(int x, int y) {
         // Market buttons
         if (wheatFieldButton.isOverlapping(x,y)){
             wheatFieldButton.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &wheatFieldFile;
+            cardImage = wheatFieldFile;
         }
         else {
             wheatFieldButton.setFill(BLUE_CARD_COLOR);
