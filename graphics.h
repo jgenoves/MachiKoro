@@ -48,6 +48,7 @@ void displayGame();
 void cpuRollDice();
 void cpuPostRoll();
 void cpuBuyCard();
+void cpuTradeCard();
 
 // Callback functions for GLUT */
 
