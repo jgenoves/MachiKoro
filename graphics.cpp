@@ -16,7 +16,7 @@ int wd;
 
 
 //Function Declarations
-unique_ptr<Image> cardImage;
+shared_ptr<Image> cardImage = wheatFieldFile;
 void init() {
 //    Player player3(50);
 //    Player player4(80);
@@ -1456,97 +1456,98 @@ void cursor(int x, int y) {
         }
         if (ranchButton.isOverlapping(x,y)){
             ranchButton.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &ranchFile;
+            cardImage = ranchFile;
         }
         else {
             ranchButton.setFill(BLUE_CARD_COLOR);
         }
         if (bakeryButton.isOverlapping(x,y)){
             bakeryButton.setFill(GREEN_CARD_HOVER_COLOR);
-            cardImage = &bakeryFile;
+            cardImage = bakeryFile;
         }
         else {
             bakeryButton.setFill(GREEN_CARD_COLOR);
         }
         if (cafeButton.isOverlapping(x,y)){
             cafeButton.setFill(RED_CARD_HOVER_COLOR);
-            cardImage = &cafeFile;
+            cardImage = cafeFile;
         }
         else {
             cafeButton.setFill(RED_CARD_COLOR);
         }
         if (convenienceStoreButton.isOverlapping(x,y)){
             convenienceStoreButton.setFill(GREEN_CARD_HOVER_COLOR);
-            cardImage = &convenienceStoreFile;
+            cardImage = convenienceStoreFile;
         }
         else {
             convenienceStoreButton.setFill(GREEN_CARD_COLOR);
         }
         if (forestButton.isOverlapping(x,y)){
             forestButton.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &forestFile;
+            cardImage = forestFile;
         }
         else {
             forestButton.setFill(BLUE_CARD_COLOR);
         }
         if (tvStationButton.isOverlapping(x,y)){
             tvStationButton.setFill(PURPLE_CARD_HOVER_COLOR);
-            cardImage = &tvStationFile;
+            cardImage = tvStationFile;
         }
         else {
             tvStationButton.setFill(PURPLE_CARD_COLOR);
         }
         if (stadiumButton.isOverlapping(x,y)){
             stadiumButton.setFill(PURPLE_CARD_HOVER_COLOR);
-            cardImage = &stadiumFile;
+            cardImage = stadiumFile;
         }
         else {
             stadiumButton.setFill(PURPLE_CARD_COLOR);
         }
         if (businessCenterButton.isOverlapping(x,y)){
             businessCenterButton.setFill(PURPLE_CARD_HOVER_COLOR);
-            cardImage = &businessCenterFile;
+            cardImage = businessCenterFile;
         }
         else {
             businessCenterButton.setFill(PURPLE_CARD_COLOR);
         }
         if (cheeseFactoryButton.isOverlapping(x,y)){
             cheeseFactoryButton.setFill(GREEN_CARD_HOVER_COLOR);
-            cardImage = &cheeseFactoryFile;
+            cardImage = cheeseFactoryFile;
         }
         else {
             cheeseFactoryButton.setFill(GREEN_CARD_COLOR);
         }
         if (furnitureFactoryButton.isOverlapping(x,y)){
             furnitureFactoryButton.setFill(GREEN_CARD_HOVER_COLOR);
-            cardImage = &furnitureFactoryFile;
+            cardImage = furnitureFactoryFile;
         }
         else {
             furnitureFactoryButton.setFill(GREEN_CARD_COLOR);
         }
         if (mineButton.isOverlapping(x,y)){
             mineButton.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &mineFile;
+            cardImage = mineFile;
         }
         else {
             mineButton.setFill(BLUE_CARD_COLOR);
         }
         if (familyRestaurantButton.isOverlapping(x,y)){
             familyRestaurantButton.setFill(RED_CARD_HOVER_COLOR);
-            cardImage = &familyRestaurantFile;
+            cardImage = familyRestaurantFile;
         }
         else {
             familyRestaurantButton.setFill(RED_CARD_COLOR);
         }
         if (appleOrchardButton.isOverlapping(x,y)){
             appleOrchardButton.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &appleOrchardFile;
+            cardImage = appleOrchardFile;
         }
         else {
             appleOrchardButton.setFill(BLUE_CARD_COLOR);
         }
         if (fruitAndVegetableMarketButton.isOverlapping(x,y)){
             fruitAndVegetableMarketButton.setFill(GREEN_CARD_HOVER_COLOR);
+            cardImage = farmersMarketFile;
         }
         else {
             fruitAndVegetableMarketButton.setFill(GREEN_CARD_COLOR);
@@ -1556,104 +1557,106 @@ void cursor(int x, int y) {
         // Inventory Slots
         if (wheatFieldSlot.isOverlapping(x,y)){
             wheatFieldSlot.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &wheatFieldFile;
+            cardImage = wheatFieldFile;
         }
         else {
             wheatFieldSlot.setFill(BLUE_CARD_COLOR);
         }
         if (ranchSlot.isOverlapping(x,y)){
             ranchSlot.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &ranchFile;
+            cardImage = ranchFile;
         }
         else {
             ranchSlot.setFill(BLUE_CARD_COLOR);
         }
         if (bakerySlot.isOverlapping(x,y)){
             bakerySlot.setFill(GREEN_CARD_HOVER_COLOR);
-            cardImage = &bakeryFile;
+            cardImage = bakeryFile;
         }
         else {
             bakerySlot.setFill(GREEN_CARD_COLOR);
         }
         if (cafeSlot.isOverlapping(x,y)){
             cafeSlot.setFill(RED_CARD_HOVER_COLOR);
-            cardImage = &cafeFile;
+            cardImage = cafeFile;
         }
         else {
             cafeSlot.setFill(RED_CARD_COLOR);
         }
         if (convenienceStoreSlot.isOverlapping(x,y)){
             convenienceStoreSlot.setFill(GREEN_CARD_HOVER_COLOR);
-            cardImage = &convenienceStoreFile;
+            cardImage = convenienceStoreFile;
         }
         else {
             convenienceStoreSlot.setFill(GREEN_CARD_COLOR);
         }
         if (forestSlot.isOverlapping(x,y)){
             forestSlot.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &forestFile;
+            cardImage = forestFile;
         }
         else {
             forestSlot.setFill(BLUE_CARD_COLOR);
         }
         if (tvStationSlot.isOverlapping(x,y)){
             tvStationSlot.setFill(PURPLE_CARD_HOVER_COLOR);
-            cardImage = &tvStationFile;
+            cardImage = tvStationFile;
         }
         else {
             tvStationSlot.setFill(PURPLE_CARD_COLOR);
         }
         if (stadiumSlot.isOverlapping(x,y)){
             stadiumSlot.setFill(PURPLE_CARD_HOVER_COLOR);
-            cardImage = &stadiumFile;
+            cardImage = stadiumFile;
         }
         else {
             stadiumSlot.setFill(PURPLE_CARD_COLOR);
         }
         if (businessCenterSlot.isOverlapping(x,y)){
             businessCenterSlot.setFill(PURPLE_CARD_HOVER_COLOR);
-            cardImage = &businessCenterFile;
+            cardImage = businessCenterFile;
         }
         else {
             businessCenterSlot.setFill(PURPLE_CARD_COLOR);
         }
         if (cheeseFactorySlot.isOverlapping(x,y)){
             cheeseFactorySlot.setFill(GREEN_CARD_HOVER_COLOR);
-            cardImage = &cheeseFactoryFile;
+            cardImage = cheeseFactoryFile;
         }
         else {
             cheeseFactorySlot.setFill(GREEN_CARD_COLOR);
         }
         if (furnitureFactorySlot.isOverlapping(x,y)){
             furnitureFactorySlot.setFill(GREEN_CARD_HOVER_COLOR);
-            cardImage = &furnitureFactoryFile;
+            cardImage = furnitureFactoryFile;
         }
         else {
             furnitureFactorySlot.setFill(GREEN_CARD_COLOR);
         }
         if (mineSlot.isOverlapping(x,y)){
             mineSlot.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &mineFile;
+            cardImage = mineFile;
         }
         else {
             mineSlot.setFill(BLUE_CARD_COLOR);
         }
         if (familyRestaurantSlot.isOverlapping(x,y)){
             familyRestaurantSlot.setFill(RED_CARD_HOVER_COLOR);
-            cardImage = &familyRestaurantFile;
+            cardImage = familyRestaurantFile;
         }
         else {
             familyRestaurantSlot.setFill(RED_CARD_COLOR);
         }
         if (appleOrchardSlot.isOverlapping(x,y)){
             appleOrchardSlot.setFill(BLUE_CARD_HOVER_COLOR);
-            cardImage = &appleOrchardFile;
+            cardImage = appleOrchardFile;
         }
         else {
             appleOrchardSlot.setFill(BLUE_CARD_COLOR);
         }
         if (fruitAndVegetableMarketSlot.isOverlapping(x,y)){
             fruitAndVegetableMarketSlot.setFill(GREEN_CARD_HOVER_COLOR);
+            cardImage = farmersMarketFile;
+
         }
         else {
             fruitAndVegetableMarketSlot.setFill(GREEN_CARD_COLOR);

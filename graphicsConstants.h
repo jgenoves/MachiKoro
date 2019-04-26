@@ -317,29 +317,30 @@ int numOfTVStation = 2;
 int numOfBusinessCenter = 2;
 
 // Card Images
-unique_ptr<Image> ranchFile = make_unique<Image>(Image("ranch.BMP"));
-unique_ptr<Image> farmersMarketFile = make_unique<Image>(Image("farmersMarket.BMP"));
-unique_ptr<Image> shoppingMall2File = make_unique<Image>(Image("shoppingMall2.BMP"));
-unique_ptr<Image> radioTower2File = make_unique<Image>(Image("radioTower2.BMP"));
-unique_ptr<Image> furnitureFactoryFile = make_unique<Image>(Image("furnitureFactory.BMP"));
-unique_ptr<Image> cheeseFactoryFile = make_unique<Image>(Image("cheeseFactory.BMP"));
-unique_ptr<Image> amusementParkFile = make_unique<Image>(Image("amusementPark.BMP"));
-unique_ptr<Image> convenienceStoreFile = make_unique<Image>(Image("convenienceStore.BMP"));
-unique_ptr<Image> shoppingMallFile = make_unique<Image>(Image("shoppingMall.BMP"));
-unique_ptr<Image> appleOrchardFile = make_unique<Image>(Image("appleOrchard.BMP"));
-unique_ptr<Image> trainStationFile = make_unique<Image>(Image("trainStation.BMP"));
-unique_ptr<Image> wheatFieldFile = make_unique<Image>(Image("wheatField.BMP"));
-unique_ptr<Image> trainStation2File = make_unique<Image>(Image("trainStation2.BMP"));
-unique_ptr<Image> tvStationFile = make_unique<Image>(Image("tvStation.BMP"));
-unique_ptr<Image> businessCenterFile = make_unique<Image>(Image("businessCenter.BMP"));
-unique_ptr<Image> cafeFile = make_unique<Image>(Image("cafe.BMP"));
-unique_ptr<Image> familyRestaurantFile = make_unique<Image>(Image("familyRestaurant.BMP"));
-unique_ptr<Image> amusementPark2File = make_unique<Image>(Image("amusementPark2.BMP"));
-unique_ptr<Image> radioTowerFile = make_unique<Image>(Image("radioTower.BMP"));
-unique_ptr<Image> stadiumFile = make_unique<Image>(Image("stadium.BMP"));
-unique_ptr<Image> mineFile = make_unique<Image>(Image("mine.BMP"));
-unique_ptr<Image> bakeryFile = make_unique<Image>(Image("bakery.bmp"));
-unique_ptr<Image> forestFile = make_unique<Image>(Image("forest.BMP"));
+shared_ptr<Image> ranchFile = make_shared<Image>(Image("ranch.BMP"));
+shared_ptr<Image> farmersMarketFile = make_shared<Image>(Image("farmersMarket.BMP"));
+shared_ptr<Image> shoppingMall2File = make_shared<Image>(Image("shoppingMall2.BMP"));
+shared_ptr<Image> radioTower2File = make_shared<Image>(Image("radioTower2.BMP"));
+shared_ptr<Image> furnitureFactoryFile = make_shared<Image>(Image("furnitureFactory.BMP"));
+shared_ptr<Image> cheeseFactoryFile = make_shared<Image>(Image("cheeseFactory.BMP"));
+shared_ptr<Image> amusementParkFile = make_shared<Image>(Image("amusementPark.BMP"));
+shared_ptr<Image> convenienceStoreFile = make_shared<Image>(Image("convenienceStore.BMP"));
+shared_ptr<Image> shoppingMallFile = make_shared<Image>(Image("shoppingMall.BMP"));
+shared_ptr<Image> appleOrchardFile = make_shared<Image>(Image("appleOrchard.BMP"));
+shared_ptr<Image> trainStationFile = make_shared<Image>(Image("trainStation.BMP"));
+shared_ptr<Image> wheatFieldFile = make_shared<Image>(Image("wheatField.BMP"));
+shared_ptr<Image> trainStation2File = make_shared<Image>(Image("trainStation2.BMP"));
+shared_ptr<Image> tvStationFile = make_shared<Image>(Image("tvStation.BMP"));
+shared_ptr<Image> businessCenterFile = make_shared<Image>(Image("businessCenter.BMP"));
+shared_ptr<Image> cafeFile = make_shared<Image>(Image("cafe.BMP"));
+shared_ptr<Image> familyRestaurantFile = make_shared<Image>(Image("familyRestaurant.BMP"));
+shared_ptr<Image> amusementPark2File = make_shared<Image>(Image("amusementPark2.BMP"));
+shared_ptr<Image> testbmpFile = make_shared<Image>(Image("testbmp.bmp"));
+shared_ptr<Image> radioTowerFile = make_shared<Image>(Image("radioTower.BMP"));
+shared_ptr<Image> stadiumFile = make_shared<Image>(Image("stadium.BMP"));
+shared_ptr<Image> mineFile = make_shared<Image>(Image("mine.BMP"));
+shared_ptr<Image> bakeryFile = make_shared<Image>(Image("bakery.bmp"));
+shared_ptr<Image> forestFile = make_shared<Image>(Image("forest.BMP"));
 
 
 // variables to keep track of last turn
