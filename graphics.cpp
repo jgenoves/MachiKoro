@@ -1299,7 +1299,6 @@ void cpuTradeCard(){
 
 
 
-
 /* Handler for window-repaint event. Call back when the window first appears and
  whenever the window needs to be re-painted. */
 void display() {
