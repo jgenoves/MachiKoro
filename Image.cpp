@@ -72,10 +72,10 @@ void Image::readBMP(string filename) {
 
         int r,g,b;
         r = img[i] & 0xff;
-        g = img[i] & 0xff;
+        g = img[i+1] & 0xff;
         b = img[i+2] & 0xff;
 
-        colors.push_back(RGBColor(g,r,b));
+        colors.push_back(RGBColor(b,r,g));
 
         //std::cout << "R: " << int(img[i] & 0xff) << " G: " << int(img[i+1] & 0xff) << " B: " << int(img[i+2] & 0xff) << std::endl;
 
@@ -85,7 +85,7 @@ void Image::readBMP(string filename) {
     int j = 0;
     for (int c = 0; c < height; c++) {
         vector<Pixel> col;
-        for (int r = 0; r < width; r++) {
+        for (int r = width - 1; r >= 0; r--) {
             Pixel p(Vector2D(r,c), colors[j]);
             col.push_back(p);
             j++;
