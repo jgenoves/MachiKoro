@@ -14,7 +14,7 @@
 /*************************/
 /** General Game Constants **/
 /*************************/
-int STARTING_MONEY = 900;
+int STARTING_MONEY = 99;
 
 /*************************/
 /** Rectangle Constants **/
@@ -23,12 +23,12 @@ int STARTING_MONEY = 900;
 int CARD_BASE_DIMENSION = 5;
 int CARD_HEIGHT_DIMENSION = 10;
 
-color RED_CARD_COLOR = {(178.0/255),(34.0/255),(34.0/255)}; // Red
-color BLUE_CARD_COLOR = {(0.0/255),(50.0/255),(120.0/255)}; // Blue
-color GREEN_CARD_COLOR = {(0.0/255),(128.0/255),(0.0/255)}; // Green
-color PURPLE_CARD_COLOR = {0.5, 0, 0.5}; // Purple
+color RED_CARD_COLOR = {(128.0/255.),(21.0/255.),(21.0/255.)}; // Red
+color BLUE_CARD_COLOR = {(20.0/255),(70.0/255),(110.0/255)}; // Blue
+color GREEN_CARD_COLOR = {(10.0/255),(100.0/255),(10.0/255)}; // Green
+color PURPLE_CARD_COLOR = {0.35, 0.1, 0.35}; // Purple
 color LANDMARK_CARD_COLOR = {0.5,0.5,0.5}; // Grey
-color LANDMARK_CARD_OWNED_COLOR = {(204.0/255),(204.0/255),(0.0/255)}; // Yellow
+color LANDMARK_CARD_OWNED_COLOR = {(184.0/255),(184.0/255),(20.0/255)}; // Yellow
 
 color RED_CARD_HOVER_COLOR = {(220.0/255),(20.0/255),(60.0/255)}; // Red
 color BLUE_CARD_HOVER_COLOR = {(65.0/255),(105.0/255),(225.0/255)}; // Blue
@@ -174,49 +174,76 @@ int WIDTH = 1400;
 int HEIGHT = 800;
 
 // Button constants
-int BUTTON_WIDTH = 200;
+int BUTTON_WIDTH = 210;
 int BUTTON_HEIGHT = 75;
-color BUTTON_COLOR = {1,0,0}; // Red
-color BUTTON_HOVER_COLOR = {0,1,0}; // Green
+color BUTTON_COLOR = {.6,.2,.2}; // Red
+color BUTTON_HOVER_COLOR = {.2,.6,.5}; // Green
 int BUTTON_X_POSITION = 25;
-int BUTTON_Y_POSITION = 10;
+int BUTTON_Y_POSITION = 17;
 int BUTTON_Y_MARGIN = 20;
 int BUTTON_X_MARGIN = 20;
 
 // In game card button constants
-int CARD_BUTTON_WIDTH = 100;
-int CARD_BUTTON_HEIGHT = 100;
-color CARD_BUTTON_COLOR = {1,0,0}; // Red
-color CARD_BUTTON_HOVER_COLOR = {0,1,0}; // Green
-int TOP_LEFT_CARD_X_POSITION = 400;
-int TOP_LEFT_CARD_Y_POSITION = 50;
-int CARD_BUTTON_X_MARGIN = 20;
-int CARD_BUTTON_Y_MARGIN = 20;
+int CARD_BUTTON_WIDTH = 124;
+int CARD_BUTTON_HEIGHT = 162;
+int TOP_LEFT_CARD_X_POSITION = 355;
+int TOP_LEFT_CARD_Y_POSITION = 72;
+int CARD_BUTTON_X_MARGIN = 15;
+int CARD_BUTTON_Y_MARGIN = 15;
 
 // In game inventory slot constants
 int SLOT_WIDTH = 300;
 int SLOT_HEIGHT = 30;
 int SLOT_X_POSITION = 25;
-int SLOT_TOP_Y_POSITION = 120;
+int SLOT_TOP_Y_POSITION = 110;
 int SLOT_Y_MARGIN = 2;
 
 //Roll dice button constants
-int ROLL_BUTTON_WIDTH = 75;
-int ROLL_BUTTON_HEIGHT = 75;
+int ROLL_BUTTON_WIDTH = BUTTON_HEIGHT + 2;
+int ROLL_BUTTON_HEIGHT = BUTTON_HEIGHT + 2;
 color ROLL_BUTTON_COLOR = {1,1,1};
 color ROLL_BUTTON_HOVER = {1, 0.5, 1};
-int ROLL_BUTTON_X_POSITION = 400;
-int ROLL_BUTTON_Y_POSITION = 25;
+int ROLL_BUTTON_X_POSITION = 362;
+int ROLL_BUTTON_Y_POSITION = 685 - BUTTON_HEIGHT;
+int ROLL_BUTTON_X_MARGIN = ROLL_BUTTON_WIDTH + 25;
 
 // Player button constants
-int PLAYER_BUTTON_X_POSITION = 400;
-int PLAYER_BUTTON_Y_POSITION = 600;
-int PLAYER_BUTTON_Y_MARGIN = 10;
-int PLAYER_BUTTON_X_MARGIN = 10;
+int PLAYER_BUTTON_X_POSITION = 351;
+int PLAYER_BUTTON_Y_POSITION = 705;
+int PLAYER_BUTTON_X_MARGIN = 25 + BUTTON_WIDTH;
+int PLAYER_BUTTON_Y_MARGIN = 0;
+
+int REROLL_BUTTON_X_POSITION = PLAYER_BUTTON_X_POSITION + PLAYER_BUTTON_X_MARGIN;
+int REROLL_BUTTON_Y_POSITION = 685 - BUTTON_HEIGHT;
+int REROLL_BUTTON_X_MARGIN = PLAYER_BUTTON_X_MARGIN;
+int REROLL_BUTTON_Y_MARGIN = 0;
+
+int SKIP_X_POSITION = PLAYER_BUTTON_X_POSITION + 2 * PLAYER_BUTTON_X_MARGIN;
+int SKIP_Y_POSITION = 705;
+
+
+// Background Stuff
+color bgColor1 = {22/255., 27/255., 33/255.}; // darkblue background
+color bgColor2 = {188/255.,152/255.,106/255.};
+color bgColor3 = {251/255., 238/255., 193/255.};
+color bgColor4 = {218/255.,173/255.,134/255.};
+color bgColor5 = {177/255.,162/255.,150/255.}; // highlight
+color bgColor6 = {40/255.,40/255.,40/255.}; // darken
+color bgColor7 = {31/255.,40/255.,51/255.};  // dark 2
+
+
+RectangleShape bigBackground(2000, 2000, bgColor1, 0, 0);
+RectangleShape cardBack(705, 601, bgColor6, 341, 0);
+RectangleShape bottomPanel(1159, 800, bgColor7, 341, 0);
+RectangleShape imageHighlight(310,470,bgColor5, 1066, 98);
+RectangleShape textBack(500,500,bgColor6, 1046, 601);
+vector<RectangleShape> backgroundShapes = {bigBackground,imageHighlight};//, bottomPanel, imageHighlight, cardBack, textBack};
+
+
 // Menu buttons
 RectangleShape startButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
 RectangleShape exitButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, startButton.getY() + BUTTON_HEIGHT + BUTTON_Y_MARGIN);
-RectangleShape mainMenuButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
+RectangleShape mainMenuButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, SLOT_X_POSITION + (SLOT_WIDTH - BUTTON_WIDTH) / 2, BUTTON_Y_POSITION);
 
 
 // In game card buttons to buy cards
@@ -268,14 +295,14 @@ RectangleShape radioTowerSlot(SLOT_WIDTH, SLOT_HEIGHT, LANDMARK_CARD_COLOR, SLOT
 
 // Player buttons
 RectangleShape player1button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION, PLAYER_BUTTON_Y_POSITION);
-RectangleShape player2button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION, PLAYER_BUTTON_Y_POSITION + PLAYER_BUTTON_Y_MARGIN + BUTTON_HEIGHT);
+RectangleShape player2button(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION + PLAYER_BUTTON_X_MARGIN, PLAYER_BUTTON_Y_POSITION + PLAYER_BUTTON_Y_MARGIN);
 
 // Game options buttons
-RectangleShape rollDieButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX(), wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
-RectangleShape roll2diceButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, wheatFieldButton.getX() + wheatFieldButton.getBase() + CARD_BUTTON_X_MARGIN, wheatFieldButton.getY() + 2 * wheatFieldButton.getHeight() + 2 * CARD_BUTTON_Y_MARGIN + 125);
-RectangleShape skipBuyButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION, PLAYER_BUTTON_Y_POSITION - BUTTON_HEIGHT - BUTTON_Y_MARGIN);
-RectangleShape rerollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, PLAYER_BUTTON_X_POSITION + PLAYER_BUTTON_X_MARGIN + BUTTON_WIDTH, PLAYER_BUTTON_Y_POSITION);
-RectangleShape keepRollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, rerollButton.getX(), rerollButton.getY() + rerollButton.getHeight() + PLAYER_BUTTON_Y_MARGIN);
+RectangleShape rollDieButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, ROLL_BUTTON_X_POSITION, ROLL_BUTTON_Y_POSITION);
+RectangleShape roll2diceButton(ROLL_BUTTON_WIDTH, ROLL_BUTTON_HEIGHT, ROLL_BUTTON_COLOR, ROLL_BUTTON_X_POSITION + ROLL_BUTTON_X_MARGIN, ROLL_BUTTON_Y_POSITION);
+RectangleShape skipBuyButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, SKIP_X_POSITION, SKIP_Y_POSITION);
+RectangleShape rerollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, REROLL_BUTTON_X_POSITION, REROLL_BUTTON_Y_POSITION);
+RectangleShape keepRollButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, REROLL_BUTTON_X_POSITION + REROLL_BUTTON_X_MARGIN, REROLL_BUTTON_Y_POSITION + REROLL_BUTTON_Y_MARGIN);
 //GameData
 struct GameData {
     int currentPlayerIndex = 0;
