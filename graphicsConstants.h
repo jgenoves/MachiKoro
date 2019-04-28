@@ -14,7 +14,7 @@
 /*************************/
 /** General Game Constants **/
 /*************************/
-int STARTING_MONEY = 900;
+int STARTING_MONEY = 99;
 
 /*************************/
 /** Rectangle Constants **/
@@ -28,7 +28,7 @@ color BLUE_CARD_COLOR = {(20.0/255),(70.0/255),(110.0/255)}; // Blue
 color GREEN_CARD_COLOR = {(10.0/255),(100.0/255),(10.0/255)}; // Green
 color PURPLE_CARD_COLOR = {0.35, 0.1, 0.35}; // Purple
 color LANDMARK_CARD_COLOR = {0.5,0.5,0.5}; // Grey
-color LANDMARK_CARD_OWNED_COLOR = {(204.0/255),(204.0/255),(0.0/255)}; // Yellow
+color LANDMARK_CARD_OWNED_COLOR = {(184.0/255),(184.0/255),(20.0/255)}; // Yellow
 
 color RED_CARD_HOVER_COLOR = {(220.0/255),(20.0/255),(60.0/255)}; // Red
 color BLUE_CARD_HOVER_COLOR = {(65.0/255),(105.0/255),(225.0/255)}; // Blue
@@ -233,10 +233,11 @@ color bgColor7 = {31/255.,40/255.,51/255.};  // dark 2
 
 
 RectangleShape bigBackground(2000, 2000, bgColor1, 0, 0);
-RectangleShape cardBack(705, 538, bgColor6, 341, 63);
-RectangleShape bottomPanel(705, 500, bgColor7, 341, 400);
-RectangleShape imageHighlight(310,470,bgColor5, 1066, 90);
-vector<RectangleShape> backgroundShapes = {bigBackground, imageHighlight, bottomPanel, cardBack};
+RectangleShape cardBack(705, 601, bgColor6, 341, 0);
+RectangleShape bottomPanel(1159, 800, bgColor7, 341, 0);
+RectangleShape imageHighlight(310,470,bgColor5, 1066, 98);
+RectangleShape textBack(500,500,bgColor6, 1046, 601);
+vector<RectangleShape> backgroundShapes = {bigBackground,imageHighlight};//, bottomPanel, imageHighlight, cardBack, textBack};
 
 
 // Menu buttons
