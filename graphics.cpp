@@ -53,9 +53,16 @@ void init() {
     //Push back starting establishments (Bakery and WheatField)
     Game.players[0].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[0].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+    Game.players[0].addEstablishment(make_shared<TVStation>(
+            TVStation(TV_STATION_DESCRIPTION, TV_STATION_COST, TV_STATION_RANGE, TV_STATION_TYPE,
+                      purpleCardRectangle, TV_STATION_NAME, TV_STATION_SYMBOL)));
 
     Game.players[1].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[1].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
+    Game.players[1].addEstablishment(make_shared<TVStation>(
+            TVStation(TV_STATION_DESCRIPTION, TV_STATION_COST, TV_STATION_RANGE, TV_STATION_TYPE,
+                      purpleCardRectangle, TV_STATION_NAME, TV_STATION_SYMBOL)));
+
 
 }
 
@@ -1312,8 +1319,10 @@ void cpuTradeCard(){
 
     vector<shared_ptr<Card>> cpuCards = Game.players[Game.currentPlayerIndex].getEstablishments();
 
-        //Can trade a business center, so if that is the card selected, select another card
-    while(cpuCards[cpuCardIndexToTrade]->getName() == BUSINESS_CENTER_NAME){
+        //Cant trade purple cards, so if that is the card selected, select another card
+    while(cpuCards[cpuCardIndexToTrade]->getName() == BUSINESS_CENTER_NAME
+          || cpuCards[cpuCardIndexToTrade]->getName() == STADIUM_NAME
+          || cpuCards[cpuCardIndexToTrade]->getName() == TV_STATION_NAME){
         cpuCardIndexToTrade = (rand() % cpuCardArraySize);
     }
 
@@ -1342,8 +1351,11 @@ void cpuTradeCard(){
 
     vector<shared_ptr<Card>> playerCards = Game.players[playerIndexToTrade].getEstablishments();
 
-        //Cant trade for another business center, so if selected, select another card
-    while(playerCards[playerCardIndexToTrade]->getName() == BUSINESS_CENTER_NAME){
+        //Cant trade for purple card or same card, so if selected, select another card
+    while(cpuCards[cpuCardIndexToTrade]->getName() == BUSINESS_CENTER_NAME
+          || cpuCards[cpuCardIndexToTrade]->getName() == STADIUM_NAME
+          || cpuCards[cpuCardIndexToTrade]->getName() == TV_STATION_NAME
+          || playerCards[playerCardIndexToTrade]->getName() == Game.businessCenterCurrentPlayerCard){
         playerCardIndexToTrade = (rand() % playerCardArraySize);
     }
 
@@ -1380,7 +1392,11 @@ void cpuTVStation(){
         Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() + 5);
         Game.players[playerIndexToTake].setMoney(Game.players[playerIndexToTake].getMoney() - 5);
 
+    }else{
+        cout << "Unable to trade coins, not enough coin" << endl;
     }
+
+    Game.tvStationUsed = true;
 
 
 
@@ -2176,6 +2192,10 @@ void mouse(int button, int state, int x, int y) {
                             Game.turnPhase = businessCenter;
                         }
                     }
+                    else{
+                        cout << "Unable to trade coins, not enough coin" << endl;
+                        Game.turnPhase = buy;
+                    }
                 }
             }
             // Press player 2 button
@@ -2193,6 +2213,10 @@ void mouse(int button, int state, int x, int y) {
                         else {
                             Game.turnPhase = businessCenter;
                         }
+                    }
+                    else{
+                        cout << "Unable to trade coins, not enough coin" << endl;
+                        Game.turnPhase = buy;
                     }
                 }
             }
