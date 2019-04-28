@@ -255,6 +255,12 @@ void moveCards(string card1Name, string card2Name, int player1Index, int player2
 
 }
 
+void drawBackground() {
+    for (RectangleShape &r: backgroundShapes) {
+        r.draw();
+    }
+}
+
 void drawMarket(){
     string message = "";
     if (numOfWheatField > 0) {
@@ -526,9 +532,9 @@ void updatePreviousTurnStats(){
 }
 
 void displayPreviousTurn(){
-    int topMessageY = 500;
-    int topMessageX = 650;
-    int messageMargin = 20;
+    int topMessageY = 650;
+    int topMessageX = 1125;
+    int messageMargin = 30;
     string message = "Previous Player: " + to_string(updatedPlayerIndex + 1);
     drawText18(message, 1, 1, 1, topMessageX, topMessageY);
     message = "Previous Roll: " + to_string(updatedDiceRoll);
@@ -553,6 +559,7 @@ void displayStart(){
 }
 
 void displayGame(){
+    drawBackground();
     cardImage->draw();
     mainMenuButton.draw();
     string message = "Main Menu";

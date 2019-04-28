@@ -7,7 +7,7 @@
 #include "Image.h"
 using namespace std;
 
-Image::Image(std::string filename): Shape(1045,100), dimensions(0.,0.), start(0,0) {
+Image::Image(std::string filename): Shape(1071,95), dimensions(0.,0.), start(0,0) {
     readBMP(filename);
     //readPNG(filename, pixels);
 }
