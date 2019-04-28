@@ -18,23 +18,7 @@ int wd;
 //Function Declarations
 shared_ptr<Image> cardImage = wheatFieldFile;
 void init() {
-//    Player player3(50);
-//    Player player4(80);
-//
-//    player3.addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
-//    player3.addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
-//
-//    player4.addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
-//    player4.addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
-//
-//    vector<Player> somePlayers;
-//    somePlayers.push_back(player3);
-//    somePlayers.push_back(player4);
-//
-//    player3.getEstablishments()[0]->activate(player3, somePlayers, player3);
-//    cout << "Player 3 Money: " << player3.getMoney() << "\n";
 
-//    cout << "wheat field min: " << WHEAT_FIELD_RANGE.minimum << "\n";
     width = WIDTH;
     height = HEIGHT;
 
@@ -53,15 +37,11 @@ void init() {
     //Push back starting establishments (Bakery and WheatField)
     Game.players[0].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[0].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
-    Game.players[0].addEstablishment(make_shared<TVStation>(
-            TVStation(TV_STATION_DESCRIPTION, TV_STATION_COST, TV_STATION_RANGE, TV_STATION_TYPE,
-                      purpleCardRectangle, TV_STATION_NAME, TV_STATION_SYMBOL)));
+
 
     Game.players[1].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[1].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
-    Game.players[1].addEstablishment(make_shared<TVStation>(
-            TVStation(TV_STATION_DESCRIPTION, TV_STATION_COST, TV_STATION_RANGE, TV_STATION_TYPE,
-                      purpleCardRectangle, TV_STATION_NAME, TV_STATION_SYMBOL)));
+
 
 
 }
@@ -153,13 +133,6 @@ void resetGame(){
 }
 
 void moveCards(string card1Name, string card2Name, int player1Index, int player2Index) {
-//    Game.players[0].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
-//    Game.players[0].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
-//    Game.players[0].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
-//    Game.players[1].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
-//    Game.players[1].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
-//    Game.players[1].addEstablishment(make_shared<FruitAndVegetableMarket>(FruitAndVegetableMarket(FRUIT_AND_VEGETABLE_MARKET_DESCRIPTION, FRUIT_AND_VEGETABLE_MARKET_COST, FRUIT_AND_VEGETABLE_MARKET_RANGE, FRUIT_AND_VEGETABLE_MARKET_TYPE, greenCardRectangle, FRUIT_AND_VEGETABLE_MARKET_NAME, FRUIT_AND_VEGETABLE_MARKET_SYMBOL)));
-
 
     Game.players[player1Index].removeCard(card1Name);
     Game.players[player2Index].removeCard(card2Name);
@@ -476,44 +449,36 @@ void drawPlayerInventory(){
     drawText18(message, 1, 1, 1, fruitAndVegetableMarketSlot.getX() + (fruitAndVegetableMarketSlot.getBase() - 30), fruitAndVegetableMarketSlot.getY() + 20);
 
     if(Game.players[Game.focusedPlayerIndex].getTrainStationBool()){
-        //trainStationSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
         trainStationSlot.draw();
     }
     else{
-        //trainStationSlot.setFill(LANDMARK_CARD_COLOR);
         trainStationSlot.draw();
     }
     message = "Train Station";
     drawText18(message, 1, 1, 1, trainStationSlot.getX() + 10, trainStationSlot.getY() + 20);
 
     if(Game.players[Game.focusedPlayerIndex].getShoppingMallBool()){
-        //shoppingMallSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
         shoppingMallSlot.draw();
     }
     else{
-        //shoppingMallSlot.setFill(LANDMARK_CARD_COLOR);
         shoppingMallSlot.draw();
     }
     message = "Shopping Mall";
     drawText18(message, 1, 1, 1, shoppingMallSlot.getX() + 10, shoppingMallSlot.getY() + 20);
 
     if(Game.players[Game.focusedPlayerIndex].getAmusementParkBool()){
-        //amusementParkSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
         amusementParkSlot.draw();
     }
     else{
-        //amusementParkSlot.setFill(LANDMARK_CARD_COLOR);
         amusementParkSlot.draw();
     }
     message = "Amusement Park";
     drawText18(message, 1, 1, 1, amusementParkSlot.getX() + 10, amusementParkSlot.getY() + 20);
 
     if(Game.players[Game.focusedPlayerIndex].getRadioTowerBool()){
-        //radioTowerSlot.setFill(LANDMARK_CARD_OWNED_COLOR);
         radioTowerSlot.draw();
     }
     else{
-        //radioTowerSlot.setFill(LANDMARK_CARD_COLOR);
         radioTowerSlot.draw();
     }
     message = "Radio Tower";
@@ -548,8 +513,6 @@ void displayPreviousTurn(){
     drawText18(message, 1, 1, 1, topMessageX, topMessageY);
     message = "Previous Roll: " + to_string(updatedDiceRoll);
     drawText18(message, 1, 1, 1, topMessageX, messageMargin + topMessageY);
-//    message = "Player's Profit: " + to_string(updatedNetProfit);
-//    drawText18(message, 1, 1, 1, topMessageX, 3*messageMargin + topMessageY);
     message = "Card Bought: " + updatedCardBought;
     drawText18(message, 1, 1, 1, topMessageX, 2*messageMargin + topMessageY);
 }
@@ -810,9 +773,7 @@ void displayGame(){
 
     }
     else if(Game.turnPhase == buy){
-        //afterMoney = Game.players[Game.currentPlayerIndex].getMoney();
-        //netProfit = afterMoney - previousMoney;
-        //cout << "buy phase\n";
+
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
@@ -822,12 +783,7 @@ void displayGame(){
 
         if(Game.boughtCard) {
             cout << "card bought" << endl;
-//            if(Game.players[Game.currentPlayerIndex].checkWinner()){
-//                Game.gameOver = true;
-//                // clean up
-//            }
             Game.turnPhase = endturn;
-            //Game.boughtCard = false;
         }
     }
     else if(Game.turnPhase == endturn){
@@ -839,7 +795,6 @@ void displayGame(){
             screen = endGame;
         }
         else {
-            //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
             if (Game.players[Game.currentPlayerIndex].getAmusementParkBool() && Game.dice1Roll == Game.dice2Roll) {
                 // Current player takes another turn
                 //Reset dice roll and dice sum values
@@ -857,7 +812,6 @@ void displayGame(){
                 Game.businessCenterTargetPlayerCard = "";
             } else {
                 Game.currentPlayerIndex++;
-                //cout << "currentPlayerIndex: " << Game.currentPlayerIndex << "\n";
                 if (Game.currentPlayerIndex >= Game.players.size()) {
                     Game.currentPlayerIndex = 0;
                 }
@@ -1392,8 +1346,6 @@ void cpuTVStation(){
         Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() + 5);
         Game.players[playerIndexToTake].setMoney(Game.players[playerIndexToTake].getMoney() - 5);
 
-    }else{
-        cout << "Unable to trade coins, not enough coin" << endl;
     }
 
     Game.tvStationUsed = true;
@@ -2193,7 +2145,6 @@ void mouse(int button, int state, int x, int y) {
                         }
                     }
                     else{
-                        cout << "Unable to trade coins, not enough coin" << endl;
                         Game.turnPhase = buy;
                     }
                 }
@@ -2215,7 +2166,6 @@ void mouse(int button, int state, int x, int y) {
                         }
                     }
                     else{
-                        cout << "Unable to trade coins, not enough coin" << endl;
                         Game.turnPhase = buy;
                     }
                 }
