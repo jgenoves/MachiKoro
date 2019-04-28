@@ -14,7 +14,7 @@
 /*************************/
 /** General Game Constants **/
 /*************************/
-int STARTING_MONEY = 99;
+int STARTING_MONEY = 3;
 
 /*************************/
 /** Rectangle Constants **/

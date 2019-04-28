@@ -39,8 +39,8 @@ void init() {
     height = HEIGHT;
 
     // Example of working inventory
-    Player player1 = Player(3);
-    Player player2 = Player(3);
+    Player player1 = Player(STARTING_MONEY);
+    Player player2 = Player(STARTING_MONEY);
 
 
     Game.players.push_back(player1);
