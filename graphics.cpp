@@ -39,16 +39,18 @@ void init() {
     height = HEIGHT;
 
     // Example of working inventory
-    Player player1 = Player(STARTING_MONEY);
-    Player player2 = Player(STARTING_MONEY);
+    Player player1 = Player(3);
+    Player player2 = Player(3);
 
 
     Game.players.push_back(player1);
     Game.players.push_back(player2);
 
+    //Game is set for human versus computer
     Game.players[0].setHuman(true);
-    Game.players[1].setHuman(true);
+    Game.players[1].setHuman(false);
 
+    //Push back starting establishments (Bakery and WheatField)
     Game.players[0].addEstablishment(make_shared<WheatField>(WheatField(WHEAT_FIELD_DESCRIPTION, WHEAT_FIELD_COST, WHEAT_FIELD_RANGE, WHEAT_FIELD_TYPE, blueCardRectangle, WHEAT_FIELD_NAME, WHEAT_FIELD_SYMBOL)));
     Game.players[0].addEstablishment(make_shared<Bakery>(Bakery(BAKERY_DESCRIPTION, BAKERY_COST, BAKERY_RANGE, BAKERY_TYPE, greenCardRectangle, BAKERY_NAME, BAKERY_SYMBOL)));
 
@@ -784,6 +786,10 @@ void displayGame(){
         drawText24(to_string(Game.dice1Roll), 0, 0, 0, rollDieButton.getX() + 30, rollDieButton.getY() + 35);
         drawText24(to_string(Game.dice2Roll), 0, 0, 0, roll2diceButton.getX() + 30, roll2diceButton.getY() + 35);
 
+        if(!Game.players[Game.currentPlayerIndex].getIsHuman()){
+            cpuTVStation();
+        }
+
         if (Game.tvStationUsed) {
             Game.skipTVStation = true;
             Game.tvStationUsed = false;
@@ -879,21 +885,21 @@ void displayEndGame(){
 
 void cpuRollDice(){
 
-
-
-
+    //If the CPU has the Train Station, it can roll two die
     if(Game.players[Game.currentPlayerIndex].getTrainStationBool()){
 
-        bool rollTwice = false;
 
-        int rollTwiceNum = (rand() % 5) + 1;
+        //Random number to decide if the CPU will roll one or two die
+        bool rollTwo = false;
+
+        int rollTwoNum = (rand() % 5) + 1;
         Game.dice1Roll = (rand() % 6) + 1;
 
-        if(rollTwiceNum == 1){
-            rollTwice = true;
+        if(rollTwoNum == 1){
+            rollTwo = true;
         }
 
-        if(rollTwice) {
+        if(rollTwo) {
             Game.dice2Roll = (rand() % 6) + 1;
         }
         else{
@@ -907,23 +913,27 @@ void cpuRollDice(){
         Game.diceRolled = true;
     }
 
-    cout << "cpu rolled: " << Game.diceRolled << endl;
-
-
-
 }
 
 
 void cpuPostRoll(){
 
-
+    //If the CPU has the radio tower, it has the option to reroll the die
     if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
 
-        bool cpuReRoll = false;
-        //TODO: Generate number to determine if the cpu will want to reroll or not, or a method to reroll if none of the cards activate
-        // Do not allow the dice to be rerolled more than once per turn
 
-        if(cpuReRoll){
+        bool reRoll = true;
+
+        //Check all of the CPUs cards. If any of the cards have been activated (the dice sum is in the activation range
+        //of at least one of the cards in the CPUs establishments), then there is no need to reroll the die
+        for(int i = 0; i < Game.players[Game.currentPlayerIndex].getEstablishments().size(); i++){
+            if(Game.diceSum >= Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMin()
+                    && Game.diceSum <= Game.players[Game.currentPlayerIndex].getEstablishments()[i]->getActivationMax()){
+                reRoll = false;
+            }
+        }
+
+        if(reRoll){
             Game.skipRadioTower = true;
             Game.turnPhase = radioTower;
         }
@@ -973,15 +983,19 @@ void cpuBuyCard(){
     }
 
 
-    int buyCardNumGen = (rand() % 3) + 1;
+    int buyCardNumGen = (rand() % 3);
 
     bool buyCard = true;
 
     if(buyCardNumGen == 1){
         buyCard = false;
+        previousCardBought = "No Card Bought";
     }
 
     if(buyCard && !Game.boughtCard) {
+
+        //The CPU needs to know which cards it can buy based on how much money it has
+        //NOTE: the cards are always pushed back in the same order to preserve their indexes in the array
         vector<int> availableCards;
         if (cpuMoney == 0) {
             Game.turnPhase = endturn;
@@ -1108,6 +1122,7 @@ void cpuBuyCard(){
          */
 
         if (cpuMoney != 0) {
+
             int arraySize = availableCards.size();
 
             int cardIndexToBuy = (rand() % arraySize);
@@ -1117,6 +1132,8 @@ void cpuBuyCard(){
                 cardIndexToBuy = (rand() % arraySize);
             }
 
+
+            //Purchase card based on index generated
             switch (cardIndexToBuy) {
                 case (0):
                     Game.players[Game.currentPlayerIndex].addEstablishment(make_shared<WheatField>(
@@ -1288,8 +1305,6 @@ void cpuBuyCard(){
 
 void cpuTradeCard(){
 
-
-
     //CPU decides which card to trade
     int cpuCardArraySize = Game.players[Game.currentPlayerIndex].getEstablishments().size();
 
@@ -1339,7 +1354,37 @@ void cpuTradeCard(){
 
 }
 
+void cpuTVStation(){
 
+    int playersArraySize = Game.players.size();
+
+    //Use a vector to hold the index in the Game.players vector of players who the CPU can take money from
+    vector<int> playerIndexes;
+
+    //Fill the vector with player indexes who are not the CPU itself, and have more than 5 coins
+    for(int i = 0; i < playersArraySize; i++){
+        if(Game.players[i].getMoney() >= 5 && i != Game.currentPlayerIndex){
+            playerIndexes.push_back(i);
+        }
+    }
+
+
+    if(!playerIndexes.empty()) {
+
+        //Choose from the playerIndex vector a player to take 5 coins from
+        int playerIndexArraySize = playerIndexes.size();
+        int i = (rand() % playerIndexArraySize);
+        int playerIndexToTake = playerIndexes[i];
+
+        //Exchange money
+        Game.players[Game.currentPlayerIndex].setMoney(Game.players[Game.currentPlayerIndex].getMoney() + 5);
+        Game.players[playerIndexToTake].setMoney(Game.players[playerIndexToTake].getMoney() - 5);
+
+    }
+
+
+
+}
 
 
 

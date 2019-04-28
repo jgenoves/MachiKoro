@@ -49,6 +49,7 @@ void cpuRollDice();
 void cpuPostRoll();
 void cpuBuyCard();
 void cpuTradeCard();
+void cpuTVStation();
 
 // Callback functions for GLUT */
 
