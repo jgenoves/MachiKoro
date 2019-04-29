@@ -849,7 +849,6 @@ void displayEndGame(){
     message = "Player " + to_string(winner) + " WINS!";
     drawText24(message, 1, 1, 1, 600,300);
 
-    resetGame();
 
 }
 
@@ -1813,7 +1812,11 @@ void cursor(int x, int y) {
 
     }
     else if (screen == endGame){
-
+        if (mainMenuButton.isOverlapping(x,y)){
+            mainMenuButton.setFill(BUTTON_HOVER_COLOR);
+        }else{
+            mainMenuButton.setFill(BUTTON_COLOR);
+        }
     }
 
     glutPostRedisplay();
