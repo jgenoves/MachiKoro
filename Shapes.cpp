@@ -8,6 +8,7 @@
 //***************************************************************************************************************//
 //                                            Beginning of Shape Class                                           //
 //***************************************************************************************************************//
+const double PI = 3.141592653589793;
 
 Shape::Shape() {
     // default color: black
@@ -590,7 +591,7 @@ void TriangleUp::draw() const{
     glBegin(GL_TRIANGLE_FAN);
     glColor3f(fill.red, fill.green, fill.blue);
     glVertex2i(position.x, position.y);
-    double deltaY = sin(60 * M_PI / 180) * (getSideLength() / 2);
+    double deltaY = sin(60 * PI / 180) * (getSideLength() / 2);
     double deltaX = (getSideLength() / 2);
     glVertex2i(position.x - deltaX, position.y + deltaY);
     glVertex2i(position.x + deltaX, position.y + deltaY);
@@ -646,7 +647,7 @@ void TriangleLeft::draw() const{
     glBegin(GL_TRIANGLE_FAN);
     glColor3f(fill.red, fill.green, fill.blue);
     glVertex2i(position.x, position.y);
-    double deltaY = sin(60 * M_PI / 180) * (getSideLength() / 2);
+    double deltaY = sin(60 * PI / 180) * (getSideLength() / 2);
     double deltaX = (getSideLength() / 2);
     glVertex2i(position.x + deltaX, position.y - deltaY);
     glVertex2i(position.x + deltaX, position.y + deltaY);
@@ -701,7 +702,7 @@ void TriangleDown::draw() const{
     glBegin(GL_TRIANGLE_FAN);
     glColor3f(fill.red, fill.green, fill.blue);
     glVertex2i(position.x, position.y);
-    double deltaY = sin(60 * M_PI / 180) * (getSideLength() / 2);
+    double deltaY = sin(60 * PI / 180) * (getSideLength() / 2);
     double deltaX = (getSideLength() / 2);
     glVertex2i(position.x - deltaX, position.y - deltaY);
     glVertex2i(position.x + deltaX, position.y - deltaY);
@@ -755,7 +756,7 @@ void TriangleRight::draw() const{
     glBegin(GL_TRIANGLE_FAN);
     glColor3f(fill.red, fill.green, fill.blue);
     glVertex2i(position.x, position.y);
-    double deltaY = sin(60 * M_PI / 180) * (getSideLength() / 2);
+    double deltaY = sin(60 * PI / 180) * (getSideLength() / 2);
     double deltaX = (getSideLength() / 2);
     glVertex2i(position.x - deltaX, position.y + deltaY);
     glVertex2i(position.x - deltaX, position.y - deltaY);

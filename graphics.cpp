@@ -13,7 +13,7 @@
 
 GLdouble width, height;
 int wd;
-
+Image i("Machi-Koro-Website.bmp");
 
 //Function Declarations
 shared_ptr<Image> cardImage = wheatFieldFile;
@@ -522,7 +522,7 @@ void displayStart(){
     startButton.draw();
     string message = "Start Game";
     drawText24(message, 1, 1, 1, startButton.getX() + 25, startButton.getY() + 45);
-
+    i.draw();
     exitButton.draw();
     message = "Exit Game";
     drawText24(message, 1, 1, 1, exitButton.getX() + 25, exitButton.getY() + 45);
