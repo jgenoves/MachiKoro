@@ -13,7 +13,7 @@
 
 GLdouble width, height;
 int wd;
-Image i("Machi-Koro-Website.bmp");
+Image i("Machi-Koro-Website-Small.bmp");
 
 //Function Declarations
 shared_ptr<Image> cardImage = wheatFieldFile;
