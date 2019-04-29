@@ -30,6 +30,8 @@ void initGL(void);
 void drawText24(string message, float r, float g, float b, double x, double y);
 void drawText18(string message, float r, float g, float b, double x, double y);
 void drawText10(string message, float r, float g, float b, double x, double y);
+void resetGame();
+void drawBackground();
 
 void drawMarket();
 
@@ -40,6 +42,8 @@ void drawPlayerButtons();
 void displayStart();
 
 void displayGame();
+
+void displayEndGame();
 
 
 

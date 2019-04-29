@@ -527,6 +527,10 @@ void displayStart(){
     message = "Exit Game";
     drawText24(message, 1, 1, 1, exitButton.getX() + 25, exitButton.getY() + 45);
 
+    resetButton.draw();
+    message = "Reset Game";
+    drawText24(message, 1, 1, 1, resetButton.getX() + 25, resetButton.getY() + 45);
+
 
 }
 
@@ -834,12 +838,19 @@ void displayGame(){
 }
 
 void displayEndGame(){
+
     mainMenuButton.draw();
     string message = "Main Menu";
+
     drawText24(message, 1, 1, 1, mainMenuButton.getX() + 25, mainMenuButton.getY() + 45);
 
-    message = "Player " + to_string(Game.currentPlayerIndex) + " WINS!";
+    int winner = Game.currentPlayerIndex + 1;
+
+    message = "Player " + to_string(winner) + " WINS!";
     drawText24(message, 1, 1, 1, 600,300);
+
+    resetGame();
+
 }
 
 
@@ -1451,6 +1462,13 @@ void cursor(int x, int y) {
         else {
             exitButton.setFill(BUTTON_COLOR);
         }
+        if (resetButton.isOverlapping(x,y)){
+            resetButton.setFill(BUTTON_HOVER_COLOR);
+        }
+        else {
+            resetButton.setFill(BUTTON_COLOR);
+        }
+
     }
     else if (screen == game){
 
@@ -1813,6 +1831,9 @@ void mouse(int button, int state, int x, int y) {
             glutDestroyWindow(wd);
             exit(0);
         }
+        else if(resetButton.isOverlapping(x,y) && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            resetGame();
+        }
 
     }
     else if (screen == game){
@@ -1834,6 +1855,7 @@ void mouse(int button, int state, int x, int y) {
             Game.diceRolled = true;
         }
         else if (skipBuyButton.isOverlapping(x,y) && !Game.boughtCard && Game.turnPhase == buy && button == GLUT_LEFT_BUTTON && state == GLUT_UP){
+            previousCardBought = "No Card Bought";
             Game.turnPhase = endturn;
         }
         else if (rerollButton.isOverlapping(x,y) && Game.turnPhase == radioTower && button == GLUT_LEFT_BUTTON && state == GLUT_UP){

@@ -243,6 +243,7 @@ vector<RectangleShape> backgroundShapes = {bigBackground,imageHighlight};//, bot
 // Menu buttons
 RectangleShape startButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, BUTTON_Y_POSITION);
 RectangleShape exitButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, startButton.getY() + BUTTON_HEIGHT + BUTTON_Y_MARGIN);
+RectangleShape resetButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, BUTTON_X_POSITION, exitButton.getY() + BUTTON_HEIGHT + BUTTON_Y_MARGIN);
 RectangleShape mainMenuButton(BUTTON_WIDTH, BUTTON_HEIGHT, BUTTON_COLOR, SLOT_X_POSITION + (SLOT_WIDTH - BUTTON_WIDTH) / 2, BUTTON_Y_POSITION);
 
 
