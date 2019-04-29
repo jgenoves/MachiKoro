@@ -20,7 +20,7 @@ shared_ptr<Image> cardImage = wheatFieldFile;
 //Function Declarations
 void init() {
 
-    startImage.setPosition(100,100);
+    startImage.setPosition(START_IMAGE_X_POSITION, START_IMAGE_Y_POSITION);
 
     width = WIDTH;
     height = HEIGHT;
@@ -521,7 +521,7 @@ void displayPreviousTurn(){
 }
 
 void displayStart(){
-
+    bigBackground.draw();
     startButton.draw();
     string message = "Start Game";
     drawText24(message, 1, 1, 1, startButton.getX() + 25, startButton.getY() + 45);
