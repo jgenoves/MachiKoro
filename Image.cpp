@@ -92,6 +92,10 @@ void Image::readBMP(string filename) {
             j++;
         }
 
+        if (width > height) {
+            j++;
+        }
+
         pixels.push_back(col);
     }
 

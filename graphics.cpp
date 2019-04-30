@@ -14,10 +14,13 @@
 GLdouble width, height;
 int wd;
 
+Image startImage("machi.bmp");
+shared_ptr<Image> cardImage = wheatFieldFile;
 
 //Function Declarations
-shared_ptr<Image> cardImage = wheatFieldFile;
 void init() {
+
+    startImage.setPosition(START_IMAGE_X_POSITION, START_IMAGE_Y_POSITION);
 
     width = WIDTH;
     height = HEIGHT;
@@ -518,11 +521,11 @@ void displayPreviousTurn(){
 }
 
 void displayStart(){
-
+    bigBackground.draw();
     startButton.draw();
     string message = "Start Game";
     drawText24(message, 1, 1, 1, startButton.getX() + 25, startButton.getY() + 45);
-
+    startImage.draw();
     exitButton.draw();
     message = "Exit Game";
     drawText24(message, 1, 1, 1, exitButton.getX() + 25, exitButton.getY() + 45);
