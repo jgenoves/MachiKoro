@@ -629,6 +629,7 @@ void displayGame(){
         else{
             if (Game.players[Game.currentPlayerIndex].getRadioTowerBool() && !Game.skipRadioTower){
                 // Do not allow the dice to be rerolled more than once per turn
+                Game.diceSum = Game.dice1Roll + Game.dice2Roll;
                 Game.skipRadioTower = true;
                 Game.turnPhase = radioTower;
             }
